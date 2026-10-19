@@ -23,6 +23,7 @@ import hashlib
 import random
 import argparse
 import chess
+import chess.pgn
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from hackathon.security import audit_bot_source, PersistentBotClient
@@ -117,6 +118,17 @@ def play_game(white_client: PersistentBotClient, black_client: PersistentBotClie
     white_name = white_client.bot_name
     black_name = black_client.bot_name
 
+    pgn_game = chess.pgn.Game()
+    pgn_game.headers["Event"] = "PICT Knight Shift 2026"
+    pgn_game.headers["Site"] = "PICT Pune"
+    pgn_game.headers["Date"] = time.strftime("%Y.%m.%d")
+    pgn_game.headers["White"] = white_name
+    pgn_game.headers["Black"] = black_name
+    if start_fen != chess.STARTING_FEN:
+        pgn_game.headers["SetUp"] = "1"
+        pgn_game.headers["FEN"] = start_fen
+    pgn_node = pgn_game
+
     game_times = {white_name: [], black_name: []}
 
     while not board.is_game_over() and board.fullmove_number <= max_full_moves:
@@ -129,17 +141,51 @@ def play_game(white_client: PersistentBotClient, black_client: PersistentBotClie
         game_times[cur_name].append(wall_t)
 
         if status != "OK" or move is None:
-            return opp_name, f"{cur_name} Forfeited [{status}]", board.fullmove_number, game_times
+            reason = f"{cur_name} Forfeited [{status}]"
+            pgn_game.headers["Result"] = "0-1" if is_white else "1-0"
+            pgn_game.headers["Termination"] = reason
+            _save_pgn_replay(pgn_game, white_name, black_name)
+            return opp_name, reason, board.fullmove_number, game_times
 
         if move not in board.legal_moves:
-            return opp_name, f"{cur_name} Forfeited [Illegal move: {move}]", board.fullmove_number, game_times
+            reason = f"{cur_name} Forfeited [Illegal move: {move}]"
+            pgn_game.headers["Result"] = "0-1" if is_white else "1-0"
+            pgn_game.headers["Termination"] = reason
+            _save_pgn_replay(pgn_game, white_name, black_name)
+            return opp_name, reason, board.fullmove_number, game_times
 
+        pgn_node = pgn_node.add_variation(move)
         board.push(move)
 
     # Resolve outcome at end of game or cap
     winner, reason = adjudicate_position(board)
     winner_name = white_name if winner == "WHITE" else (black_name if winner == "BLACK" else "DRAW")
+    if winner_name == white_name:
+        pgn_game.headers["Result"] = "1-0"
+    elif winner_name == black_name:
+        pgn_game.headers["Result"] = "0-1"
+    else:
+        pgn_game.headers["Result"] = "1/2-1/2"
+    pgn_game.headers["Termination"] = reason
+
+    _save_pgn_replay(pgn_game, white_name, black_name)
     return winner_name, reason, board.fullmove_number, game_times
+
+
+def _save_pgn_replay(pgn_game, white_name: str, black_name: str):
+    """Saves PGN replay to hackathon/replays/ for WhatsApp sharing & Lichess analysis."""
+    try:
+        replays_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "replays")
+        os.makedirs(replays_dir, exist_ok=True)
+        # Individual replay
+        filename = f"{white_name}_vs_{black_name}.pgn"
+        with open(os.path.join(replays_dir, filename), "w", encoding="utf-8") as f:
+            print(pgn_game, file=f, end="\n\n")
+        # Append to master tournament PGN
+        with open(os.path.join(replays_dir, "tournament_replays.pgn"), "a", encoding="utf-8") as f:
+            print(pgn_game, file=f, end="\n\n")
+    except Exception:
+        pass
 
 
 def play_paired_match(bot1_path: str, bot2_path: str, opening_fen: str, time_limit: float = 1.0):
