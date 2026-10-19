@@ -1,0 +1,12 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Ne7+*
+
+*🎬 Winning Sequence:*
+1. *31. Ne7+* _(f5 ➔ e7)_
+2. *31... Kh8* _(g8 ➔ h8)_
+3. *32. N5g6+* _(e5 ➔ g6)_
+4. *32... hxg6* _(h7 ➔ g6)_
+5. *33. Qh3#* _(f3 ➔ h3)_
+
+📝 *Breakdown:* _Ne7+ initiates a decisive forcing sequence leading to checkmate._

@@ -1,0 +1,3 @@
+🎯 *TRAP SOLUTION:* 2️⃣ *Bb4*
+
+📝 *Breakdown:* _6... Bb4! pins White's bishop to the king. If 7. Qd2, Black plays 7... Bxc3 8. Qxc3 Qc1# with an instant back-rank mate!_

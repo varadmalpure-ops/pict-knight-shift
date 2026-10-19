@@ -1,0 +1,7 @@
+*⚡ White to play: What is your move?*
+_React with number_
+
+1️⃣ *62. Rf8+*
+2️⃣ *62. Rh8*
+3️⃣ *62. Kxc4*
+4️⃣ *62. Re7+*

@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Bxh5*
+
+*🎬 Winning Sequence:*
+1. *15. Bxh5* _(e2 ➔ h5)_
+2. *15... Bxe5* _(d6 ➔ e5)_
+3. *16. Bxe5* _(b2 ➔ e5)_
+4. *16... Nxe5* _(g6 ➔ e5)_
+
+📝 *Breakdown:* _Bxh5 wins a piece and establishes a decisive material advantage._

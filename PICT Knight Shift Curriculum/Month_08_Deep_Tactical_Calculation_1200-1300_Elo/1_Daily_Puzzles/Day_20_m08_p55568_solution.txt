@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 3️⃣ *Rf1+*
+
+*🎬 Winning Sequence:*
+1. *27... Rf1+* _(f8 ➔ f1)_
+2. *28. Rxf1* _(e1 ➔ f1)_
+3. *28... Qxe3* _(g5 ➔ e3)_
+4. *29. Rac1* _(a1 ➔ c1)_
+
+📝 *Breakdown:* _Rf1+ wins the opponent's queen through a decisive tactical sequence._

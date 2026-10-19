@@ -1,0 +1,13 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Qb1+*
+
+*🎬 Winning Sequence:*
+1. *29... Qb1+* _(b3 ➔ b1)_
+2. *30. Qxb1* _(f5 ➔ b1)_
+3. *30... Rxb1+* _(b8 ➔ b1)_
+4. *31. Kh2* _(g1 ➔ h2)_
+5. *31... Bxe5+* _(f6 ➔ e5)_
+6. *32. g3* _(g2 ➔ g3)_
+
+📝 *Breakdown:* _Qb1+ wins the opponent's queen through a decisive tactical sequence._

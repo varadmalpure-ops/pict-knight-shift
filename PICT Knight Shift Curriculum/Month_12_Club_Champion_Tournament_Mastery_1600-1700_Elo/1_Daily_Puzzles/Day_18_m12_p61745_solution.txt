@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 3️⃣ *Qxd4+*
+
+*🎬 Winning Sequence:*
+1. *10... Qxd4+* _(d8 ➔ d4)_
+2. *11. Kh1* _(g1 ➔ h1)_
+3. *11... Qxe5* _(d4 ➔ e5)_
+4. *12. Bf4* _(c1 ➔ f4)_
+
+📝 *Breakdown:* _Qxd4+ wins a piece and establishes a decisive material advantage._

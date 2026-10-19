@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Nxc5*
+
+*🎬 Winning Sequence:*
+1. *22... Nxc5* _(a4 ➔ c5)_
+2. *23. bxc5* _(b4 ➔ c5)_
+3. *23... bxc4* _(b5 ➔ c4)_
+4. *24. g4* _(g2 ➔ g4)_
+
+📝 *Breakdown:* _Nxc5 wins a piece and establishes a decisive material advantage._

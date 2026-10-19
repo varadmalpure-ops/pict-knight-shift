@@ -1,0 +1,13 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Rh4+*
+
+*🎬 Winning Sequence:*
+1. *48... Rh4+* _(e4 ➔ h4)_
+2. *49. Kg2* _(h3 ➔ g2)_
+3. *49... Rh2+* _(h4 ➔ h2)_
+4. *50. Kf1* _(g2 ➔ f1)_
+5. *50... Rxc2* _(h2 ➔ c2)_
+6. *51. Rd3* _(f3 ➔ d3)_
+
+📝 *Breakdown:* _Rh4+ wins a rook by exploiting the opponent's tactical vulnerability._

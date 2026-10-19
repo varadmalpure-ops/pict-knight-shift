@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 3️⃣ *Ne7+*
+
+*🎬 Winning Sequence:*
+1. *17. Ne7+* _(d5 ➔ e7)_
+2. *17... Kh8* _(g8 ➔ h8)_
+3. *18. Nxc8* _(e7 ➔ c8)_
+4. *18... Nxc8* _(b6 ➔ c8)_
+
+📝 *Breakdown:* _Ne7+ wins a rook by exploiting the opponent's tactical vulnerability._

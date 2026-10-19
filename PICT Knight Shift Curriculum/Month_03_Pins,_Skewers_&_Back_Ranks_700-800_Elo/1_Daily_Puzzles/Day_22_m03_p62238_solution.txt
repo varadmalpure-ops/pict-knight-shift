@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Qxe8+*
+
+*🎬 Winning Sequence:*
+1. *27. Qxe8+* _(h5 ➔ e8)_
+2. *27... Qd8* _(d6 ➔ d8)_
+3. *28. Qxd8#* _(e8 ➔ d8)_
+
+📝 *Breakdown:* _Qxe8+ initiates a decisive forcing sequence leading to checkmate._

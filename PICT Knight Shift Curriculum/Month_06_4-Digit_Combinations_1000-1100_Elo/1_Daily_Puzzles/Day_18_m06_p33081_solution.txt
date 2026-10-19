@@ -1,0 +1,14 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 3️⃣ *Be3+*
+
+*🎬 Winning Sequence:*
+1. *24... Be3+* _(g5 ➔ e3)_
+2. *25. Kh1* _(g1 ➔ h1)_
+3. *25... Nf2+* _(e4 ➔ f2)_
+4. *26. Kg1* _(h1 ➔ g1)_
+5. *26... Nxg4+* _(f2 ➔ g4)_
+6. *27. Kf1* _(g1 ➔ f1)_
+7. *27... Nxh2#* _(g4 ➔ h2)_
+
+📝 *Breakdown:* _Be3+ initiates a decisive forcing sequence leading to checkmate._

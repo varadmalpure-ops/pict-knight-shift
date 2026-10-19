@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 2️⃣ *Bxf4*
+
+*🎬 Winning Sequence:*
+1. *21... Bxf4* _(h6 ➔ f4)_
+2. *22. Qxf4* _(d2 ➔ f4)_
+3. *22... Nxf4* _(d5 ➔ f4)_
+4. *23. Bb6* _(c7 ➔ b6)_
+
+📝 *Breakdown:* _Bxf4 wins the opponent's queen through a decisive tactical sequence._

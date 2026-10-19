@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Nxb3+*
+
+*🎬 Winning Sequence:*
+1. *15... Nxb3+* _(c5 ➔ b3)_
+2. *16. Kb1* _(c1 ➔ b1)_
+3. *16... Nxd2+* _(b3 ➔ d2)_
+4. *17. Bxd2* _(e3 ➔ d2)_
+
+📝 *Breakdown:* _Nxb3+ wins the opponent's queen through a decisive tactical sequence._

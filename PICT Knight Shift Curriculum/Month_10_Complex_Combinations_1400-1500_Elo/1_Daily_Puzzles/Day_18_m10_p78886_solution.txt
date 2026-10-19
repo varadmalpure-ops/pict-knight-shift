@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Nf3+*
+
+*🎬 Winning Sequence:*
+1. *22... Nf3+* _(g5 ➔ f3)_
+2. *23. Kh1* _(g1 ➔ h1)_
+3. *23... Nxd4* _(f3 ➔ d4)_
+4. *24. Nxd4* _(e2 ➔ d4)_
+
+📝 *Breakdown:* _Nf3+ wins the opponent's queen through a decisive tactical sequence._

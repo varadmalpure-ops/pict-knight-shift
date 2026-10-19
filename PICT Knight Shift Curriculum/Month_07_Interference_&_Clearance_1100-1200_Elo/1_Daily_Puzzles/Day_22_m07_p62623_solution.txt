@@ -1,0 +1,13 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Nxd3*
+
+*🎬 Winning Sequence:*
+1. *30... Nxd3* _(f4 ➔ d3)_
+2. *31. Bxe5* _(g3 ➔ e5)_
+3. *31... Nxe5* _(d3 ➔ e5)_
+4. *32. Rh8+* _(h2 ➔ h8)_
+5. *32... Kg7* _(g8 ➔ g7)_
+6. *33. Re8* _(h8 ➔ e8)_
+
+📝 *Breakdown:* _Nxd3 wins a piece and establishes a decisive material advantage._

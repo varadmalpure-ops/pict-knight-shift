@@ -1,0 +1,7 @@
+*⚡ Black to play: What is your move?*
+_React with number_
+
+1️⃣ *32... Rf5*
+2️⃣ *32... Rxa2*
+3️⃣ *32... g4+*
+4️⃣ *32... Rxh2+*

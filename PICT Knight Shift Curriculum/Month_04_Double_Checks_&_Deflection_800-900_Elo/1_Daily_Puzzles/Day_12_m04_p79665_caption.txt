@@ -1,0 +1,7 @@
+*⚡ Black to play: What is your move?*
+_React with number_
+
+1️⃣ *22... Nf3+*
+2️⃣ *22... Nxb3*
+3️⃣ *22... Ne2+*
+4️⃣ *22... Rxf1+*

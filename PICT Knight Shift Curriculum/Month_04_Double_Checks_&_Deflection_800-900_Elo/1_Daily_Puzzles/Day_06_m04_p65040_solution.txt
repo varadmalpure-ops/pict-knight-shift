@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 2️⃣ *Ra8+*
+
+*🎬 Winning Sequence:*
+1. *31. Ra8+* _(a6 ➔ a8)_
+2. *31... Ke7* _(f8 ➔ e7)_
+3. *32. Re8#* _(a8 ➔ e8)_
+
+📝 *Breakdown:* _Ra8+ initiates a decisive forcing sequence leading to checkmate._

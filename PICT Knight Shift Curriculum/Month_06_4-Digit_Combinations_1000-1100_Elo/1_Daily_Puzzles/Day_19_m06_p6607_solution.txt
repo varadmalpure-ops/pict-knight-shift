@@ -1,0 +1,14 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 2️⃣ *Rh3+*
+
+*🎬 Winning Sequence:*
+1. *21. Rh3+* _(f3 ➔ h3)_
+2. *21... Kg8* _(h8 ➔ g8)_
+3. *22. Bh7+* _(e4 ➔ h7)_
+4. *22... Kh8* _(g8 ➔ h8)_
+5. *23. Bg8+* _(h7 ➔ g8)_
+6. *23... Kxg8* _(h8 ➔ g8)_
+7. *24. Qh7#* _(c2 ➔ h7)_
+
+📝 *Breakdown:* _Rh3+ initiates a decisive forcing sequence leading to checkmate._

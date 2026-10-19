@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Qb4+*
+
+*🎬 Winning Sequence:*
+1. *9... Qb4+* _(b2 ➔ b4)_
+2. *10. Qd2* _(d1 ➔ d2)_
+3. *10... Qxc4* _(b4 ➔ c4)_
+4. *11. Qd3* _(d2 ➔ d3)_
+
+📝 *Breakdown:* _Qb4+ wins a piece and establishes a decisive material advantage._

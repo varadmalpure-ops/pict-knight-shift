@@ -1,0 +1,7 @@
+*♟️ White to play: What is the crucial move?*
+_React with number_
+
+1️⃣ *37. Be4+*
+2️⃣ *37. Re3+*
+3️⃣ *37. Rxd5+*
+4️⃣ *37. Be2+*

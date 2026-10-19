@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 2️⃣ *Rxg2+*
+
+*🎬 Winning Sequence:*
+1. *31... Rxg2+* _(g3 ➔ g2)_
+2. *32. Kxg2* _(g1 ➔ g2)_
+3. *32... Qxh4* _(e1 ➔ h4)_
+4. *33. Rf2* _(f1 ➔ f2)_
+
+📝 *Breakdown:* _Rxg2+ wins the opponent's queen through a decisive tactical sequence._

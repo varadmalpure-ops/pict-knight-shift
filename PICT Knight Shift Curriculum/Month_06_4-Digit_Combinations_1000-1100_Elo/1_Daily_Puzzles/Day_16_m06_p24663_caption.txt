@@ -1,0 +1,7 @@
+*⚡ Black to play: What is your move?*
+_React with number_
+
+1️⃣ *8... Rd1#*
+2️⃣ *8... Bxc3+*
+3️⃣ *8... Ne7*
+4️⃣ *8... Nh6*

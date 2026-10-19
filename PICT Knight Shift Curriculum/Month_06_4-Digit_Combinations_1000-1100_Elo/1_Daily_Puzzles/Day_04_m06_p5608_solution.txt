@@ -1,0 +1,12 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 2️⃣ *Bf7+*
+
+*🎬 Winning Sequence:*
+1. *13. Bf7+* _(c4 ➔ f7)_
+2. *13... Ke7* _(e8 ➔ e7)_
+3. *14. Bb4+* _(a5 ➔ b4)_
+4. *14... c5* _(c7 ➔ c5)_
+5. *15. Bxc5#* _(b4 ➔ c5)_
+
+📝 *Breakdown:* _Bf7+ initiates a decisive forcing sequence leading to checkmate._

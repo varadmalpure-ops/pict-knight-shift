@@ -1,0 +1,7 @@
+*⚡ White to play: What is your move?*
+_React with number_
+
+1️⃣ *24. Rxc6*
+2️⃣ *24. Qxd5+*
+3️⃣ *24. Rxh7+*
+4️⃣ *24. Rf6+*

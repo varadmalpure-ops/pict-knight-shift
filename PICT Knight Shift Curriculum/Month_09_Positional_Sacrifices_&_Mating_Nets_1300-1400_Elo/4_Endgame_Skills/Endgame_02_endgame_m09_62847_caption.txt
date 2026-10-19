@@ -1,0 +1,7 @@
+*♟️ White to play: What is the crucial move?*
+_React with number_
+
+1️⃣ *52. Kg4*
+2️⃣ *52. Re4*
+3️⃣ *52. Be4+*
+4️⃣ *52. Kg5*

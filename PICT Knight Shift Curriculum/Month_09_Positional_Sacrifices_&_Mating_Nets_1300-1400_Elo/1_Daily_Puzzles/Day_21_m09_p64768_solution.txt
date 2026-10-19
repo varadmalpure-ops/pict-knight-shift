@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 2️⃣ *Rxc8*
+
+*🎬 Winning Sequence:*
+1. *17. Rxc8* _(c1 ➔ c8)_
+2. *17... Qxc8* _(d8 ➔ c8)_
+3. *18. Bxe7* _(g5 ➔ e7)_
+4. *18... Bxg2* _(e4 ➔ g2)_
+
+📝 *Breakdown:* _Rxc8 wins a rook by exploiting the opponent's tactical vulnerability._

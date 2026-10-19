@@ -1,0 +1,7 @@
+*♟️ White to play: What is the crucial move?*
+_React with number_
+
+1️⃣ *38. Qxb5*
+2️⃣ *38. Qe5+*
+3️⃣ *38. Rxh7+*
+4️⃣ *38. Qxf8+*

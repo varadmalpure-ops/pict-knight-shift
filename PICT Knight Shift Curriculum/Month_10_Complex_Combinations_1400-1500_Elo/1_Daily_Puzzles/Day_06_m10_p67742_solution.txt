@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 3️⃣ *a7*
+
+*🎬 Winning Sequence:*
+1. *44. a7* _(a6 ➔ a7)_
+2. *44... Rxe2* _(f2 ➔ e2)_
+3. *45. a8=Q+* _(a7 ➔ a8)_
+4. *45... Kg7* _(f8 ➔ g7)_
+
+📝 *Breakdown:* _a7 wins a rook by exploiting the opponent's tactical vulnerability._

@@ -1,0 +1,13 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Bxf6*
+
+*🎬 Winning Sequence:*
+1. *24. Bxf6* _(b2 ➔ f6)_
+2. *24... Bxa2* _(d5 ➔ a2)_
+3. *25. Bxg7* _(f6 ➔ g7)_
+4. *25... Kxg7* _(g8 ➔ g7)_
+5. *26. Rxa2* _(a1 ➔ a2)_
+6. *26... cxb4* _(c5 ➔ b4)_
+
+📝 *Breakdown:* _Bxf6 wins a piece and establishes a decisive material advantage._

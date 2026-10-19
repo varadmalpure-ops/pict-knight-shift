@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 3️⃣ *Nf6+*
+
+*🎬 Winning Sequence:*
+1. *18. Nf6+* _(e4 ➔ f6)_
+2. *18... gxf6* _(g7 ➔ f6)_
+3. *19. Qh7#* _(f5 ➔ h7)_
+
+📝 *Breakdown:* _Nf6+ initiates a decisive forcing sequence leading to checkmate._

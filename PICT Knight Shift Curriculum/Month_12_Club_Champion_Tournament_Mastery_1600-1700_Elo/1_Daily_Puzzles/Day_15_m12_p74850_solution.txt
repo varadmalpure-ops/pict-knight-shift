@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 3️⃣ *Nxf2*
+
+*🎬 Winning Sequence:*
+1. *41. Nxf2* _(g4 ➔ f2)_
+2. *41... Bf5+* _(e4 ➔ f5)_
+3. *42. Rg4* _(g3 ➔ g4)_
+4. *42... Rxc3+* _(c7 ➔ c3)_
+
+📝 *Breakdown:* _Nxf2 wins a rook by exploiting the opponent's tactical vulnerability._

@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Rf3+*
+
+*🎬 Winning Sequence:*
+1. *27. Rf3+* _(e3 ➔ f3)_
+2. *27... Kg8* _(f7 ➔ g8)_
+3. *28. Re8#* _(e6 ➔ e8)_
+
+📝 *Breakdown:* _Rf3+ initiates a decisive forcing sequence leading to checkmate._

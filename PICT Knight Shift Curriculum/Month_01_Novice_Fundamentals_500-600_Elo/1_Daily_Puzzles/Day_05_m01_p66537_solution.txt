@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Rb6+*
+
+*🎬 Winning Sequence:*
+1. *49. Rb6+* _(b3 ➔ b6)_
+2. *49... Ke5* _(d6 ➔ e5)_
+3. *50. Re7#* _(a7 ➔ e7)_
+
+📝 *Breakdown:* _Rb6+ initiates a decisive forcing sequence leading to checkmate._

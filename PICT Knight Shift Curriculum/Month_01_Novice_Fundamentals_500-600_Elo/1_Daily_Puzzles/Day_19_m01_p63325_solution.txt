@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *g5+*
+
+*🎬 Winning Sequence:*
+1. *30. g5+* _(g4 ➔ g5)_
+2. *30... Kh5* _(h6 ➔ h5)_
+3. *31. Rxh7#* _(b7 ➔ h7)_
+
+📝 *Breakdown:* _g5+ initiates a decisive forcing sequence leading to checkmate._

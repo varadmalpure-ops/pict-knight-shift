@@ -1,0 +1,7 @@
+*⚡ White to play: What is your move?*
+_React with number_
+
+1️⃣ *21. Bxb7*
+2️⃣ *21. Rh3+*
+3️⃣ *21. Qc4*
+4️⃣ *21. Qxc5*

@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 2️⃣ *Nd2+*
+
+*🎬 Winning Sequence:*
+1. *23... Nd2+* _(e4 ➔ d2)_
+2. *24. Ke2* _(f1 ➔ e2)_
+3. *24... Nxb1* _(d2 ➔ b1)_
+4. *25. Rxb1* _(d1 ➔ b1)_
+
+📝 *Breakdown:* _Nd2+ wins a rook by exploiting the opponent's tactical vulnerability._

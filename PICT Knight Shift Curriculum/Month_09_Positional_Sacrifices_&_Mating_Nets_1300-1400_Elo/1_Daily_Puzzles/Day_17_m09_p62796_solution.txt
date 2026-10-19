@@ -1,0 +1,13 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Rxc3*
+
+*🎬 Winning Sequence:*
+1. *34... Rxc3* _(e3 ➔ c3)_
+2. *35. Qxc3* _(b4 ➔ c3)_
+3. *35... Ng3+* _(h5 ➔ g3)_
+4. *36. Qxg3* _(c3 ➔ g3)_
+5. *36... Qxg3* _(h4 ➔ g3)_
+6. *37. Nxg4* _(h2 ➔ g4)_
+
+📝 *Breakdown:* _Rxc3 wins the opponent's queen through a decisive tactical sequence._

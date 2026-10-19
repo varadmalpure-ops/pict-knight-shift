@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Qxh5*
+
+*🎬 Winning Sequence:*
+1. *24. Qxh5* _(h4 ➔ h5)_
+2. *24... Bxg5* _(e7 ➔ g5)_
+3. *25. Qxg5* _(h5 ➔ g5)_
+4. *25... Qe6* _(h6 ➔ e6)_
+
+📝 *Breakdown:* _Qxh5 wins a rook by exploiting the opponent's tactical vulnerability._

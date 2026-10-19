@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Nxa1*
+
+*🎬 Winning Sequence:*
+1. *24... Nxa1* _(b3 ➔ a1)_
+2. *25. Qxa1* _(b2 ➔ a1)_
+3. *25... Be7* _(c5 ➔ e7)_
+4. *26. f5* _(f4 ➔ f5)_
+
+📝 *Breakdown:* _Nxa1 wins a rook by exploiting the opponent's tactical vulnerability._

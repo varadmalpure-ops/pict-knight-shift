@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.env
+.venv/
+env/
+
+# macOS
+.DS_Store
+
+# State files / credentials if any
+last_puzzle_state.json
+dispatched_history.json

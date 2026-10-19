@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Bd4*
+
+*🎬 Winning Sequence:*
+1. *31... Bd4* _(e5 ➔ d4)_
+2. *32. Qxd4* _(e3 ➔ d4)_
+3. *32... cxd4* _(c5 ➔ d4)_
+4. *33. h5* _(h4 ➔ h5)_
+
+📝 *Breakdown:* _Bd4 wins the opponent's queen through a decisive tactical sequence._

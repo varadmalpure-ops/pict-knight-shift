@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Qxe5*
+
+*🎬 Winning Sequence:*
+1. *24... Qxe5* _(d6 ➔ e5)_
+2. *25. Nxe6* _(d4 ➔ e6)_
+3. *25... Qxe6* _(e5 ➔ e6)_
+4. *26. Qb2* _(e2 ➔ b2)_
+
+📝 *Breakdown:* _Qxe5 wins a piece and establishes a decisive material advantage._

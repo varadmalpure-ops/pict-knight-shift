@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Ke7*
+
+*🎬 Winning Sequence:*
+1. *20... Ke7* _(e8 ➔ e7)_
+2. *21. Rxc6* _(d6 ➔ c6)_
+3. *21... bxc6* _(b7 ➔ c6)_
+4. *22. Bb3* _(c4 ➔ b3)_
+
+📝 *Breakdown:* _Ke7 wins a rook by exploiting the opponent's tactical vulnerability._

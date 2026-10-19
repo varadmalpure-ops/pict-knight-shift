@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 3️⃣ *Qf7+*
+
+*🎬 Winning Sequence:*
+1. *29. Qf7+* _(h5 ➔ f7)_
+2. *29... Rxf7* _(g7 ➔ f7)_
+3. *30. Rg8#* _(g3 ➔ g8)_
+
+📝 *Breakdown:* _Qf7+ initiates a decisive forcing sequence leading to checkmate._

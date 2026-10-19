@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 3️⃣ *Re1+*
+
+*🎬 Winning Sequence:*
+1. *39... Re1+* _(e2 ➔ e1)_
+2. *40. Rf1* _(f2 ➔ f1)_
+3. *40... Rxf1#* _(e1 ➔ f1)_
+
+📝 *Breakdown:* _Re1+ initiates a decisive forcing sequence leading to checkmate._

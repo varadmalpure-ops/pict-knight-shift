@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Ng4+*
+
+*🎬 Winning Sequence:*
+1. *19... Ng4+* _(f6 ➔ g4)_
+2. *20. hxg4* _(h3 ➔ g4)_
+3. *20... Rxf2* _(f7 ➔ f2)_
+4. *21. Re2* _(e1 ➔ e2)_
+
+📝 *Breakdown:* _Ng4+ wins a rook by exploiting the opponent's tactical vulnerability._

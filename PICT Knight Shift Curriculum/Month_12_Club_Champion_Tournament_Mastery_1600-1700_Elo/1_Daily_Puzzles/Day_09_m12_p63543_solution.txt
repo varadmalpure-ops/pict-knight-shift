@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 3️⃣ *Qd5*
+
+*🎬 Winning Sequence:*
+1. *13. Qd5* _(d4 ➔ d5)_
+2. *13... O-O* _(e8 ➔ g8)_
+3. *14. Qxa8* _(d5 ➔ a8)_
+4. *14... a6* _(a7 ➔ a6)_
+
+📝 *Breakdown:* _Qd5 wins a rook by exploiting the opponent's tactical vulnerability._

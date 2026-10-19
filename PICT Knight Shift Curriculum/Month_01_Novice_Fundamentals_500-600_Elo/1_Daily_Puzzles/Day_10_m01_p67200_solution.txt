@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 2️⃣ *Rd1+*
+
+*🎬 Winning Sequence:*
+1. *20... Rd1+* _(d8 ➔ d1)_
+2. *21. Ne1* _(f3 ➔ e1)_
+3. *21... Rxe1#* _(d1 ➔ e1)_
+
+📝 *Breakdown:* _Rd1+ initiates a decisive forcing sequence leading to checkmate._

@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Bxd5*
+
+*🎬 Winning Sequence:*
+1. *24. Bxd5* _(c6 ➔ d5)_
+2. *24... Rxc1* _(c8 ➔ c1)_
+3. *25. Bxb3* _(d5 ➔ b3)_
+4. *25... h6* _(h7 ➔ h6)_
+
+📝 *Breakdown:* _Bxd5 wins a rook by exploiting the opponent's tactical vulnerability._

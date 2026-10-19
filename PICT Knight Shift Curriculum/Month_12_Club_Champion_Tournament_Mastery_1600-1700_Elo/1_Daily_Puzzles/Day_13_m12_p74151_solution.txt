@@ -1,0 +1,15 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *b3*
+
+*🎬 Winning Sequence:*
+1. *21... b3* _(b4 ➔ b3)_
+2. *22. Qxb3* _(c2 ➔ b3)_
+3. *22... Bc4* _(a6 ➔ c4)_
+4. *23. Qc2* _(b3 ➔ c2)_
+5. *23... Bxa2* _(c4 ➔ a2)_
+6. *24. Ra1* _(b1 ➔ a1)_
+7. *24... Bc4* _(a2 ➔ c4)_
+8. *25. Rab1* _(a1 ➔ b1)_
+
+📝 *Breakdown:* _b3 wins a piece and establishes a decisive material advantage._

@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 2️⃣ *Rxd4*
+
+*🎬 Winning Sequence:*
+1. *31. Rxd4* _(d1 ➔ d4)_
+2. *31... e2* _(e3 ➔ e2)_
+3. *32. Bg3* _(d6 ➔ g3)_
+4. *32... Kf7* _(g8 ➔ f7)_
+
+📝 *Breakdown:* _Rxd4 wins a piece and establishes a decisive material advantage._

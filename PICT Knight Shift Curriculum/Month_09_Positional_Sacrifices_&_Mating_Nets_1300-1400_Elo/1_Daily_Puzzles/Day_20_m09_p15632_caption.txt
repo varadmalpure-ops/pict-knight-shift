@@ -1,0 +1,7 @@
+*⚡ Black to play: What is your move?*
+_React with number_
+
+1️⃣ *40... Qa6*
+2️⃣ *40... Qf6*
+3️⃣ *40... Qxa7*
+4️⃣ *40... Qf1+*

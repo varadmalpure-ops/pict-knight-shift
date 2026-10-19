@@ -1,0 +1,7 @@
+*⚡ White to play: What is your move?*
+_React with number_
+
+1️⃣ *50. Rxa1*
+2️⃣ *50. Rh8+*
+3️⃣ *50. g6+*
+4️⃣ *50. Rg8*

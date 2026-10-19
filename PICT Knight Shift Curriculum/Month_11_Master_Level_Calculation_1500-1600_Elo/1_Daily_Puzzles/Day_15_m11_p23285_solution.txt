@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Rf8+*
+
+*🎬 Winning Sequence:*
+1. *19. Rf8+* _(f1 ➔ f8)_
+2. *19... Kh7* _(g8 ➔ h7)_
+3. *20. Rh8#* _(f8 ➔ h8)_
+
+📝 *Breakdown:* _Rf8+ initiates a decisive forcing sequence leading to checkmate._

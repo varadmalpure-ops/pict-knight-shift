@@ -1,0 +1,13 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 1️⃣ *Rxd3+*
+
+*🎬 Winning Sequence:*
+1. *30... Rxd3+* _(d8 ➔ d3)_
+2. *31. Nxd3* _(b4 ➔ d3)_
+3. *31... Bxe4+* _(b7 ➔ e4)_
+4. *32. Ke3* _(f3 ➔ e3)_
+5. *32... Bxh1* _(e4 ➔ h1)_
+6. *33. Kd4* _(e3 ➔ d4)_
+
+📝 *Breakdown:* _Rxd3+ wins a rook by exploiting the opponent's tactical vulnerability._

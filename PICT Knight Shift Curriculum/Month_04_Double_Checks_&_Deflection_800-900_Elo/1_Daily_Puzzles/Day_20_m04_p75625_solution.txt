@@ -1,0 +1,10 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Rf1+*
+
+*🎬 Winning Sequence:*
+1. *49... Rf1+* _(f2 ➔ f1)_
+2. *50. Kh2* _(h1 ➔ h2)_
+3. *50... Qg1#* _(a7 ➔ g1)_
+
+📝 *Breakdown:* _Rf1+ initiates a decisive forcing sequence leading to checkmate._

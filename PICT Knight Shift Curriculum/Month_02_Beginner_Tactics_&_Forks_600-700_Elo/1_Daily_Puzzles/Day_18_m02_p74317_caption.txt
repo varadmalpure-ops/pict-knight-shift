@@ -1,0 +1,7 @@
+*⚡ White to play: What is your move?*
+_React with number_
+
+1️⃣ *31. Bb6*
+2️⃣ *31. Rf8+*
+3️⃣ *31. Nc7+*
+4️⃣ *31. Bb8*

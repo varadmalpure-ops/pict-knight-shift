@@ -1,0 +1,11 @@
+*💡 SOLUTION REVEAL 💡*
+
+🎯 *Winning Poll Choice:* 4️⃣ *Nb3*
+
+*🎬 Winning Sequence:*
+1. *28... Nb3* _(c5 ➔ b3)_
+2. *29. Qe3* _(d2 ➔ e3)_
+3. *29... Nxa1* _(b3 ➔ a1)_
+4. *30. Rxa1* _(e1 ➔ a1)_
+
+📝 *Breakdown:* _Nb3 wins a rook by exploiting the opponent's tactical vulnerability._
