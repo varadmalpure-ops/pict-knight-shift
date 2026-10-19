@@ -63,8 +63,8 @@ Every week, we track the chaos from our arenas and award official campus titles:
    👉 [Click to Join WhatsApp](https://chat.whatsapp.com/H3DDsOt2kl91HmhcXBozbj) *(Daily puzzles, trash talk, room challenge link drops)*
 2. **Join the Chess.com Club:**  
    👉 [chess.com/club/pict-knight-shift](https://www.chess.com/club/pict-knight-shift) *(Free entry to weekly arenas)*
-3. **Submit a Bot:**  
-   👉 Check out the [`hackathon/`](./hackathon/) directory and submit your bot before the Diwali deadline!
+3. **Submit a Bot to the Derby:**  
+   👉 [Submit your `<name>_bot.py` via Google Form](https://forms.gle/4vuAAeGVSjJ5JzFV6) *(Read [`hackathon/README.md`](./hackathon/README.md) for starter code & rules)*
 
 ---
 *Maintained with ❤️ by the students of PICT Pune.*
