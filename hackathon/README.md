@@ -9,8 +9,6 @@ The challenge: Build, prompt, or tune a lightweight Python chess bot to battle o
 ## 📜 Key Tournament Information
 
 - **Rulebook:** Read the comprehensive rules in [`RULES.md`](file:///Users/varadmalpure/foo/PICT%20Knight%20Shift/hackathon/RULES.md).
-- **Design Dossier Template:** [`DOSSIER_TEMPLATE.md`](file:///Users/varadmalpure/foo/PICT%20Knight%20Shift/hackathon/DOSSIER_TEMPLATE.md) (Mandatory 1-page submission).
-- **Oral Viva Rubric:** [`VIVA_RUBRIC.md`](file:///Users/varadmalpure/foo/PICT%20Knight%20Shift/hackathon/VIVA_RUBRIC.md) (5 criteria &times; 0–4 scale = 20 pts).
 - **Audit & Engineering Changelog:** [`CHANGELOG.md`](file:///Users/varadmalpure/foo/PICT%20Knight%20Shift/CHANGELOG.md).
 
 ---
@@ -27,11 +25,10 @@ The challenge: Build, prompt, or tune a lightweight Python chess bot to battle o
    - **No External Engines or Network:** Strictly offline execution.
 3. **Persistent Process Architecture:**  
    Your bot process persists across moves within a match, meaning your Transposition Table (TT) and history heuristics retain state throughout the game.
-4. **Aggregate 100-Point Scoring Matrix:**
-   - 🏆 **50% Tournament** (Swiss & Double Round-Robin with eval-balanced paired openings)
+4. **100% Automated Scoring (Zero Manual Grading, No Viva):**
+   - 🏆 **70% Main Tournament Arena** (Swiss & Double Round-Robin with eval-balanced paired openings)
    - 🧩 **20% Hidden Challenge Suite** (Chess960, material odds, endgames, variable time controls)
    - ⚔️ **10% Calibrated Reference Gauntlet** (~1000, ~1500, ~2000 Elo tiers)
-   - 🔬 **20% Academic Defense** (10% Design Dossier + 10% 3-Minute Live Oral Viva)
 
 ---
 
@@ -77,7 +74,7 @@ Generic AI code typically plateaus at **~1500 Elo**. To reach the expert tier (~
 - 👑 **The Campus Grandmaster:** Overall 1st Place champion across the 100-point matrix.
 - ⚔️ **The Giant Slayer:** Highest points scored against the ~2000 Elo reference benchmark engine.
 - 🛡️ **The Iron Bastion:** Lowest blunder/timeout forfeit rate under high-stress time controls and adversarial positions.
-- 🔬 **Engineering Excellence Award:** Highest combined score on the Design Dossier and Oral Viva defense.
+- ⚡ **Tactical Maestro Award:** Highest score on the Hidden Challenge Suite (Chess960 & complex puzzles).
 
 ---
 
