@@ -12,3 +12,5 @@ env/
 # State files / credentials if any
 last_puzzle_state.json
 dispatched_history.json
+Chess/curriculum/
+Chess/PICT Knight Shift Curriculum/

@@ -1,29 +1,37 @@
 # 🤖 PICT Knight Shift — Campus Chess Bot Derby ♟️⚡
 
-Welcome to PICT's first **Agentic Chess Bot Arena**! 
+Welcome to PICT's premier **Agentic Chess Bot Arena**! 
 
-The challenge: Build, prompt, or tune a lightweight Python chess bot to battle other students' bots in an automated round-robin tournament.
+The challenge: Build, prompt, or tune a lightweight Python chess bot to battle other students' bots in an automated campus tournament and defense gauntlet.
 
 ---
 
-## 📜 The Rules (Simple & Fast)
+## 📜 Key Tournament Information
 
-1. **AI Agents / Vibe Coding are 100% Allowed:**
-   Use Cursor, Claude, ChatGPT, Antigravity, or code it yourself from scratch. The real skill is **prompting, heuristic tuning, and optimization within constraints.**
-2. **Runtime Constraints:**
-   - **Environment:** Pure Python 3 using `python-chess`.
-   - **Time Limit:** **1.0 second max per move**. If your bot hangs or exceeds 1.0s, it forfeits the match!
-   - **No External Engines:** No calling Stockfish binaries or web APIs during the match. All logic must live inside your file.
-3. **Format:**
-   - A single Python file named: `<your_name>_bot.py` (e.g., `rohan_bot.py`).
-   - Must define this exact function:
-     ```python
-     import chess
+- **Rulebook:** Read the comprehensive rules in [`RULES.md`](file:///Users/varadmalpure/foo/PICT%20Knight%20Shift/hackathon/RULES.md).
+- **Design Dossier Template:** [`DOSSIER_TEMPLATE.md`](file:///Users/varadmalpure/foo/PICT%20Knight%20Shift/hackathon/DOSSIER_TEMPLATE.md) (Mandatory 1-page submission).
+- **Oral Viva Rubric:** [`VIVA_RUBRIC.md`](file:///Users/varadmalpure/foo/PICT%20Knight%20Shift/hackathon/VIVA_RUBRIC.md) (5 criteria &times; 0–4 scale = 20 pts).
+- **Audit & Engineering Changelog:** [`CHANGELOG.md`](file:///Users/varadmalpure/foo/PICT%20Knight%20Shift/CHANGELOG.md).
 
-     def get_move(board: chess.Board, time_limit: float = 1.0) -> chess.Move:
-         # Your bot logic / evaluation here
-         return best_move
-     ```
+---
+
+## ⚖️ The 4 Core Principles
+
+1. **AI Agents / Vibe Coding are 100% Legal & Encouraged:**  
+   Use Cursor, Claude 3.5 Sonnet, ChatGPT, Antigravity, or write pure Python by hand. The real skill is **prompt engineering, algorithmic critique, heuristic weighting, and empirical A/B benchmarking.**
+2. **Runtime Constraints:**  
+   - **Environment:** Pure Python 3 (`python-chess`).
+   - **File Size:** Single file `<your_name>_bot.py` $\le$ **100 KB**.
+   - **Time Budget:** 1.0 second per move (soft target: 0.75s, hard OS timeout: 1.25s).
+   - **Memory Limit:** 256 MB per bot process.
+   - **No External Engines or Network:** Strictly offline execution.
+3. **Persistent Process Architecture:**  
+   Your bot process persists across moves within a match, meaning your Transposition Table (TT) and history heuristics retain state throughout the game.
+4. **Aggregate 100-Point Scoring Matrix:**
+   - 🏆 **50% Tournament** (Swiss & Double Round-Robin with eval-balanced paired openings)
+   - 🧩 **20% Hidden Challenge Suite** (Chess960, material odds, endgames, variable time controls)
+   - ⚔️ **10% Calibrated Reference Gauntlet** (~1000, ~1500, ~2000 Elo tiers)
+   - 🔬 **20% Academic Defense** (10% Design Dossier + 10% 3-Minute Live Oral Viva)
 
 ---
 
@@ -34,52 +42,47 @@ The challenge: Build, prompt, or tune a lightweight Python chess bot to battle o
 pip install python-chess
 ```
 
-### 2. Test Your Bot Locally
-We provided two baseline bots for you to practice against:
-- `random_bot.py` (Plays random moves)
-- `aggressive_bot.py` (Greedy bot that aggressively hunts captures and checks)
-
-Run a local 1v1 match on your terminal:
+### 2. Verify Security Compliance
 ```bash
-python3 test_local.py bot_template.py random_bot.py --games 2
+python3 compliance_check.py hackathon/bot_template.py
 ```
 
-Play against the aggressive bot with move logs:
+### 3. Test Your Bot Locally
+Run a 2-game paired match against the baseline bots:
 ```bash
-python3 test_local.py bot_template.py aggressive_bot.py --games 2 --verbose
+python3 hackathon/arena_runner.py hackathon/bot_template.py hackathon/aggressive_bot.py --games 2
+```
+
+Play a local test with move-by-move terminal output:
+```bash
+python3 hackathon/test_local.py hackathon/bot_template.py hackathon/aggressive_bot.py --games 2 --verbose
 ```
 
 ---
 
-## 🧠 Pro-Tips for Tuning Your Bot (Vibe-Coding Prompts)
+## 🧠 Pro-Tips for Reaching ~2000 Elo Play
 
-If you're using an AI agent (Cursor, Claude, ChatGPT), try prompting it with these ideas to crush the competition:
-- *"Add Piece-Square Tables (PST) to evaluate piece placement (e.g. Knights in center, Pawns advanced, King castled safe)."*
-- *"Implement Move Ordering: evaluate captures and checks first to trigger faster Alpha-Beta cutoffs."*
-- *"Add an endgame detector: when Queens are traded, encourage the King to activate towards the center."*
-- *"Make the minimax depth adaptive so it never exceeds 0.8 seconds per move."*
-
----
-
-## 🛡️ Anti-Cheat & Fair Play Scanner
-
-To ensure pure algorithmic competition, our tournament engine (`arena_runner.py`) runs an **automated static code audit** on all submissions:
-- 🚫 **No Stockfish / UCI Wrappers:** `import chess.engine` is strictly blocked and auto-disqualified.
-- 🚫 **No Subprocesses or Shell Calls:** `subprocess`, `os.system`, `ctypes` are blocked.
-- 🚫 **No Network API Calls:** `urllib`, `requests`, `socket`, `http` are blocked. (The tournament runs offline).
-- 🚫 **File Size Cap:** Single `.py` file under 150KB (prevents embedding pre-compiled binaries or neural net weights).
-- ⏱️ **Hard Process Timeout:** Moves have a hard deadline. If an infinite loop occurs, the process is terminated and the game is forfeited.
+Generic AI code typically plateaus at **~1500 Elo**. To reach the expert tier (~2000 Elo) and compete for **The Giant Slayer** award:
+- **Iterative Deepening & Time Abort:** Search depth 1, 2, 3... and abort cleanly when budget reaches ~0.75s, returning the best move from the last completed depth.
+- **Move Ordering:** Evaluate hash moves first, then MVV-LVA (Most Valuable Victim - Least Valuable Attacker) captures, killer moves, and history heuristic.
+- **Quiescence Search:** Search captures and promotions until the board is quiet to eliminate tactical horizon blunders.
+- **Transposition Table:** Key board positions with Zobrist hashes (`chess.polyglot.zobrist_hash(board)`) to reuse previously searched subtrees.
+- **Tapered PeSTO Evaluation:** Interpolate between middlegame and endgame piece-square tables to balance king safety early with king centralization in the endgame.
+- **Mop-Up Endgame Vectoring:** In winning endgames, drive the opposing king toward board edges and corners to convert checkmates quickly.
 
 ---
 
-## 🏆 Submission & Tournament Day
+## 🏆 Honors & Awards
 
-1. **Submit:** Upload your `<yourname>_bot.py` file to the official Google Form:  
-   👉 **[Submit Your Bot (Google Form)](https://forms.gle/4vuAAeGVSjJ5JzFV6)**
-2. **Weekly Provisional Runs:** Every Sunday night at 9:00 PM, provisional standings will be updated in the WhatsApp group. (Unlimited resubmissions allowed until Diwali eve!).
-3. **The Honors:**
-   - 🥇 **Campus Grandmaster** (1st Place overall)
-   - ⚡ **Executioner Award** (Most brutal checkmates delivered)
-   - 🏎️ **Speed Demon** (Fastest average calculation time)
+- 👑 **The Campus Grandmaster:** Overall 1st Place champion across the 100-point matrix.
+- ⚔️ **The Giant Slayer:** Highest points scored against the ~2000 Elo reference benchmark engine.
+- 🛡️ **The Iron Bastion:** Lowest blunder/timeout forfeit rate under high-stress time controls and adversarial positions.
+- 🔬 **Engineering Excellence Award:** Highest combined score on the Design Dossier and Oral Viva defense.
 
-Good luck, and may the best prompt win! 👑
+---
+
+## 📥 Submission Links
+
+1. **Submit Bot File:** 👉 **[Official Google Form](https://forms.gle/4vuAAeGVSjJ5JzFV6)**
+2. **Weekly Leaderboard Updates:** Every Sunday night at 9:00 PM.
+3. **Hard Deadline:** **Diwali Eve (Saturday, November 7, 2026 @ 11:59 PM)**.
