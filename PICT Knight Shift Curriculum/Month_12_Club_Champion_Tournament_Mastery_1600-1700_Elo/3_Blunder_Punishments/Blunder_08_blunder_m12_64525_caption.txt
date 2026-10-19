@@ -2,7 +2,7 @@
 *Black to play: How do you punish this blunder?*
 _React with number_
 
-1️⃣ *31... Qd2+*
+1️⃣ *31... Qxf3+*
 2️⃣ *31... Qc5+*
 3️⃣ *31... Qd4+*
-4️⃣ *31... Qxf3+*
+4️⃣ *31... Qd2+*

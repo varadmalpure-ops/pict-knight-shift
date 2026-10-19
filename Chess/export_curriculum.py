@@ -13,8 +13,13 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import send_daily_puzzle as sdp
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_EXPORT_NAME = "PICT Knight Shift Curriculum" if os.path.exists(os.path.join(BASE_DIR, "PICT Knight Shift Curriculum")) else "exported_curriculum"
-EXPORT_DIR = os.path.join(BASE_DIR, DEFAULT_EXPORT_NAME)
+ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, ".."))
+if os.path.exists(os.path.join(ROOT_DIR, "PICT Knight Shift Curriculum")):
+    EXPORT_DIR = os.path.join(ROOT_DIR, "PICT Knight Shift Curriculum")
+elif os.path.exists(os.path.join(BASE_DIR, "PICT Knight Shift Curriculum")):
+    EXPORT_DIR = os.path.join(BASE_DIR, "PICT Knight Shift Curriculum")
+else:
+    EXPORT_DIR = os.path.join(BASE_DIR, "exported_curriculum")
 
 
 FIXED_IDS = {
@@ -26,7 +31,10 @@ FIXED_IDS = {
 
 
 def load_curriculum(filename):
-    with open(os.path.join(BASE_DIR, "curriculum", filename), "r", encoding="utf-8") as f:
+    path1 = os.path.join(ROOT_DIR, "curriculum", filename)
+    path2 = os.path.join(BASE_DIR, "curriculum", filename)
+    target = path1 if os.path.exists(path1) else path2
+    with open(target, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -79,7 +87,7 @@ def export_puzzle_item(item, idx, folder, generate_gif=True, overwrite=False):
 
     # Save board image (re-download if missing, overwrite requested, or fixed illegal last move)
     img_path = os.path.join(folder, f"{prefix}_board.png")
-    if overwrite or item.get("id") in FIXED_IDS or not os.path.exists(img_path):
+    if not os.path.exists(img_path) or ("--all-images" in sys.argv):
         sdp.download_image(image_url, save_path=img_path, fen=fen, last_move_uci=last_move_uci)
 
     with open(os.path.join(folder, f"{prefix}_caption.txt"), "w", encoding="utf-8") as f:
@@ -205,7 +213,7 @@ def export_blunder_item(item, idx, folder, generate_gif=True, overwrite=False):
     )
 
     img_path = os.path.join(folder, f"{prefix}_board.png")
-    if overwrite or item.get("id") in FIXED_IDS or not os.path.exists(img_path):
+    if not os.path.exists(img_path) or ("--all-images" in sys.argv):
         sdp.download_image(image_url, save_path=img_path, fen=fen, last_move_uci=last_move_uci)
 
     with open(os.path.join(folder, f"{prefix}_caption.txt"), "w", encoding="utf-8") as f:
@@ -259,7 +267,7 @@ def export_endgame_item(item, idx, folder, generate_gif=True, overwrite=False):
     )
 
     img_path = os.path.join(folder, f"{prefix}_board.png")
-    if overwrite or item.get("id") in FIXED_IDS or not os.path.exists(img_path):
+    if not os.path.exists(img_path) or ("--all-images" in sys.argv):
         sdp.download_image(image_url, save_path=img_path, fen=fen, last_move_uci=last_move_uci)
 
     with open(os.path.join(folder, f"{prefix}_caption.txt"), "w", encoding="utf-8") as f:

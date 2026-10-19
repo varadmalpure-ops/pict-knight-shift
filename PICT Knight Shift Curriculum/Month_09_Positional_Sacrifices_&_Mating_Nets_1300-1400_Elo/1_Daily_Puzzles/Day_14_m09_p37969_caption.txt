@@ -1,6 +1,6 @@
 *⚡ White to play: What is your move?*
 _React with number_
 
-1️⃣ *24. Bc2+*
-2️⃣ *24. Kd2*
-3️⃣ *24. Ke1*
+1️⃣ *24. Ke1*
+2️⃣ *24. Bc2+*
+3️⃣ *24. Kd2*

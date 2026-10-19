@@ -1,7 +1,7 @@
 *⚡ Black to play: What is your move?*
 _React with number_
 
-1️⃣ *42... Rxe4*
+1️⃣ *42... Re8*
 2️⃣ *42... Bxc5*
-3️⃣ *42... Re8*
+3️⃣ *42... Rxe4*
 4️⃣ *42... Re5+*

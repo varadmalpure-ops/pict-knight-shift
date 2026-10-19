@@ -2,7 +2,7 @@
 *Black to play: What is the winning tactical strike?*
 _React with number_
 
-1️⃣ *11... c4*
-2️⃣ *11... Qa5+*
-3️⃣ *11... Qc8*
-4️⃣ *11... Qb8*
+1️⃣ *11... Qa5+*
+2️⃣ *11... Qb8*
+3️⃣ *11... c4*
+4️⃣ *11... Qc8*

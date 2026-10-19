@@ -763,9 +763,27 @@ def generate_solution_animation(fen, solution_moves, save_path=None):
     flip_param = "&flip=true" if color == "black" else ""
     ctx = ssl._create_unverified_context()
     sq_size = 90
+    board_size = 720
+    border_left = 44
+    border_bottom = 44
+    border_right = 16
     bar_h = 48
+    total_w = border_left + board_size + border_right
+    total_h = bar_h + board_size + border_bottom
+
+    flipped = (color == "black")
+    files = ["h", "g", "f", "e", "d", "c", "b", "a"] if flipped else ["a", "b", "c", "d", "e", "f", "g", "h"]
+    ranks = ["1", "2", "3", "4", "5", "6", "7", "8"] if flipped else ["8", "7", "6", "5", "4", "3", "2", "1"]
 
     font = None
+    font_coords = None
+    for f_path in ["/System/Library/Fonts/Supplemental/Arial Bold.ttf", "/System/Library/Fonts/Helvetica.ttc", "/Library/Fonts/Arial Bold.ttf"]:
+        if os.path.exists(f_path):
+            try:
+                font_coords = ImageFont.truetype(f_path, 24)
+                break
+            except Exception:
+                pass
     for f_path in ["/System/Library/Fonts/Helvetica.ttc", "/System/Library/Fonts/Supplemental/Arial.ttf"]:
         if os.path.exists(f_path):
             try:
@@ -775,6 +793,8 @@ def generate_solution_animation(fen, solution_moves, save_path=None):
                 pass
     if font is None:
         font = ImageFont.load_default()
+    if font_coords is None:
+        font_coords = font
 
     def fetch_board(b_fen):
         cache_key = (b_fen, flip_param)
@@ -801,17 +821,33 @@ def generate_solution_animation(fen, solution_moves, save_path=None):
         return Image.new("RGBA", (720, 720), (240, 240, 240, 255))
 
     def attach_header(board_img, status_text, is_solved=False):
-        canvas = Image.new("RGBA", (720, 720 + bar_h), (20, 24, 30, 255))
-        canvas.paste(board_img, (0, bar_h))
+        canvas = Image.new("RGBA", (total_w, total_h), (20, 24, 30, 255))
+        canvas.paste(board_img, (border_left, bar_h))
         draw = ImageDraw.Draw(canvas)
-        draw.line([(0, bar_h - 1), (720, bar_h - 1)], fill=(45, 52, 64), width=1)
+        draw.line([(0, bar_h - 1), (total_w, bar_h - 1)], fill=(45, 52, 64), width=1)
         draw.text((16, 13), "PICT CHESS CLUB", font=font, fill=(240, 246, 252))
 
         bbox = font.getbbox(status_text)
         tw = bbox[2] - bbox[0]
-        tx = 720 - 18 - tw
+        tx = total_w - 18 - tw
         text_color = (78, 201, 120) if is_solved else (88, 166, 255)
         draw.text((tx, 13), status_text, font=font, fill=text_color)
+
+        # Coordinate labels
+        for row, r_char in enumerate(ranks):
+            cx = border_left // 2
+            cy = bar_h + row * sq_size + sq_size // 2
+            r_bbox = draw.textbbox((0, 0), r_char, font=font_coords)
+            rw, rh = r_bbox[2] - r_bbox[0], r_bbox[3] - r_bbox[1]
+            draw.text((cx - rw // 2, cy - rh // 2 - 2), r_char, fill=(215, 220, 225, 255), font=font_coords)
+
+        for col, f_char in enumerate(files):
+            cx = border_left + col * sq_size + sq_size // 2
+            cy = bar_h + board_size + border_bottom // 2
+            f_bbox = draw.textbbox((0, 0), f_char, font=font_coords)
+            fw, fh = f_bbox[2] - f_bbox[0], f_bbox[3] - f_bbox[1]
+            draw.text((cx - fw // 2, cy - fh // 2 - 2), f_char, fill=(215, 220, 225, 255), font=font_coords)
+
         return canvas
 
     board_states = [fetch_board(board.fen())]
@@ -874,9 +910,28 @@ def generate_opening_animation(opening_moves, save_path, final_turn=None, trap_n
     color = "black" if flip else "white"
     flip_param = "&flip=true" if flip else ""
     ctx = ssl._create_unverified_context()
+    sq_size = 90
+    board_size = 720
+    border_left = 44
+    border_bottom = 44
+    border_right = 16
     bar_h = 48
+    total_w = border_left + board_size + border_right
+    total_h = bar_h + board_size + border_bottom
+
+    flipped = flip
+    files = ["h", "g", "f", "e", "d", "c", "b", "a"] if flipped else ["a", "b", "c", "d", "e", "f", "g", "h"]
+    ranks = ["1", "2", "3", "4", "5", "6", "7", "8"] if flipped else ["8", "7", "6", "5", "4", "3", "2", "1"]
 
     font = None
+    font_coords = None
+    for f_path in ["/System/Library/Fonts/Supplemental/Arial Bold.ttf", "/System/Library/Fonts/Helvetica.ttc", "/Library/Fonts/Arial Bold.ttf"]:
+        if os.path.exists(f_path):
+            try:
+                font_coords = ImageFont.truetype(f_path, 24)
+                break
+            except Exception:
+                pass
     for f_path in ["/System/Library/Fonts/Helvetica.ttc", "/System/Library/Fonts/Supplemental/Arial.ttf"]:
         if os.path.exists(f_path):
             try:
@@ -886,6 +941,8 @@ def generate_opening_animation(opening_moves, save_path, final_turn=None, trap_n
                 pass
     if font is None:
         font = ImageFont.load_default()
+    if font_coords is None:
+        font_coords = font
 
     def fetch_board(b_fen):
         cache_key = (b_fen, flip_param)
@@ -912,17 +969,33 @@ def generate_opening_animation(opening_moves, save_path, final_turn=None, trap_n
         return Image.new("RGBA", (720, 720), (240, 240, 240, 255))
 
     def attach_header(board_img, status_text, is_trap_reached=False):
-        canvas = Image.new("RGBA", (720, 720 + bar_h), (20, 24, 30, 255))
-        canvas.paste(board_img, (0, bar_h))
+        canvas = Image.new("RGBA", (total_w, total_h), (20, 24, 30, 255))
+        canvas.paste(board_img, (border_left, bar_h))
         draw = ImageDraw.Draw(canvas)
-        draw.line([(0, bar_h - 1), (720, bar_h - 1)], fill=(45, 52, 64), width=1)
+        draw.line([(0, bar_h - 1), (total_w, bar_h - 1)], fill=(45, 52, 64), width=1)
         draw.text((16, 13), "PICT CHESS CLUB", font=font, fill=(240, 246, 252))
 
         bbox = font.getbbox(status_text)
         tw = bbox[2] - bbox[0]
-        tx = 720 - 18 - tw
+        tx = total_w - 18 - tw
         text_color = (255, 175, 50) if is_trap_reached else (88, 166, 255)
         draw.text((tx, 13), status_text, font=font, fill=text_color)
+
+        # Coordinate labels
+        for row, r_char in enumerate(ranks):
+            cx = border_left // 2
+            cy = bar_h + row * sq_size + sq_size // 2
+            r_bbox = draw.textbbox((0, 0), r_char, font=font_coords)
+            rw, rh = r_bbox[2] - r_bbox[0], r_bbox[3] - r_bbox[1]
+            draw.text((cx - rw // 2, cy - rh // 2 - 2), r_char, fill=(215, 220, 225, 255), font=font_coords)
+
+        for col, f_char in enumerate(files):
+            cx = border_left + col * sq_size + sq_size // 2
+            cy = bar_h + board_size + border_bottom // 2
+            f_bbox = draw.textbbox((0, 0), f_char, font=font_coords)
+            fw, fh = f_bbox[2] - f_bbox[0], f_bbox[3] - f_bbox[1]
+            draw.text((cx - fw // 2, cy - fh // 2 - 2), f_char, fill=(215, 220, 225, 255), font=font_coords)
+
         return canvas
 
     board_states = [fetch_board(board.fen())]

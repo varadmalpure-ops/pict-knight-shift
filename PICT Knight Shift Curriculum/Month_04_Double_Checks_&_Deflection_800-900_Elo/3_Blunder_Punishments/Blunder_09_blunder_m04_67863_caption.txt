@@ -3,6 +3,6 @@
 _React with number_
 
 1️⃣ *29. Rxe8+*
-2️⃣ *29. Qxf5*
-3️⃣ *29. Bxd5*
+2️⃣ *29. Bxd5*
+3️⃣ *29. Qxf5*
 4️⃣ *29. Qxa4*

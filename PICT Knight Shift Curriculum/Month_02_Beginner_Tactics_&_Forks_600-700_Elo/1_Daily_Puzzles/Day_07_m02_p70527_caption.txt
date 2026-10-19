@@ -1,7 +1,7 @@
 *⚡ White to play: What is your move?*
 _React with number_
 
-1️⃣ *28. Rxa1*
-2️⃣ *28. Qxg7+*
-3️⃣ *28. Qd8+*
-4️⃣ *28. Qxd5*
+1️⃣ *28. Qxg7+*
+2️⃣ *28. Rxa1*
+3️⃣ *28. Qxd5*
+4️⃣ *28. Qd8+*

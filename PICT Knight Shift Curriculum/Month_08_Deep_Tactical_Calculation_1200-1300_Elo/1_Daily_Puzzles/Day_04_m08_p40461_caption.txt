@@ -1,7 +1,7 @@
 *⚡ Black to play: What is your move?*
 _React with number_
 
-1️⃣ *26... Qxf8*
-2️⃣ *26... Qh8*
-3️⃣ *26... Ng3+*
-4️⃣ *26... Qa1+*
+1️⃣ *26... Qa1+*
+2️⃣ *26... Ng3+*
+3️⃣ *26... Qxf8*
+4️⃣ *26... Qh8*

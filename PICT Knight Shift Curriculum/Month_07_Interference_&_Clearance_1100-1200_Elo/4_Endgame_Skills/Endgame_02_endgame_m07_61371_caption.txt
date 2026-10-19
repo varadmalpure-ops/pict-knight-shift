@@ -1,7 +1,7 @@
 *♟️ White to play: What is the crucial move?*
 _React with number_
 
-1️⃣ *42. Ne4+*
-2️⃣ *42. Rxd4*
-3️⃣ *42. Nd7+*
-4️⃣ *42. Nb7*
+1️⃣ *42. Rxd4*
+2️⃣ *42. Nb7*
+3️⃣ *42. Ne4+*
+4️⃣ *42. Nd7+*

@@ -1,7 +1,7 @@
 *⚡ Black to play: What is your move?*
 _React with number_
 
-1️⃣ *16... Bd6+*
-2️⃣ *16... Qg5+*
-3️⃣ *16... Qd6+*
-4️⃣ *16... Qg6+*
+1️⃣ *16... Qd6+*
+2️⃣ *16... Qg6+*
+3️⃣ *16... Bd6+*
+4️⃣ *16... Qg5+*

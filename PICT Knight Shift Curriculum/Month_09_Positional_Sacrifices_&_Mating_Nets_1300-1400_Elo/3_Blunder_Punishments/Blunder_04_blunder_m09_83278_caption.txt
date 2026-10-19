@@ -2,7 +2,7 @@
 *Black to play: How do you punish this blunder?*
 _React with number_
 
-1️⃣ *30... Bxe4+*
-2️⃣ *30... Rh8*
-3️⃣ *30... Nxe4*
-4️⃣ *30... Rxd3+*
+1️⃣ *30... Rh8*
+2️⃣ *30... Rxd3+*
+3️⃣ *30... Bxe4+*
+4️⃣ *30... Nxe4*

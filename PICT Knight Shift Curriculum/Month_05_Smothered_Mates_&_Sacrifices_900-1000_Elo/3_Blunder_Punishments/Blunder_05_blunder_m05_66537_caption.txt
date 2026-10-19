@@ -2,7 +2,7 @@
 *White to play: How do you punish this blunder?*
 _React with number_
 
-1️⃣ *49. Rd7+*
-2️⃣ *49. Ra6+*
-3️⃣ *49. Rb6+*
-4️⃣ *49. Rxh7*
+1️⃣ *49. Rxh7*
+2️⃣ *49. Rb6+*
+3️⃣ *49. Ra6+*
+4️⃣ *49. Rd7+*

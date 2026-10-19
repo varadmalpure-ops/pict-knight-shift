@@ -1,7 +1,7 @@
 *⚡ Black to play: What is your move?*
 _React with number_
 
-1️⃣ *33... Rc1+*
+1️⃣ *33... Qxa2+*
 2️⃣ *33... Bxb3*
-3️⃣ *33... Qxa2+*
-4️⃣ *33... Qxd3+*
+3️⃣ *33... Qxd3+*
+4️⃣ *33... Rc1+*

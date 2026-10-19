@@ -2,7 +2,7 @@
 *Black to play: How do you punish this blunder?*
 _React with number_
 
-1️⃣ *27... Qxd6*
+1️⃣ *27... Qxa4*
 2️⃣ *27... Qe8*
-3️⃣ *27... Qxa4*
-4️⃣ *27... Nxb3*
+3️⃣ *27... Nxb3*
+4️⃣ *27... Qxd6*

@@ -1,7 +1,7 @@
 *⚡ White to play: What is your move?*
 _React with number_
 
-1️⃣ *26. Bxc8*
-2️⃣ *26. Rxc7*
-3️⃣ *26. Rd8*
-4️⃣ *26. Rxf7*
+1️⃣ *26. Rxc7*
+2️⃣ *26. Bxc8*
+3️⃣ *26. Rxf7*
+4️⃣ *26. Rd8*

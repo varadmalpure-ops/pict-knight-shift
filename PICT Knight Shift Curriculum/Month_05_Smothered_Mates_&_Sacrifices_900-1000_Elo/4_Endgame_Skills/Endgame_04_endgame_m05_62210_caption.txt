@@ -1,6 +1,6 @@
 *♟️ White to play: What is the crucial move?*
 _React with number_
 
-1️⃣ *51. Kf3*
-2️⃣ *51. Kg5*
+1️⃣ *51. Kg5*
+2️⃣ *51. Kf3*
 3️⃣ *51. Kg4*

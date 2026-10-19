@@ -1,7 +1,7 @@
 *⚡ Black to play: What is your move?*
 _React with number_
 
-1️⃣ *24... Bxg2+*
-2️⃣ *24... Qc8*
-3️⃣ *24... Qc7*
-4️⃣ *24... Qb7*
+1️⃣ *24... Qc7*
+2️⃣ *24... Qb7*
+3️⃣ *24... Bxg2+*
+4️⃣ *24... Qc8*

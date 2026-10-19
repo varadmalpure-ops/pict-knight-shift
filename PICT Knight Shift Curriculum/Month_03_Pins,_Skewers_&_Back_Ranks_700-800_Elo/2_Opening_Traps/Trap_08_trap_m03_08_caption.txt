@@ -2,7 +2,7 @@
 *Black to play: What is the winning tactical strike?*
 _React with number_
 
-1️⃣ *16... Rg3*
-2️⃣ *16... Qxe5+*
-3️⃣ *16... Qxc3+*
+1️⃣ *16... Qxc3+*
+2️⃣ *16... Rg3*
+3️⃣ *16... Qxe5+*
 4️⃣ *16... Rxg2*

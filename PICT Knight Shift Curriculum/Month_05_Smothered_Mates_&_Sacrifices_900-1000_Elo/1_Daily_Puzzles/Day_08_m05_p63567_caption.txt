@@ -1,7 +1,7 @@
 *⚡ White to play: What is your move?*
 _React with number_
 
-1️⃣ *29. Qa7+*
-2️⃣ *29. Qb7+*
-3️⃣ *29. Ra1+*
-4️⃣ *29. Qd5+*
+1️⃣ *29. Qd5+*
+2️⃣ *29. Ra1+*
+3️⃣ *29. Qb7+*
+4️⃣ *29. Qa7+*

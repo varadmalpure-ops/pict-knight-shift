@@ -1,7 +1,7 @@
 *⚡ White to play: What is your move?*
 _React with number_
 
-1️⃣ *30. g5+*
-2️⃣ *30. Rg7*
-3️⃣ *30. Rb8*
-4️⃣ *30. Rxh7+*
+1️⃣ *30. Rxh7+*
+2️⃣ *30. Rb8*
+3️⃣ *30. Rg7*
+4️⃣ *30. g5+*

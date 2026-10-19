@@ -1,7 +1,7 @@
 *⚡ White to play: What is your move?*
 _React with number_
 
-1️⃣ *17. Qxe8+*
-2️⃣ *17. Qxb5*
-3️⃣ *17. Ne7+*
-4️⃣ *17. Nh6+*
+1️⃣ *17. Qxb5*
+2️⃣ *17. Ne7+*
+3️⃣ *17. Nh6+*
+4️⃣ *17. Qxe8+*

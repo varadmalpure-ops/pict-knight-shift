@@ -2,7 +2,7 @@
 *White to play: How do you punish this blunder?*
 _React with number_
 
-1️⃣ *15. Nxg5*
-2️⃣ *15. Nc7+*
-3️⃣ *15. Nxb6*
-4️⃣ *15. Nf6+*
+1️⃣ *15. Nf6+*
+2️⃣ *15. Nxg5*
+3️⃣ *15. Nc7+*
+4️⃣ *15. Nxb6*

@@ -1,7 +1,7 @@
 *⚡ White to play: What is your move?*
 _React with number_
 
-1️⃣ *41. d5+*
+1️⃣ *41. Ne5*
 2️⃣ *41. Nf6*
 3️⃣ *41. Nxf2*
-4️⃣ *41. Ne5*
+4️⃣ *41. d5+*

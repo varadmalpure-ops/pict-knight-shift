@@ -2,7 +2,7 @@
 *White to play: How do you punish this blunder?*
 _React with number_
 
-1️⃣ *25. Qh6*
-2️⃣ *25. Qf4*
-3️⃣ *25. Qg5*
+1️⃣ *25. Qg5*
+2️⃣ *25. Qh6*
+3️⃣ *25. Qf4*
 4️⃣ *25. Nxf6+*

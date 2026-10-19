@@ -1,7 +1,7 @@
 *⚡ White to play: What is your move?*
 _React with number_
 
-1️⃣ *49. Rxh7*
-2️⃣ *49. Rd7+*
-3️⃣ *49. Ra6+*
+1️⃣ *49. Rd7+*
+2️⃣ *49. Ra6+*
+3️⃣ *49. Rxh7*
 4️⃣ *49. Rb6+*

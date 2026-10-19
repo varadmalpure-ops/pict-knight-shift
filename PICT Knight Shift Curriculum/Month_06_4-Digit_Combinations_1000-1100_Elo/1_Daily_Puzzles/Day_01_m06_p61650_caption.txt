@@ -1,7 +1,7 @@
 *⚡ White to play: What is your move?*
 _React with number_
 
-1️⃣ *45. Rh8*
-2️⃣ *45. Rg6+*
-3️⃣ *45. Ne4+*
-4️⃣ *45. Nd5+*
+1️⃣ *45. Rg6+*
+2️⃣ *45. Nd5+*
+3️⃣ *45. Rh8*
+4️⃣ *45. Ne4+*

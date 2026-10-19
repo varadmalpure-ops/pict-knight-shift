@@ -1,7 +1,7 @@
 *⚡ Black to play: What is your move?*
 _React with number_
 
-1️⃣ *31... Bd4*
-2️⃣ *31... Bh2+*
-3️⃣ *31... Bxg4*
-4️⃣ *31... Qxd5*
+1️⃣ *31... Qxd5*
+2️⃣ *31... Bxg4*
+3️⃣ *31... Bh2+*
+4️⃣ *31... Bd4*

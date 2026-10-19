@@ -1,7 +1,7 @@
 *⚡ White to play: What is your move?*
 _React with number_
 
-1️⃣ *40. Qh4*
+1️⃣ *40. Rxh7+*
 2️⃣ *40. Nxe4*
 3️⃣ *40. Nxh7*
-4️⃣ *40. Rxh7+*
+4️⃣ *40. Qh4*

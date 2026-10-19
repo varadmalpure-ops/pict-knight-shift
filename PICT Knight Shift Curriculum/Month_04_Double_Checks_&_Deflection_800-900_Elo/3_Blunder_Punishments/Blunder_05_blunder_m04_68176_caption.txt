@@ -2,7 +2,7 @@
 *Black to play: How do you punish this blunder?*
 _React with number_
 
-1️⃣ *46... Rxh4*
-2️⃣ *46... Re3+*
-3️⃣ *46... Rc4+*
-4️⃣ *46... b4+*
+1️⃣ *46... b4+*
+2️⃣ *46... Rc4+*
+3️⃣ *46... Re3+*
+4️⃣ *46... Rxh4*

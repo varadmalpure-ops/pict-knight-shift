@@ -2,7 +2,7 @@
 *White to play: What is the winning tactical strike?*
 _React with number_
 
-1️⃣ *17. Nxb5*
-2️⃣ *17. Bxb5*
-3️⃣ *17. g3*
-4️⃣ *17. Qxh5*
+1️⃣ *17. Bxb5*
+2️⃣ *17. Qxh5*
+3️⃣ *17. Nxb5*
+4️⃣ *17. g3*

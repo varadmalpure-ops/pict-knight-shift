@@ -1,7 +1,7 @@
 *⚡ Black to play: What is your move?*
 _React with number_
 
-1️⃣ *15... Rxa3*
-2️⃣ *15... Bxd4*
-3️⃣ *15... Nxd6*
-4️⃣ *15... Nxd4*
+1️⃣ *15... Nxd4*
+2️⃣ *15... Rxa3*
+3️⃣ *15... Bxd4*
+4️⃣ *15... Nxd6*
