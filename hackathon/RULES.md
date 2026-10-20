@@ -97,7 +97,17 @@ The entire competition is **100% automated and objective**. There is **no subjec
 ```
 
 ### 1. Main Tournament Arena: The Championship Triathlon (70 Points)
-- **Format:** Qualifying rounds leading into an 8-bot Double Round-Robin Final.
+- **Format:** Dynamic scaling based on registrations:
+  * **$N \le 12$ Contenders:** Direct Double Round-Robin Triathlon (Marathon endurance).
+  * **$13 \le N \le 32$ Contenders:** 5-Round Swiss Qualifier &rarr; Top-8 Double Round-Robin Playoff.
+  * **$N > 32$ Contenders:** Boss Gatekeeper Trial &rarr; 7-Round Swiss &rarr; Top-8 Super-Bullet Grand Finals.
+- **The Boss Gatekeeper Trial ($N > 16$):**
+  * When more than 16 contenders register, all submissions must first play a preliminary trial against the 3 Campus Boss Bots (`boris_bastion_bot`, `valkyrie_tactics_bot`, `victor_vanguard_bot`).
+  * Contenders must score $\ge 0.5$ points to qualify for the main championship bracket. Broken or 0-point bots are filtered out.
+- **Progressive Time Control (The Pressure Cooker):**
+  * **Stage 1 (Qualifiers / Swiss):** `0.20s` per move (Soft: `0.14s`, Watchdog: `0.28s`).
+  * **Stage 2 (Semi-Finals):** `0.15s` per move (Soft: `0.10s`, Watchdog: `0.21s`).
+  * **Stage 3 (Grand Finals - Top 8):** **`0.10s` Super-Bullet** (Soft: `0.07s`, Watchdog: `0.14s`)!
 - **The Tri-Format Arena:** Every matchup between contenders tests their engine across three demanding arenas:
   1. ⚔️ **Sharp Tactical Firestorms:** Razor-sharp classical lines (Sicilian Dragon, King's Indian Classical, French Winawer, Modern Benoni). Bypasses quiet development; directly tests tactical calculation and king defense under heavy crossfire.
   2. 🗡️ **Thematic Sacrificial Gambits:** Dynamic sacrifices (Evans Gambit Accepted, Danish Gambit Accepted, King's Gambit Accepted, Smith-Morra). Tests evaluation sophistication — can your bot weigh attacking initiative against raw material, both as the attacking gambiteer and as the defending material-holder?
@@ -106,7 +116,9 @@ The entire competition is **100% automated and objective**. There is **no subjec
 - **Handling Chess960:** In `python-chess`, simply iterating over `board.legal_moves` automatically generates valid moves for both classical chess and Chess960 without any custom code.
 - **Scoring:** Win = 1.0 pt, Draw = 0.5 pt, Loss = 0.0 pt.
 - **Game Cap:** 120 full moves (240 plies). If neither side mates or claims a draw, games are adjudicated based on material delta ($\ge 400$ cp / piece + pawn).
-- **Tie-Breaks:** Direct Head-to-Head &rarr; Sonneborn-Berger Score &rarr; Total Wins.
+- **Tie-Breaks & Sudden-Death Puzzle Rush:**
+  * Direct Head-to-Head &rarr; Sonneborn-Berger Score &rarr; Total Wins.
+  * **1st Place / Cut Ties:** Triggers an automated **Sudden-Death Tactical Puzzle Rush**. Tied bots are tested on sharp tactical puzzles; the bot solving the most puzzles with the fastest millisecond calculation time wins the tiebreaker!
 
 ### 2. Hidden Challenge Suite (20 Points)
 - An automated 18-test stress benchmark executed by the tournament runner:

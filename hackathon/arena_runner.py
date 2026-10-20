@@ -63,6 +63,112 @@ DISCIPLINE_SUITES = {
     "Chess960": CHESS960_SUITE,
 }
 
+BOSS_BOT_FILENAMES = ["victor_vanguard_bot", "valkyrie_tactics_bot", "boris_bastion_bot"]
+
+# ============================================================================
+# SUDDEN-DEATH TACTICAL PUZZLE RUSH SUITE
+# ============================================================================
+
+SUDDEN_DEATH_PUZZLES = [
+    # 1. Back rank mate deflection (Rxd8#)
+    ("Back Rank Deflection", "3r2k1/5ppp/8/8/8/1Q6/5PPP/3R2K1 w - - 0 1", "d1d8"),
+    # 2. Opera Box Mate (Bxd7 / Rxd7 classic)
+    ("Opera Box Decoy", "4kb1r/p2rqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 0 1", "d1d7"),
+    # 3. Queen Smother Setup (Qe8+)
+    ("Smothered Entry", "6k1/5ppp/8/8/8/8/4QPPP/2r1R1K1 w - - 0 1", "e2e8"),
+    # 4. Royal Knight Fork (dxe4 winning knight)
+    ("Royal Knight Fork", "r1bqk2r/pppp1ppp/2n5/4p3/2B1n3/3P1N2/PPP2PPP/R1BQK2R w KQkq - 0 6", "d3e4"),
+    # 5. Greek Gift Sacrifice setup (Bd3 active development)
+    ("Greek Gift Blast", "r1bq1rk1/ppp2ppp/2n5/3pP3/1b1Pn3/2N2N2/PPP2PPP/R1BQKB1R w KQ - 0 8", "f1d3"),
+]
+
+
+def run_puzzle_rush_tiebreaker(tied_bot_paths: dict, time_limit: float = 0.20):
+    """
+    Executes a Sudden-Death Tactical Puzzle Rush for bots tied in points.
+    Returns: dict mapping bot_name -> (solved_count, total_time_ms)
+    """
+    print("\n" + "="*70)
+    print("⚡ SUDDEN-DEATH TACTICAL PUZZLE RUSH TIEBREAKER")
+    print(f"Tied Contenders: {', '.join(tied_bot_paths.keys())}")
+    print("="*70)
+
+    results = {}
+    for name, path in tied_bot_paths.items():
+        client = PersistentBotClient(path)
+        ok, _ = client.start()
+        if not ok:
+            results[name] = (0, 99999.0)
+            continue
+
+        solved = 0
+        total_time_ms = 0.0
+        print(f"⏱️  Testing {name} on {len(SUDDEN_DEATH_PUZZLES)} tactical puzzles...")
+
+        for p_name, fen, solution_uci in SUDDEN_DEATH_PUZZLES:
+            board = chess.Board(fen)
+            move, status, _, wall_t = client.query_move(board, time_limit=time_limit)
+            time_ms = wall_t * 1000.0
+
+            if status == "OK" and move and move.uci() == solution_uci:
+                solved += 1
+                total_time_ms += time_ms
+                print(f"   ✅ [{p_name}]: SOLVED ({move.uci()}) in {time_ms:.1f}ms")
+            else:
+                total_time_ms += (time_limit * 1000.0)
+                actual_move = move.uci() if move else "None"
+                print(f"   ❌ [{p_name}]: MISSED ({actual_move} != {solution_uci})")
+
+        client.stop()
+        results[name] = (solved, total_time_ms)
+        print(f"-> {name} Result: {solved}/{len(SUDDEN_DEATH_PUZZLES)} solved (Time: {total_time_ms:.1f}ms)\n")
+
+    return results
+
+
+def run_gatekeeper_trial(candidate_paths: dict, boss_paths: dict, time_limit: float = 0.20):
+    """
+    For large contender pools (N > 16), filters out non-competitive or crashing bots.
+    Every candidate bot plays a paired series against each of the Campus Boss Bots.
+    Must score at least 0.5 points to qualify for the main championship draw.
+    """
+    print("\n" + "="*70)
+    print("🛡️  STAGE 0: THE BOSS GATEKEEPER TRIAL (Large Pool Elimination)")
+    print(f"Contenders: {len(candidate_paths)} | Boss Benchmarks: {', '.join(boss_paths.keys())}")
+    print("Requirement: Must score >= 0.5 points vs Bosses to qualify for Championship.")
+    print("="*70)
+
+    qualified_bots = {}
+    eliminated_bots = {}
+
+    for name, path in candidate_paths.items():
+        print(f"🥊 Gatekeeper Trial for: {name}...")
+        total_score = 0.0
+
+        for boss_name, boss_path in boss_paths.items():
+            op_label, op_fen, is_960 = TACTICAL_SUITE[0]
+            res1, reason1, res2, reason2, _ = play_paired_match(
+                path, boss_path, op_fen, is_chess960=is_960, time_limit=time_limit
+            )
+            if res1 == name:
+                total_score += 1.0
+            elif res1 == "DRAW":
+                total_score += 0.5
+
+            if res2 == name:
+                total_score += 1.0
+            elif res2 == "DRAW":
+                total_score += 0.5
+
+        if total_score >= 0.5:
+            qualified_bots[name] = path
+            print(f"  ✅ [QUALIFIED] {name} scored {total_score:.1f} pts vs Bosses -> Advancing to Main Draw!\n")
+        else:
+            eliminated_bots[name] = total_score
+            print(f"  ❌ [ELIMINATED] {name} scored {total_score:.1f} pts vs Bosses -> Filtered Out.\n")
+
+    return qualified_bots, eliminated_bots
+
 # Legacy fallback
 BALANCED_OPENINGS = [
     (item[0], item[1]) for suite in DISCIPLINE_SUITES.values() for item in suite
@@ -299,11 +405,21 @@ class TournamentStats:
         return sb
 
 
-def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: float = 0.20, output_file: str = "hackathon/leaderboard.md"):
+def run_tournament(
+    bot_paths,
+    seed: str = "PICT-KNIGHT-SHIFT-2026",
+    time_limit: float = 0.20,
+    finals_time_limit: float = 0.10,
+    enable_gatekeeper: bool = False,
+    enable_progressive_time: bool = False,
+    output_file: str = "hackathon/leaderboard.md"
+):
     commit_hash = generate_commit_hash(seed)
     print("\n" + "="*70)
     print("🏆 PICT KNIGHT SHIFT // CAMPUS CHESS BOT DERBY")
     print(f"🔑 Secret Seed SHA-256 Commit: {commit_hash[:16]}...{commit_hash[-8:]}")
+    if enable_progressive_time:
+        print(f"⚡ Progressive Time Control: Qualifiers {time_limit}s -> Super-Bullet Finals {finals_time_limit}s")
     print("="*70)
 
     # 1. Static Security Audit
@@ -317,6 +433,14 @@ def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: 
             print(f"  ✅ [ELIGIBLE] {name:20}")
         else:
             print(f"  🚫 [DISQUALIFIED] {name:20} -> {msg}")
+
+    # Optional / Large Pool Gatekeeper Trial
+    if enable_gatekeeper or len(valid_bots) > 16:
+        boss_paths = {n: valid_bots[n] for n in valid_bots if n in BOSS_BOT_FILENAMES}
+        candidate_paths = {n: valid_bots[n] for n in valid_bots if n not in BOSS_BOT_FILENAMES}
+        if boss_paths and candidate_paths:
+            qualified, eliminated = run_gatekeeper_trial(candidate_paths, boss_paths, time_limit=time_limit)
+            valid_bots = {**qualified, **boss_paths}
 
     bot_names = sorted(list(valid_bots.keys()))
     if len(bot_names) < 2:
@@ -343,7 +467,9 @@ def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: 
         print(f"⚔️ Executing {len(pairings)} Triathlon Matchups ({total_games} games across Tactical, Gambit & Chess960)...\n")
 
         for idx, (b1, b2) in enumerate(pairings, 1):
-            print(f"[{idx}/{len(pairings)}] {b1} vs {b2} (Triathlon Matchup: 6 games)...")
+            # Progressive time: Top-tier matchups battle under tighter Super-Bullet time
+            active_time = finals_time_limit if (enable_progressive_time and idx > len(pairings) // 2) else time_limit
+            print(f"[{idx}/{len(pairings)}] {b1} vs {b2} (Triathlon Matchup: 6 games @ {active_time}s)...")
 
             for disc in TRI_DISCIPLINES:
                 suite = DISCIPLINE_SUITES[disc]
@@ -351,7 +477,7 @@ def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: 
                 print(f"   ⚔️  [{disc.upper()}] {op_label}")
 
                 res1, reason1, res2, reason2, times = play_paired_match(
-                    valid_bots[b1], valid_bots[b2], op_fen, is_chess960=is_960, time_limit=time_limit
+                    valid_bots[b1], valid_bots[b2], op_fen, is_chess960=is_960, time_limit=active_time
                 )
 
                 # Record Game 1
@@ -375,13 +501,25 @@ def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: 
 
                 print(f"      G1: {res1} ({reason1}) | G2: {res2} ({reason2})")
 
-    # 3. Generate Standings & Leaderboard
+    # 3. Generate Standings & Check Sudden-Death Tiebreakers
     def sort_rank(n):
         s = tourney_stats.stats[n]
         sb = tourney_stats.sonneborn_berger(n)
         return (s["points"], sb, s["wins"], s["checkmates"])
 
     standings = sorted(bot_names, key=sort_rank, reverse=True)
+
+    # 4. Sudden-Death Tactical Rush for Ties at the Top
+    if len(standings) >= 2:
+        top_score = tourney_stats.stats[standings[0]]["points"]
+        tied_at_top = [n for n in standings if tourney_stats.stats[n]["points"] == top_score]
+        if len(tied_at_top) > 1:
+            print(f"\n⚡ TIE DETECTED FOR 1ST PLACE ({top_score} pts) between: {', '.join(tied_at_top)}!")
+            tied_paths = {n: valid_bots[n] for n in tied_at_top}
+            rush_res = run_puzzle_rush_tiebreaker(tied_paths, time_limit=time_limit)
+            tied_at_top.sort(key=lambda n: (rush_res[n][0], -rush_res[n][1]), reverse=True)
+            standings = tied_at_top + [n for n in standings if n not in tied_at_top]
+            print(f"🏆 Sudden-Death Champion: {tied_at_top[0]} ({rush_res[tied_at_top[0]][0]}/{len(SUDDEN_DEATH_PUZZLES)} solved in {rush_res[tied_at_top[0]][1]:.1f}ms)!\n")
 
     # Format Markdown Output
     md = []
@@ -436,6 +574,9 @@ def main():
     parser.add_argument("--bots-dir", default="hackathon/submitted_bots", help="Directory of bot submissions")
     parser.add_argument("--seed", default="PICT-KNIGHT-SHIFT-2026-DIWALI", help="Secret tournament seed")
     parser.add_argument("--time-limit", type=float, default=0.20, help="Time limit per move (default: 0.20s)")
+    parser.add_argument("--finals-time", type=float, default=0.10, help="Super-Bullet finals time limit (default: 0.10s)")
+    parser.add_argument("--progressive-time", action="store_true", help="Enable progressive time control (0.20s -> 0.10s)")
+    parser.add_argument("--gatekeeper", action="store_true", help="Force Boss Gatekeeper Trial elimination")
     parser.add_argument("--output", default="hackathon/leaderboard.md", help="Output leaderboard markdown file")
     args = parser.parse_args()
 
@@ -444,7 +585,15 @@ def main():
         print(f"⚠️ No bots in {args.bots_dir}. Using sample bots in hackathon/...")
         bot_paths = [p for p in glob.glob("hackathon/*.py") if "runner" not in p and "test" not in p and "security" not in p]
 
-    run_tournament(bot_paths, seed=args.seed, time_limit=args.time_limit, output_file=args.output)
+    run_tournament(
+        bot_paths,
+        seed=args.seed,
+        time_limit=args.time_limit,
+        finals_time_limit=args.finals_time,
+        enable_gatekeeper=args.gatekeeper,
+        enable_progressive_time=args.progressive_time,
+        output_file=args.output
+    )
 
 
 if __name__ == "__main__":

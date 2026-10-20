@@ -118,7 +118,7 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
     # Run tournament (handles both Swiss Qualifier for >8 bots and Double Round-Robin for <=8 bots)
     tourney_stats = run_tournament(eligible_bots, seed=secret_seed, time_limit=0.20)
     if tourney_stats:
-        max_possible_arena_pts = (len(eligible_bots) - 1) * 2.0
+        max_possible_arena_pts = (len(eligible_bots) - 1) * 6.0
         for name in scores:
             if name in tourney_stats.stats:
                 rec = tourney_stats.stats[name]
