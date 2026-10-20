@@ -29,30 +29,43 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from hackathon.security import audit_bot_source, PersistentBotClient
 
 # ============================================================================
-# 1. EVAL-BALANCED BENCHMARK OPENING SUITE
+# 1. CHAMPIONSHIP TRI-FORMAT OPENING SUITES (TACTICAL, GAMBIT, CHESS960)
 # ============================================================================
 
+# Suite A: Fischer Random / Chess960 (Zero Opening Books Possible)
+CHESS960_SUITE = [
+    ("Chess960 SP 520 (RBNQBKNR)", "rbnqbknr/pppppppp/8/8/8/8/PPPPPPPP/RBNQBKNR w KQkq - 0 1", True),
+    ("Chess960 SP 282 (BBQNNRKR)", "bbqnnrkr/pppppppp/8/8/8/8/PPPPPPPP/BBQNNRKR w KQkq - 0 1", True),
+    ("Chess960 SP 748 (RNKBQBNR)", "rnkbqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNKBQBNR w KQkq - 0 1", True),
+    ("Chess960 SP 406 (NQBRBNKR)", "nqbrbnkr/pppppppp/8/8/8/8/PPPPPPPP/NQBRBNKR w KQkq - 0 1", True),
+]
+
+# Suite B: Sharp Classical Tactical Firestorms
+TACTICAL_SUITE = [
+    ("Sicilian Dragon", "r1bqk2r/pp2ppbp/2np1np1/8/3NP3/2N1B3/PPP2PPP/R2QKB1R w KQkq - 4 7", False),
+    ("King's Indian Defense", "rnbq1rk1/ppp1ppbp/3p1np1/8/2PPP3/2N2N2/PP2BPPP/R1BQK2R b KQ - 3 6", False),
+    ("French Winawer", "rnbqk1nr/ppp2ppp/4p3/3p4/1b1PP3/2N5/PPP2PPP/R1BQKBNR w KQkq - 2 4", False),
+    ("Modern Benoni", "rnbqkb1r/pp1p1ppp/4pn2/2p5/2PP4/5N2/PP2PPPP/RNBQKB1R w KQkq - 0 4", False),
+]
+
+# Suite C: Thematic Sacrificial Gambits
+GAMBIT_SUITE = [
+    ("Evans Gambit Accepted", "r1bqk1nr/pppp1ppp/2n5/2b1p3/1PB1P3/5N2/P1PP1PPP/RNBQK2R b KQkq - 0 4", False),
+    ("Danish Gambit Accepted", "rnbqkbnr/pppp1ppp/8/8/2B5/8/PB3PPP/RN1QK1NR b KQkq - 0 5", False),
+    ("King's Gambit Accepted", "rnbqkbnr/pppp1ppp/8/8/4Pp2/5N2/PPPP2PP/RNBQKB1R b KQkq - 1 3", False),
+    ("Smith-Morra Gambit Accepted", "rnbqkbnr/pp1ppppp/8/8/8/2N5/PP2PPPP/R1BQKBNR b KQkq - 0 4", False),
+]
+
+TRI_DISCIPLINES = ["Tactical", "Gambit", "Chess960"]
+DISCIPLINE_SUITES = {
+    "Tactical": TACTICAL_SUITE,
+    "Gambit": GAMBIT_SUITE,
+    "Chess960": CHESS960_SUITE,
+}
+
+# Legacy fallback
 BALANCED_OPENINGS = [
-    # 1. Standard start
-    ("Standard Start", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"),
-    # 2. Open Game (1. e4 e5)
-    ("Open Game (1. e4 e5)", "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"),
-    # 3. Sicilian Defense (1. e4 c5)
-    ("Sicilian (1. e4 c5)", "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"),
-    # 4. French Defense (1. e4 e6)
-    ("French (1. e4 e6)", "rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"),
-    # 5. Caro-Kann Defense (1. e4 c6)
-    ("Caro-Kann (1. e4 c6)", "rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2"),
-    # 6. Queen's Pawn Game (1. d4 d5)
-    ("Queen's Pawn (1. d4 d5)", "rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 0 2"),
-    # 7. Indian Defense (1. d4 Nf6)
-    ("Indian Defense (1. d4 Nf6)", "rnbqkb1r/pppppppp/5n2/8/3P4/8/PPP1PPPP/RNBQKBNR w KQkq - 0 2"),
-    # 8. English Opening (1. c4 e5)
-    ("English (1. c4 e5)", "rnbqkbnr/pppp1ppp/8/4p3/2P5/8/PP1PPPPP/RNBQKBNR w KQkq - 0 2"),
-    # 9. Italian Game (1. e4 e5 2. Nf3 Nc6 3. Bc4)
-    ("Italian (1. e4 e5 2. Nf3 Nc6 3. Bc4)", "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3"),
-    # 10. Queen's Gambit Declined (1. d4 d5 2. c4 e6)
-    ("QGD (1. d4 d5 2. c4 e6)", "rnbqkbnr/ppp2ppp/4p3/3p4/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 0 3"),
+    (item[0], item[1]) for suite in DISCIPLINE_SUITES.values() for item in suite
 ]
 
 # Material values for endgame adjudication
@@ -109,12 +122,12 @@ def adjudicate_position(board: chess.Board):
     return "DRAW", "Adjudicated Draw at Move Cap (Equilibrium)"
 
 
-def play_game(white_client: PersistentBotClient, black_client: PersistentBotClient, start_fen: str, time_limit: float = 1.0, max_full_moves: int = 120):
+def play_game(white_client: PersistentBotClient, black_client: PersistentBotClient, start_fen: str, is_chess960: bool = False, time_limit: float = 0.20, max_full_moves: int = 120):
     """
     Simulates a single game between two persistent bot clients.
-    Guarantees max 120 full moves (240 plies).
+    Guarantees max 120 full moves (240 plies). Supports Chess960.
     """
-    board = chess.Board(start_fen)
+    board = chess.Board(start_fen, chess960=is_chess960)
     white_name = white_client.bot_name
     black_name = black_client.bot_name
 
@@ -124,7 +137,11 @@ def play_game(white_client: PersistentBotClient, black_client: PersistentBotClie
     pgn_game.headers["Date"] = time.strftime("%Y.%m.%d")
     pgn_game.headers["White"] = white_name
     pgn_game.headers["Black"] = black_name
-    if start_fen != chess.STARTING_FEN:
+    if is_chess960:
+        pgn_game.headers["Variant"] = "Chess960"
+        pgn_game.headers["SetUp"] = "1"
+        pgn_game.headers["FEN"] = start_fen
+    elif start_fen != chess.STARTING_FEN:
         pgn_game.headers["SetUp"] = "1"
         pgn_game.headers["FEN"] = start_fen
     pgn_node = pgn_game
@@ -188,11 +205,12 @@ def _save_pgn_replay(pgn_game, white_name: str, black_name: str):
         pass
 
 
-def play_paired_match(bot1_path: str, bot2_path: str, opening_fen: str, time_limit: float = 1.0):
+def play_paired_match(bot1_path: str, bot2_path: str, opening_fen: str, is_chess960: bool = False, time_limit: float = 0.20):
     """
     Plays an eval-balanced pair:
     Game 1: Bot1 as White, Bot2 as Black
     Game 2: Bot2 as White, Bot1 as Black
+    Supports Chess960.
     """
     name1 = os.path.splitext(os.path.basename(bot1_path))[0]
     name2 = os.path.splitext(os.path.basename(bot2_path))[0]
@@ -203,7 +221,7 @@ def play_paired_match(bot1_path: str, bot2_path: str, opening_fen: str, time_lim
     c1.start()
     c2.start()
 
-    res1, reason1, moves1, times1 = play_game(c1, c2, opening_fen, time_limit=time_limit)
+    res1, reason1, moves1, times1 = play_game(c1, c2, opening_fen, is_chess960=is_chess960, time_limit=time_limit)
     c1.stop()
     c2.stop()
 
@@ -213,7 +231,7 @@ def play_paired_match(bot1_path: str, bot2_path: str, opening_fen: str, time_lim
     c2_rev.start()
     c1_rev.start()
 
-    res2, reason2, moves2, times2 = play_game(c2_rev, c1_rev, opening_fen, time_limit=time_limit)
+    res2, reason2, moves2, times2 = play_game(c2_rev, c1_rev, opening_fen, is_chess960=is_chess960, time_limit=time_limit)
     c2_rev.stop()
     c1_rev.stop()
 
@@ -237,12 +255,13 @@ class TournamentStats:
                 "forfeits": 0,
                 "times": [],
                 "h2h": {opp: 0.0 for opp in bot_names if opp != name},
-                "opponents_faced": []
+                "opponents_faced": [],
+                "disciplines": {"Tactical": 0.0, "Gambit": 0.0, "Chess960": 0.0}
             }
             for name in bot_names
         }
 
-    def record_game(self, winner: str, loser: str, is_draw: bool, is_mate: bool, is_forfeit: bool):
+    def record_game(self, winner: str, loser: str, is_draw: bool, is_mate: bool, is_forfeit: bool, discipline: str = None):
         if is_draw:
             self.stats[winner]["points"] += 0.5
             self.stats[loser]["points"] += 0.5
@@ -250,6 +269,9 @@ class TournamentStats:
             self.stats[loser]["draws"] += 1
             self.stats[winner]["h2h"][loser] += 0.5
             self.stats[loser]["h2h"][winner] += 0.5
+            if discipline and discipline in self.stats[winner]["disciplines"]:
+                self.stats[winner]["disciplines"][discipline] += 0.5
+                self.stats[loser]["disciplines"][discipline] += 0.5
         else:
             self.stats[winner]["points"] += 1.0
             self.stats[winner]["wins"] += 1
@@ -259,6 +281,8 @@ class TournamentStats:
                 self.stats[winner]["checkmates"] += 1
             if is_forfeit:
                 self.stats[loser]["forfeits"] += 1
+            if discipline and discipline in self.stats[winner]["disciplines"]:
+                self.stats[winner]["disciplines"][discipline] += 1.0
 
         if loser not in self.stats[winner]["opponents_faced"]:
             self.stats[winner]["opponents_faced"].append(loser)
@@ -275,7 +299,7 @@ class TournamentStats:
         return sb
 
 
-def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: float = 1.0, output_file: str = "hackathon/leaderboard.md"):
+def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: float = 0.20, output_file: str = "hackathon/leaderboard.md"):
     commit_hash = generate_commit_hash(seed)
     print("\n" + "="*70)
     print("🏆 PICT KNIGHT SHIFT // CAMPUS CHESS BOT DERBY")
@@ -304,49 +328,52 @@ def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: 
     tourney_stats = TournamentStats(bot_names)
 
     # 2. Select Tournament Architecture
-    # If <= 8 bots: Direct Double Round-Robin
-    # If > 8 bots: 5-Round Swiss Qualifier -> Top 8 Double Round-Robin Finals
     use_swiss = len(bot_names) > 8
-    print(f"\n📊 Contenders: {len(bot_names)} | Architecture: {'Swiss Qualifier (Stage 1)' if use_swiss else 'Full Double Round-Robin'}")
+    print(f"\n📊 Contenders: {len(bot_names)} | Architecture: {'Swiss Qualifier (Stage 1)' if use_swiss else 'Full Double Round-Robin Triathlon'}")
 
     if not use_swiss:
-        # Full Double Round-Robin with paired openings
+        # Full Double Round-Robin Triathlon across all 3 disciplines
         pairings = []
         for i in range(len(bot_names)):
             for j in range(i + 1, len(bot_names)):
                 pairings.append((bot_names[i], bot_names[j]))
 
         rng.shuffle(pairings)
-        print(f"⚔️ Executing {len(pairings)} Paired Matchups ({len(pairings) * 2} games)...\n")
+        total_games = len(pairings) * len(TRI_DISCIPLINES) * 2
+        print(f"⚔️ Executing {len(pairings)} Triathlon Matchups ({total_games} games across Tactical, Gambit & Chess960)...\n")
 
         for idx, (b1, b2) in enumerate(pairings, 1):
-            op_label, op_fen = rng.choice(BALANCED_OPENINGS)
-            print(f"[{idx}/{len(pairings)}] {b1} vs {b2} | Opening: {op_label}")
+            print(f"[{idx}/{len(pairings)}] {b1} vs {b2} (Triathlon Matchup: 6 games)...")
 
-            res1, reason1, res2, reason2, times = play_paired_match(
-                valid_bots[b1], valid_bots[b2], op_fen, time_limit=time_limit
-            )
+            for disc in TRI_DISCIPLINES:
+                suite = DISCIPLINE_SUITES[disc]
+                op_label, op_fen, is_960 = rng.choice(suite)
+                print(f"   ⚔️  [{disc.upper()}] {op_label}")
 
-            # Record Game 1
-            if res1 == "DRAW":
-                tourney_stats.record_game(b1, b2, True, False, False)
-            elif res1 == b1:
-                tourney_stats.record_game(b1, b2, False, "Checkmate" in reason1, "Forfeited" in reason1)
-            else:
-                tourney_stats.record_game(b2, b1, False, "Checkmate" in reason1, "Forfeited" in reason1)
+                res1, reason1, res2, reason2, times = play_paired_match(
+                    valid_bots[b1], valid_bots[b2], op_fen, is_chess960=is_960, time_limit=time_limit
+                )
 
-            # Record Game 2
-            if res2 == "DRAW":
-                tourney_stats.record_game(b2, b1, True, False, False)
-            elif res2 == b2:
-                tourney_stats.record_game(b2, b1, False, "Checkmate" in reason2, "Forfeited" in reason2)
-            else:
-                tourney_stats.record_game(b1, b2, False, "Checkmate" in reason2, "Forfeited" in reason2)
+                # Record Game 1
+                if res1 == "DRAW":
+                    tourney_stats.record_game(b1, b2, True, False, False, discipline=disc)
+                elif res1 == b1:
+                    tourney_stats.record_game(b1, b2, False, "Checkmate" in reason1, "Forfeited" in reason1, discipline=disc)
+                else:
+                    tourney_stats.record_game(b2, b1, False, "Checkmate" in reason1, "Forfeited" in reason1, discipline=disc)
 
-            tourney_stats.stats[b1]["times"].extend(times[b1])
-            tourney_stats.stats[b2]["times"].extend(times[b2])
+                # Record Game 2
+                if res2 == "DRAW":
+                    tourney_stats.record_game(b2, b1, True, False, False, discipline=disc)
+                elif res2 == b2:
+                    tourney_stats.record_game(b2, b1, False, "Checkmate" in reason2, "Forfeited" in reason2, discipline=disc)
+                else:
+                    tourney_stats.record_game(b1, b2, False, "Checkmate" in reason2, "Forfeited" in reason2, discipline=disc)
 
-            print(f"   G1: {res1} ({reason1}) | G2: {res2} ({reason2})")
+                tourney_stats.stats[b1]["times"].extend(times[b1])
+                tourney_stats.stats[b2]["times"].extend(times[b2])
+
+                print(f"      G1: {res1} ({reason1}) | G2: {res2} ({reason2})")
 
     # 3. Generate Standings & Leaderboard
     def sort_rank(n):
@@ -358,10 +385,11 @@ def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: 
 
     # Format Markdown Output
     md = []
-    md.append("# 🏆 PICT Knight Shift // Official Tournament Leaderboard\n")
+    md.append("# 🏆 PICT Knight Shift // Championship Decathlon Leaderboard\n")
     md.append(f"**Seed SHA-256 Commit:** `{commit_hash}`  |  **Time Limit:** {time_limit}s per move\n")
-    md.append("| Rank | Contender | Score | SB Tiebreak | W / D / L | Checkmates | Avg Time | Status |")
-    md.append("|:---:|:---|:---:|:---:|:---:|:---:|:---:|:---:|")
+    md.append("**Championship Format:** Triathlon (Tactical Gauntlet + Themed Gambits + Fischer Random Chess960)\n")
+    md.append("| Rank | Contender | Overall Score | Tactical | Gambit | Chess960 | SB Tiebreak | W / D / L | Checkmates | Avg Time | Status |")
+    md.append("|:---:|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|")
 
     for rank, name in enumerate(standings, 1):
         s = tourney_stats.stats[name]
@@ -370,16 +398,24 @@ def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: 
         record = f"{s['wins']}W - {s['draws']}D - {s['losses']}L"
         medal = "🥇 " if rank == 1 else ("🥈 " if rank == 2 else ("🥉 " if rank == 3 else ""))
         status = "✅ Clean" if s["forfeits"] == 0 else f"⚠️ {s['forfeits']} Forfeits"
-        md.append(f"| {rank} | {medal}**{name}** | **{s['points']:.1f}** | {sb:.2f} | {record} | {s['checkmates']} | {avg_t:.3f}s | {status} |")
+        d = s["disciplines"]
+        md.append(f"| {rank} | {medal}**{name}** | **{s['points']:.1f}** | {d['Tactical']:.1f} | {d['Gambit']:.1f} | {d['Chess960']:.1f} | {sb:.2f} | {record} | {s['checkmates']} | {avg_t:.3f}s | {status} |")
 
     md.append("\n---\n")
-    md.append("### 🎖️ Official Tournament Superlatives:\n")
+    md.append("### 🎖️ Official Championship Superlatives:\n")
     if standings:
         champ = standings[0]
-        md.append(f"- 👑 **Campus Grandmaster:** `{champ}` with {tourney_stats.stats[champ]['points']:.1f} points!")
+        md.append(f"- 👑 **Campus Grandmaster:** `{champ}` with {tourney_stats.stats[champ]['points']:.1f} total championship points!")
+        tactical_champ = max(standings, key=lambda n: (tourney_stats.stats[n]["disciplines"]["Tactical"], tourney_stats.stats[n]["points"]))
+        gambit_champ = max(standings, key=lambda n: (tourney_stats.stats[n]["disciplines"]["Gambit"], tourney_stats.stats[n]["points"]))
+        chess960_champ = max(standings, key=lambda n: (tourney_stats.stats[n]["disciplines"]["Chess960"], tourney_stats.stats[n]["points"]))
         most_mates = max(standings, key=lambda n: tourney_stats.stats[n]["checkmates"])
-        md.append(f"- ⚡ **Executioner Award (Most Mates):** `{most_mates}` with {tourney_stats.stats[most_mates]['checkmates']} checkmates.")
         least_losses = min(standings, key=lambda n: tourney_stats.stats[n]["losses"])
+
+        md.append(f"- ⚔️ **Tactical Maestro:** `{tactical_champ}` ({tourney_stats.stats[tactical_champ]['disciplines']['Tactical']:.1f} pts in Tactical Firestorms)")
+        md.append(f"- 🗡️ **Gambit Gladiator:** `{gambit_champ}` ({tourney_stats.stats[gambit_champ]['disciplines']['Gambit']:.1f} pts in Sacrificial Gambits)")
+        md.append(f"- 🎲 **Fischer Random Champion:** `{chess960_champ}` ({tourney_stats.stats[chess960_champ]['disciplines']['Chess960']:.1f} pts in Zero-Book Chess960)")
+        md.append(f"- ⚡ **Executioner Award (Most Mates):** `{most_mates}` with {tourney_stats.stats[most_mates]['checkmates']} checkmates.")
         md.append(f"- 🛡️ **Iron Bastion:** `{least_losses}` conceding only {tourney_stats.stats[least_losses]['losses']} losses.")
 
     md.append(f"\n*(Tournament Seed revealed after final submission lock: `{seed}`)*\n")

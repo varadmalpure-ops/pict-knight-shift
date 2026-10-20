@@ -21,23 +21,20 @@ import chess
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from hackathon.security import PersistentBotClient, audit_bot_source
+from hackathon.arena_runner import TACTICAL_SUITE, GAMBIT_SUITE, CHESS960_SUITE
 from organizer_tools.reference_bots import create_reference_bot, find_stockfish_binary
 
-# Standard balanced opening positions for paired testing
-BALANCED_OPENINGS = [
-    # Standard start
-    ("Standard Start", "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"),
-    # Italian Game (Giuoco Piano)
-    ("Italian Game", "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4"),
-    # Queen's Gambit Declined
-    ("QGD", "rnbqkb1r/ppp2ppp/4pn2/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 2 4"),
-    # Sicilian Defense (Classical)
-    ("Sicilian Classical", "r1bqkb1r/pp2pppp/2np1n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R w KQkq - 2 5"),
+# Tri-Format opening positions for paired gauntlet testing
+GAUNTLET_OPENINGS = [
+    TACTICAL_SUITE[0],   # Sicilian Dragon (Tactical)
+    GAMBIT_SUITE[0],     # Evans Gambit (Gambit)
+    CHESS960_SUITE[0],   # Chess960 SP 520 (Chess960)
+    TACTICAL_SUITE[1],   # King's Indian (Tactical)
 ]
 
 
-def play_game(candidate_client: PersistentBotClient, ref_bot, candidate_is_white: bool, candidate_name: str, ref_name: str, start_fen: str, time_limit: float = 1.0, max_full_moves: int = 120):
-    board = chess.Board(start_fen)
+def play_game(candidate_client: PersistentBotClient, ref_bot, candidate_is_white: bool, candidate_name: str, ref_name: str, start_fen: str, is_chess960: bool = False, time_limit: float = 0.20, max_full_moves: int = 120):
+    board = chess.Board(start_fen, chess960=is_chess960)
     moves_history = []
 
     for ply in range(max_full_moves * 2):
@@ -134,13 +131,13 @@ def run_gauntlet(bot_file: str, pairs_per_tier: int = 2, time_limit: float = 0.2
             tier_games = 0
 
             for p_idx in range(pairs_per_tier):
-                op_name, op_fen = BALANCED_OPENINGS[p_idx % len(BALANCED_OPENINGS)]
+                op_name, op_fen, is_960 = GAUNTLET_OPENINGS[p_idx % len(GAUNTLET_OPENINGS)]
 
                 # Leg 1: Candidate is White
                 cand_pts_w, reason_w, _ = play_game(
                     candidate_client, ref_bot, candidate_is_white=True,
                     candidate_name=bot_name, ref_name=ref_bot.name,
-                    start_fen=op_fen, time_limit=time_limit
+                    start_fen=op_fen, is_chess960=is_960, time_limit=time_limit
                 )
                 tier_score += cand_pts_w
                 tier_games += 1
@@ -151,7 +148,7 @@ def run_gauntlet(bot_file: str, pairs_per_tier: int = 2, time_limit: float = 0.2
                 cand_pts_b, reason_b, _ = play_game(
                     candidate_client, ref_bot, candidate_is_white=False,
                     candidate_name=bot_name, ref_name=ref_bot.name,
-                    start_fen=op_fen, time_limit=time_limit
+                    start_fen=op_fen, is_chess960=is_960, time_limit=time_limit
                 )
                 tier_score += cand_pts_b
                 tier_games += 1

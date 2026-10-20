@@ -27,7 +27,7 @@ The challenge: Build, prompt, or tune a lightweight Python chess bot to battle o
 3. **Persistent Process Architecture:**  
    Your bot process persists across moves within a match, meaning your Transposition Table (TT) and history heuristics retain state throughout the game.
 4. **100% Automated Scoring (Zero Manual Grading, No Viva):**
-   - 🏆 **70% Main Tournament Arena** (Swiss & Double Round-Robin with eval-balanced paired openings)
+   - 🏆 **70% Main Tournament Arena** (Championship Triathlon: Sharp Tactical + Thematic Gambits + Fischer Random Chess960)
    - 🧩 **20% Hidden Challenge Suite** (Chess960, material odds, endgames, variable time controls)
    - ⚔️ **10% Calibrated Reference Gauntlet** (~1000, ~1500, ~2000 Elo tiers)
 

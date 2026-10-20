@@ -96,11 +96,16 @@ The entire competition is **100% automated and objective**. There is **no subjec
 └───────────────────┴────────────────────────────────────────────────────┘
 ```
 
-### 1. Main Tournament Arena (70 Points)
-- **Format:** Qualifying Swiss rounds leading into an 8-bot Double Round-Robin Final.
+### 1. Main Tournament Arena: The Championship Triathlon (70 Points)
+- **Format:** Qualifying rounds leading into an 8-bot Double Round-Robin Final.
+- **The Tri-Format Arena:** Every matchup between contenders tests their engine across three demanding arenas:
+  1. ⚔️ **Sharp Tactical Firestorms:** Razor-sharp classical lines (Sicilian Dragon, King's Indian Classical, French Winawer, Modern Benoni). Bypasses quiet development; directly tests tactical calculation and king defense under heavy crossfire.
+  2. 🗡️ **Thematic Sacrificial Gambits:** Dynamic sacrifices (Evans Gambit Accepted, Danish Gambit Accepted, King's Gambit Accepted, Smith-Morra). Tests evaluation sophistication — can your bot weigh attacking initiative against raw material, both as the attacking gambiteer and as the defending material-holder?
+  3. 🎲 **Fischer Random / Chess960:** Random starting piece layouts on rank 1 (`chess960=True`). Completely nullifies hardcoded opening books and rigid piece-square tables; demands pure dynamic piece coordination from Move 1.
 - **Fair Openings:** Matches are played in **eval-balanced pairs** (each pair of bots plays both White and Black from identical opening setups) to eliminate color bias.
+- **Handling Chess960:** In `python-chess`, simply iterating over `board.legal_moves` automatically generates valid moves for both classical chess and Chess960 without any custom code.
 - **Scoring:** Win = 1.0 pt, Draw = 0.5 pt, Loss = 0.0 pt.
-- **Game Cap:** 120 full moves (240 plies). If neither side mates or claims a draw, games are adjudicated based on material delta ($\ge 3$ points).
+- **Game Cap:** 120 full moves (240 plies). If neither side mates or claims a draw, games are adjudicated based on material delta ($\ge 400$ cp / piece + pawn).
 - **Tie-Breaks:** Direct Head-to-Head &rarr; Sonneborn-Berger Score &rarr; Total Wins.
 
 ### 2. Hidden Challenge Suite (20 Points)
