@@ -6,21 +6,23 @@
 
 | Rank | Contender | Overall Score | Tactical | Gambit | Chess960 | SB Tiebreak | W / D / L | Checkmates | Avg Time | Status |
 |:---:|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 1 | 🥇 **varad_bot** | **21.5** | 7.5 | 6.5 | 7.5 | 179.75 | 20W - 3D - 1L | 20 | 0.114s | ✅ Clean |
-| 2 | 🥈 **victor_vanguard_bot** | **20.5** | 6.5 | 7.5 | 6.5 | 161.75 | 19W - 3D - 2L | 19 | 0.104s | ✅ Clean |
-| 3 | 🥉 **alice_alpha_bot** | **11.5** | 4.0 | 3.5 | 4.0 | 38.50 | 11W - 1D - 12L | 11 | 0.003s | ✅ Clean |
-| 4 | **bob_blitz_bot** | **5.5** | 2.0 | 1.5 | 2.0 | 5.50 | 5W - 1D - 18L | 2 | 0.000s | ✅ Clean |
-| 5 | **charlie_chaos_bot** | **1.0** | 0.0 | 1.0 | 0.0 | 8.50 | 0W - 2D - 22L | 0 | 0.000s | ✅ Clean |
+| 1 | 🥇 **victor_vanguard_bot** | **33.5** | 11.0 | 11.5 | 11.0 | 494.75 | 32W - 3D - 1L | 32 | 0.107s | ✅ Clean |
+| 2 | 🥈 **varad_bot** | **28.5** | 8.0 | 10.5 | 10.0 | 347.75 | 28W - 1D - 7L | 28 | 0.105s | ✅ Clean |
+| 3 | 🥉 **valkyrie_tactics_bot** | **26.5** | 9.5 | 8.0 | 9.0 | 319.75 | 26W - 1D - 9L | 26 | 0.107s | ✅ Clean |
+| 4 | **alice_alpha_bot** | **16.0** | 5.5 | 5.5 | 5.0 | 109.00 | 14W - 4D - 18L | 14 | 0.003s | ✅ Clean |
+| 5 | **boris_bastion_bot** | **12.5** | 5.5 | 3.5 | 3.5 | 109.00 | 10W - 5D - 21L | 10 | 0.046s | ✅ Clean |
+| 6 | **bob_blitz_bot** | **6.5** | 2.5 | 2.0 | 2.0 | 31.25 | 5W - 3D - 28L | 5 | 0.000s | ✅ Clean |
+| 7 | **charlie_chaos_bot** | **2.5** | 0.0 | 1.0 | 1.5 | 27.00 | 1W - 3D - 32L | 0 | 0.000s | ✅ Clean |
 
 ---
 
 ### 🎖️ Official Championship Superlatives:
 
-- 👑 **Campus Grandmaster:** `varad_bot` with 21.5 total championship points!
-- ⚔️ **Tactical Maestro:** `varad_bot` (7.5 pts in Tactical Firestorms)
-- 🗡️ **Gambit Gladiator:** `victor_vanguard_bot` (7.5 pts in Sacrificial Gambits)
-- 🎲 **Fischer Random Champion:** `varad_bot` (7.5 pts in Zero-Book Chess960)
-- ⚡ **Executioner Award (Most Mates):** `varad_bot` with 20 checkmates.
-- 🛡️ **Iron Bastion:** `varad_bot` conceding only 1 losses.
+- 👑 **Campus Grandmaster:** `victor_vanguard_bot` with 33.5 total championship points!
+- ⚔️ **Tactical Maestro:** `victor_vanguard_bot` (11.0 pts in Tactical Firestorms)
+- 🗡️ **Gambit Gladiator:** `victor_vanguard_bot` (11.5 pts in Sacrificial Gambits)
+- 🎲 **Fischer Random Champion:** `victor_vanguard_bot` (11.0 pts in Zero-Book Chess960)
+- ⚡ **Executioner Award (Most Mates):** `victor_vanguard_bot` with 32 checkmates.
+- 🛡️ **Iron Bastion:** `victor_vanguard_bot` conceding only 1 losses.
 
 *(Tournament Seed revealed after final submission lock: `PICT-KNIGHT-SHIFT-2026-DIWALI`)*

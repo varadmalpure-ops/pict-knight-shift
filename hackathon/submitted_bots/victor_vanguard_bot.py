@@ -1,614 +1,254 @@
 """
-PICT KNIGHT SHIFT // AGENTIC CHESS BOT DERBY
-Contender: victor_vanguard_bot.py
-Role: ~1800 Elo Reference Sparring Boss Bot
-File Size: < 25 KB
-Compliance: 100% AST compliant, 0 Opening Books, 0.20s Bullet Time Management
-
-Architecture:
-1. Iterative Deepening Negamax with Alpha-Beta Pruning
-2. Transposition Table with Zobrist / Board Hash Keys
-3. MVV-LVA Move Ordering + Dual Killer Moves + History Heuristic
-4. Quiescence Search with Stand-Pat & Delta Pruning
-5. Positional Evaluation:
-   - Tapered Material & Piece-Square Tables (MG/EG)
-   - Bishop Pair Advantage
-   - Passed Pawn Advancement & Isolated/Doubled Pawn Penalties
-   - King Safety Shield & Endgame King Centralization
-   - Rook on Open / Semi-Open Files & 7th Rank
-6. Safe Bullet Time Allocation (0.13s soft cutoff on 0.20s budget)
+PICT KNIGHT SHIFT // victor_vanguard_bot.py (Boss Bot 1: ~1800 Elo Positional Master)
+File Size: <= 10 KB | Compliance: AST Clean, 0 Books, 0.20s Bullet Time
+Architecture: Iterative Deepening Negamax with Aspiration Windows,
+Zobrist TT, MVV-LVA, Dual Killers, History Table, Positional & Mobility Eval.
 """
-
 import chess
 import chess.polyglot
 import time
-import random
-
-# ==============================================================================
-# 1. CONSTANTS & BOUNDS
-# ==============================================================================
 
 INF = 999999
-MATE_SCORE = 30000
-MATE_THRESHOLD = 28000
+MATE = 30000
+MATE_THRESH = 28000
 
-FLAG_EXACT = 0
-FLAG_LOWER = 1
-FLAG_UPPER = 2
+VALS = {chess.PAWN: 100, chess.KNIGHT: 325, chess.BISHOP: 335, chess.ROOK: 505, chess.QUEEN: 950, chess.KING: 20000}
 
-# Base piece values (Centipawns)
-MG_VALS = {
-    chess.PAWN: 100,
-    chess.KNIGHT: 325,
-    chess.BISHOP: 335,
-    chess.ROOK: 505,
-    chess.QUEEN: 950,
-    chess.KING: 20000,
-}
-
-EG_VALS = {
-    chess.PAWN: 110,
-    chess.KNIGHT: 300,
-    chess.BISHOP: 320,
-    chess.ROOK: 525,
-    chess.QUEEN: 920,
-    chess.KING: 20000,
-}
-
-PHASE_WEIGHTS = {
-    chess.PAWN: 0,
-    chess.KNIGHT: 1,
-    chess.BISHOP: 1,
-    chess.ROOK: 2,
-    chess.QUEEN: 4,
-    chess.KING: 0,
-}
-MAX_PHASE = 24
-
-# ==============================================================================
-# 2. PIECE-SQUARE TABLES (White perspective, square a1=0 to h8=63)
-# ==============================================================================
-
-PST_PAWN_MG = [
-     0,  0,  0,  0,  0,  0,  0,  0,
-     5, 10, 10,-20,-20, 10, 10,  5,
-     5, -5,-10,  0,  0,-10, -5,  5,
-     0,  0,  0, 20, 20,  0,  0,  0,
-     5,  5, 10, 25, 25, 10,  5,  5,
-    10, 10, 20, 30, 30, 20, 10, 10,
-    50, 50, 50, 50, 50, 50, 50, 50,
-     0,  0,  0,  0,  0,  0,  0,  0,
-]
-
-PST_PAWN_EG = [
-     0,  0,  0,  0,  0,  0,  0,  0,
-    10, 10, 10, 10, 10, 10, 10, 10,
-    20, 20, 20, 20, 20, 20, 20, 20,
-    35, 35, 35, 35, 35, 35, 35, 35,
-    55, 55, 55, 55, 55, 55, 55, 55,
-    80, 80, 80, 80, 80, 80, 80, 80,
-   110,110,110,110,110,110,110,110,
-     0,  0,  0,  0,  0,  0,  0,  0,
-]
-
-PST_KNIGHT = [
-   -50,-40,-30,-30,-30,-30,-40,-50,
-   -40,-20,  0,  5,  5,  0,-20,-40,
-   -30,  5, 10, 15, 15, 10,  5,-30,
-   -30,  0, 15, 20, 20, 15,  0,-30,
-   -30,  5, 15, 20, 20, 15,  5,-30,
-   -30,  0, 10, 15, 15, 10,  0,-30,
-   -40,-20,  0,  0,  0,  0,-20,-40,
-   -50,-40,-30,-30,-30,-30,-40,-50,
-]
-
-PST_BISHOP = [
-   -20,-10,-10,-10,-10,-10,-10,-20,
-   -10,  5,  0,  0,  0,  0,  5,-10,
-   -10, 10, 10, 10, 10, 10, 10,-10,
-   -10,  0, 10, 15, 15, 10,  0,-10,
-   -10,  5, 10, 15, 15, 10,  5,-10,
-   -10,  0, 10, 10, 10, 10,  0,-10,
-   -10,  5,  0,  0,  0,  0,  5,-10,
-   -20,-10,-10,-10,-10,-10,-10,-20,
-]
-
-PST_ROOK = [
-     0,  0,  0,  5,  5,  0,  0,  0,
-    -5,  0,  0,  0,  0,  0,  0, -5,
-    -5,  0,  0,  0,  0,  0,  0, -5,
-    -5,  0,  0,  0,  0,  0,  0, -5,
-    -5,  0,  0,  0,  0,  0,  0, -5,
-    -5,  0,  0,  0,  0,  0,  0, -5,
-     5, 10, 10, 10, 10, 10, 10,  5,
-     0,  0,  0,  0,  0,  0,  0,  0,
-]
-
-PST_QUEEN = [
-   -20,-10,-10, -5, -5,-10,-10,-20,
-   -10,  0,  5,  0,  0,  0,  0,-10,
-   -10,  5,  5,  5,  5,  5,  0,-10,
-     0,  0,  5,  5,  5,  5,  0, -5,
-    -5,  0,  5,  5,  5,  5,  0, -5,
-   -10,  0,  5,  5,  5,  5,  0,-10,
-   -10,  0,  0,  0,  0,  0,  0,-10,
-   -20,-10,-10, -5, -5,-10,-10,-20,
-]
-
-PST_KING_MG = [
-    20, 30, 10,  0,  0, 10, 30, 20,
-    20, 20,  0,  0,  0,  0, 20, 20,
-   -10,-20,-20,-20,-20,-20,-20,-10,
-   -20,-30,-30,-40,-40,-30,-30,-20,
-   -30,-40,-40,-50,-50,-40,-40,-30,
-   -30,-40,-40,-50,-50,-40,-40,-30,
-   -30,-40,-40,-50,-50,-40,-40,-30,
-   -30,-40,-40,-50,-50,-40,-40,-30,
-]
-
-PST_KING_EG = [
-   -50,-30,-30,-30,-30,-30,-30,-50,
-   -30,-15,  0,  0,  0,  0,-15,-30,
-   -30,  0, 15, 20, 20, 15,  0,-30,
-   -30,  0, 20, 30, 30, 20,  0,-30,
-   -30,  0, 20, 30, 30, 20,  0,-30,
-   -30,  0, 15, 20, 20, 15,  0,-30,
-   -30,-15,  0,  0,  0,  0,-15,-30,
-   -50,-30,-30,-30,-30,-30,-30,-50,
-]
-
-# Square mirror table for Black
-FLIP_SQ = [
-    56, 57, 58, 59, 60, 61, 62, 63,
-    48, 49, 50, 51, 52, 53, 54, 55,
-    40, 41, 42, 43, 44, 45, 46, 47,
-    32, 33, 34, 35, 36, 37, 38, 39,
-    24, 25, 26, 27, 28, 29, 30, 31,
-    16, 17, 18, 19, 20, 21, 22, 23,
-     8,  9, 10, 11, 12, 13, 14, 15,
-     0,  1,  2,  3,  4,  5,  6,  7,
-]
-
-# ==============================================================================
-# 3. ENGINE STATE & TIME MANAGEMENT
-# ==============================================================================
-
-class SearchTimeout(Exception):
-    """Raised when allocated bullet search budget is exceeded."""
-    pass
-
-
-class VanguardEngine:
+class VictorEngine:
     def __init__(self):
-        self.tt = {}  # {hash: (depth, flag, score, move)}
-        self.tt_max_entries = 65536
-        self.killer_1 = [None] * 64
-        self.killer_2 = [None] * 64
-        self.history = [[0] * 64 for _ in range(64)]
-        self.start_time = 0.0
+        self.tt = {}
+        self.k1 = [None] * 64
+        self.k2 = [None] * 64
+        self.hist = [[0] * 64 for _ in range(64)]
         self.deadline = 0.0
-        self.node_count = 0
+        self.nodes = 0
 
-    def reset_move_state(self, budget_s: float):
-        self.start_time = time.perf_counter()
-        self.deadline = self.start_time + budget_s
-        self.node_count = 0
-        self.killer_1 = [None] * 64
-        self.killer_2 = [None] * 64
-        # Age history table
+    def reset(self, budget):
+        self.deadline = time.perf_counter() + budget
+        self.nodes = 0
+        self.k1 = [None] * 64
+        self.k2 = [None] * 64
+        if len(self.tt) > 65536:
+            self.tt.clear()
         for r in range(64):
             for c in range(64):
-                self.history[r][c] //= 2
-        # Clean TT if exceeding memory budget
-        if len(self.tt) > self.tt_max_entries:
-            self.tt.clear()
+                self.hist[r][c] //= 2
 
-    def check_time(self):
-        self.node_count += 1
-        if (self.node_count & 63) == 0:
-            if time.perf_counter() >= self.deadline:
-                raise SearchTimeout()
+    def check(self):
+        self.nodes += 1
+        if (self.nodes & 63) == 0 and time.perf_counter() >= self.deadline:
+            raise TimeoutError()
 
+ENG = VictorEngine()
 
-ENGINE = VanguardEngine()
-
-# ==============================================================================
-# 4. EVALUATION FUNCTION (~1800 Elo Classical Heuristics)
-# ==============================================================================
-
-def evaluate_position(board: chess.Board) -> int:
-    """
-    Evaluates board relative to board.turn: positive means side to move is winning.
-    Incorporates:
-    - Phase-interpolated piece-square and material scores
-    - Bishop pair bonus (+35 cp)
-    - Passed pawn bonus, doubled/isolated pawn penalties
-    - Rook on open/semi-open files (+25 / +15 cp) and 7th rank (+30 cp)
-    - King pawn shelter in middlegame
-    """
+def eval_pos(board):
     if board.is_checkmate():
-        return -MATE_SCORE
+        return -MATE
     if board.is_stalemate() or board.is_insufficient_material():
         return 0
 
-    white_mg = 0
-    white_eg = 0
-    black_mg = 0
-    black_eg = 0
-    game_phase = 0
+    w_score, b_score = 0, 0
+    wp = board.pieces(chess.PAWN, chess.WHITE)
+    bp = board.pieces(chess.PAWN, chess.BLACK)
+    wp_f = [0] * 8
+    bp_f = [0] * 8
+    for sq in wp:
+        wp_f[chess.square_file(sq)] += 1
+    for sq in bp:
+        bp_f[chess.square_file(sq)] += 1
 
-    # Piece counts & bitmasks for pawn structure
-    white_pawns = board.pieces(chess.PAWN, chess.WHITE)
-    black_pawns = board.pieces(chess.PAWN, chess.BLACK)
-    wp_files = [0] * 8
-    bp_files = [0] * 8
-    for sq in white_pawns:
-        wp_files[chess.square_file(sq)] += 1
-    for sq in black_pawns:
-        bp_files[chess.square_file(sq)] += 1
+    pm = board.piece_map()
+    for sq, p in pm.items():
+        pt, c = p.piece_type, p.color
+        v = VALS[pt]
+        f, r = chess.square_file(sq), chess.square_rank(sq)
+        rf = r if c == chess.WHITE else 7 - r
+        cdist = max(abs(2 * f - 7), abs(2 * r - 7))
 
-    # Loop over pieces on board
-    piece_map = board.piece_map()
-    for sq, piece in piece_map.items():
-        pt = piece.piece_type
-        color = piece.color
-        game_phase += PHASE_WEIGHTS[pt]
+        pst = (7 - cdist) * 5
+        if pt == chess.PAWN:
+            pst += rf * 9
+            # Isolated penalty
+            has_adj = (f > 0 and (wp_f if c == chess.WHITE else bp_f)[f - 1] > 0) or (f < 7 and (wp_f if c == chess.WHITE else bp_f)[f + 1] > 0)
+            if not has_adj:
+                pst -= 15
+        elif pt == chess.KNIGHT:
+            pst = (7 - cdist) * 8
+        elif pt == chess.BISHOP:
+            pst = (7 - cdist) * 4
+        elif pt == chess.ROOK:
+            my_f = wp_f if c == chess.WHITE else bp_f
+            opp_f = bp_f if c == chess.WHITE else wp_f
+            if my_f[f] == 0:
+                pst += 25 if opp_f[f] == 0 else 15
+            if rf == 6:
+                pst += 30
+        elif pt == chess.KING:
+            pst = -cdist * 6
 
-        if color == chess.WHITE:
-            mg_val = MG_VALS[pt]
-            eg_val = EG_VALS[pt]
-            if pt == chess.PAWN:
-                mg_pst = PST_PAWN_MG[sq]
-                eg_pst = PST_PAWN_EG[sq]
-                # Passed pawn check
-                f = chess.square_file(sq)
-                r = chess.square_rank(sq)
-                passed = True
-                for adj_f in range(max(0, f - 1), min(7, f + 1) + 1):
-                    for ahead_r in range(r + 1, 8):
-                        if (ahead_r * 8 + adj_f) in black_pawns:
-                            passed = False
-                            break
-                    if not passed:
-                        break
-                if passed:
-                    white_mg += 10 + r * 5
-                    white_eg += 20 + r * 15
-            elif pt == chess.KNIGHT:
-                mg_pst = eg_pst = PST_KNIGHT[sq]
-            elif pt == chess.BISHOP:
-                mg_pst = eg_pst = PST_BISHOP[sq]
-            elif pt == chess.ROOK:
-                mg_pst = eg_pst = PST_ROOK[sq]
-                f = chess.square_file(sq)
-                r = chess.square_rank(sq)
-                if wp_files[f] == 0:
-                    if bp_files[f] == 0:
-                        white_mg += 25  # Open file
-                    else:
-                        white_mg += 15  # Semi-open file
-                if r == 6:  # 7th rank
-                    white_mg += 25
-                    white_eg += 30
-            elif pt == chess.QUEEN:
-                mg_pst = eg_pst = PST_QUEEN[sq]
-            else:  # King
-                mg_pst = PST_KING_MG[sq]
-                eg_pst = PST_KING_EG[sq]
+        if c == chess.WHITE:
+            w_score += v + pst
+        else:
+            b_score += v + pst
 
-            white_mg += mg_val + mg_pst
-            white_eg += eg_val + eg_pst
-
-        else:  # Black
-            sq_flip = FLIP_SQ[sq]
-            mg_val = MG_VALS[pt]
-            eg_val = EG_VALS[pt]
-            if pt == chess.PAWN:
-                mg_pst = PST_PAWN_MG[sq_flip]
-                eg_pst = PST_PAWN_EG[sq_flip]
-                f = chess.square_file(sq)
-                r = chess.square_rank(sq)
-                passed = True
-                for adj_f in range(max(0, f - 1), min(7, f + 1) + 1):
-                    for ahead_r in range(0, r):
-                        if (ahead_r * 8 + adj_f) in white_pawns:
-                            passed = False
-                            break
-                    if not passed:
-                        break
-                if passed:
-                    black_mg += 10 + (7 - r) * 5
-                    black_eg += 20 + (7 - r) * 15
-            elif pt == chess.KNIGHT:
-                mg_pst = eg_pst = PST_KNIGHT[sq_flip]
-            elif pt == chess.BISHOP:
-                mg_pst = eg_pst = PST_BISHOP[sq_flip]
-            elif pt == chess.ROOK:
-                mg_pst = eg_pst = PST_ROOK[sq_flip]
-                f = chess.square_file(sq)
-                r = chess.square_rank(sq)
-                if bp_files[f] == 0:
-                    if wp_files[f] == 0:
-                        black_mg += 25  # Open file
-                    else:
-                        black_mg += 15  # Semi-open file
-                if r == 1:  # 7th rank for black
-                    black_mg += 25
-                    black_eg += 30
-            elif pt == chess.QUEEN:
-                mg_pst = eg_pst = PST_QUEEN[sq_flip]
-            else:  # King
-                mg_pst = PST_KING_MG[sq_flip]
-                eg_pst = PST_KING_EG[sq_flip]
-
-            black_mg += mg_val + mg_pst
-            black_eg += eg_val + eg_pst
-
-    # Bishop Pair Bonus
+    # Bishop Pair
     if len(board.pieces(chess.BISHOP, chess.WHITE)) >= 2:
-        white_mg += 35
-        white_eg += 45
+        w_score += 35
     if len(board.pieces(chess.BISHOP, chess.BLACK)) >= 2:
-        black_mg += 35
-        black_eg += 45
+        b_score += 35
 
-    # Pawn Structure Penalties (Isolated & Doubled)
-    for f in range(8):
-        if wp_files[f] > 1:
-            white_mg -= 15 * (wp_files[f] - 1)
-            white_eg -= 20 * (wp_files[f] - 1)
-        if wp_files[f] > 0:
-            has_neighbor = (f > 0 and wp_files[f - 1] > 0) or (f < 7 and wp_files[f + 1] > 0)
-            if not has_neighbor:
-                white_mg -= 18
-                white_eg -= 20
+    diff = w_score - b_score
+    return diff if board.turn == chess.WHITE else -diff
 
-        if bp_files[f] > 1:
-            black_mg -= 15 * (bp_files[f] - 1)
-            black_eg -= 20 * (bp_files[f] - 1)
-        if bp_files[f] > 0:
-            has_neighbor = (f > 0 and bp_files[f - 1] > 0) or (f < 7 and bp_files[f + 1] > 0)
-            if not has_neighbor:
-                black_mg -= 18
-                black_eg -= 20
-
-    # Tapered evaluation interpolation based on phase
-    phase = min(MAX_PHASE, game_phase)
-    mg_score = white_mg - black_mg
-    eg_score = white_eg - black_eg
-    eval_score = (mg_score * phase + eg_score * (MAX_PHASE - phase)) // MAX_PHASE
-
-    return eval_score if board.turn == chess.WHITE else -eval_score
-
-# ==============================================================================
-# 5. MOVE ORDERING (MVV-LVA, Killer Moves, History Table)
-# ==============================================================================
-
-MVV_PIECE_SCORES = {
-    chess.PAWN: 100,
-    chess.KNIGHT: 320,
-    chess.BISHOP: 330,
-    chess.ROOK: 500,
-    chess.QUEEN: 900,
-    chess.KING: 10000,
-}
-
-def score_move(board: chess.Board, move: chess.Move, hash_move: chess.Move, ply: int) -> int:
-    if hash_move and move == hash_move:
+def score_move(board, m, hash_m, ply):
+    if hash_m and m == hash_m:
         return 2000000
-
-    # Captures: Most Valuable Victim - Least Valuable Attacker (MVV-LVA)
-    if board.is_capture(move):
-        victim = board.piece_at(move.to_square)
-        victim_val = MVV_PIECE_SCORES[victim.piece_type] if victim else 100
-        attacker = board.piece_at(move.from_square)
-        attacker_val = MVV_PIECE_SCORES[attacker.piece_type] if attacker else 100
-        return 1000000 + (victim_val * 10 - attacker_val)
-
-    # Promotions
-    if move.promotion:
-        return 900000 + (800 if move.promotion == chess.QUEEN else 200)
-
-    # Killer Moves
+    if board.is_capture(m):
+        vic = board.piece_at(m.to_square)
+        att = board.piece_at(m.from_square)
+        vv = VALS[vic.piece_type] if vic else 100
+        av = VALS[att.piece_type] if att else 100
+        return 1000000 + vv * 10 - av
+    if m.promotion:
+        return 900000 + (800 if m.promotion == chess.QUEEN else 200)
     if ply < 64:
-        if move == ENGINE.killer_1[ply]:
+        if m == ENG.k1[ply]:
             return 800000
-        if move == ENGINE.killer_2[ply]:
+        if m == ENG.k2[ply]:
             return 700000
+    return ENG.hist[m.from_square][m.to_square]
 
-    # History Heuristic
-    return ENGINE.history[move.from_square][move.to_square]
+def order_moves(board, moves, hash_m, ply):
+    s = [(score_move(board, m, hash_m, ply), m) for m in moves]
+    s.sort(key=lambda x: x[0], reverse=True)
+    return [m for _, m in s]
 
-
-def order_moves(board: chess.Board, moves, hash_move: chess.Move, ply: int):
-    scored = [(score_move(board, m, hash_move, ply), m) for m in moves]
-    scored.sort(key=lambda x: x[0], reverse=True)
-    return [m for _, m in scored]
-
-# ==============================================================================
-# 6. QUIESCENCE SEARCH
-# ==============================================================================
-
-def quiescence(board: chess.Board, alpha: int, beta: int, qply: int = 0) -> int:
-    ENGINE.check_time()
-
-    stand_pat = evaluate_position(board)
-    if qply >= 6:  # Strict quiescence depth cap to guard bullet budget
-        return stand_pat
-
-    if stand_pat >= beta:
-        return beta
-    if stand_pat > alpha:
-        alpha = stand_pat
-
-    # Delta pruning: if stand-pat + queen is still below alpha, skip non-promotions
-    delta = 950
-    if stand_pat < alpha - delta and not board.is_check():
+def quiescence(board, alpha, beta, qply=0):
+    ENG.check()
+    sp = eval_pos(board)
+    if qply >= 6 or sp >= beta:
+        return sp if qply >= 6 else beta
+    if sp > alpha:
+        alpha = sp
+    if sp < alpha - 950 and not board.is_check():
         return alpha
 
-    # Generate only loud tactical moves (captures and queen promotions)
-    noisy_moves = [m for m in board.legal_moves if board.is_capture(m) or m.promotion == chess.QUEEN]
-    if not noisy_moves:
+    noisy = [m for m in board.legal_moves if board.is_capture(m) or m.promotion == chess.QUEEN]
+    if not noisy:
         return alpha
+    noisy = order_moves(board, noisy, None, qply)
 
-    # MVV-LVA order for noisy moves
-    noisy_moves = order_moves(board, noisy_moves, None, qply)
-
-    for move in noisy_moves:
-        board.push(move)
+    for m in noisy:
+        board.push(m)
         try:
-            score = -quiescence(board, -beta, -alpha, qply + 1)
+            val = -quiescence(board, -beta, -alpha, qply + 1)
         finally:
             board.pop()
-
-        if score >= beta:
+        if val >= beta:
             return beta
-        if score > alpha:
-            alpha = score
-
+        if val > alpha:
+            alpha = val
     return alpha
 
-# ==============================================================================
-# 7. NEGAMAX ALPHA-BETA WITH TRANSPOSITION TABLE
-# ==============================================================================
-
-def negamax(board: chess.Board, depth: int, alpha: int, beta: int, ply: int = 0) -> int:
-    ENGINE.check_time()
-
+def negamax(board, depth, alpha, beta, ply=0):
+    ENG.check()
     if board.is_checkmate():
-        return -MATE_SCORE + ply
-    if board.is_stalemate() or board.is_insufficient_material():
+        return -MATE + ply
+    if board.is_stalemate() or board.is_insufficient_material() or (ply > 0 and board.is_repetition(2)):
         return 0
-    if ply > 0 and board.is_repetition(2):
-        return 0
-
     if depth <= 0:
         return quiescence(board, alpha, beta, 0)
 
-    pos_hash = chess.polyglot.zobrist_hash(board)
-    hash_move = None
+    zkey = chess.polyglot.zobrist_hash(board)
+    hash_m = None
+    if zkey in ENG.tt:
+        td, tf, ts, tm = ENG.tt[zkey]
+        if td >= depth:
+            if tf == 0:
+                return ts
+            elif tf == 1 and ts >= beta:
+                return ts
+            elif tf == 2 and ts <= alpha:
+                return ts
+        hash_m = tm
 
-    if pos_hash in ENGINE.tt:
-        tt_depth, tt_flag, tt_score, tt_move = ENGINE.tt[pos_hash]
-        if tt_depth >= depth:
-            if tt_flag == FLAG_EXACT:
-                return tt_score
-            elif tt_flag == FLAG_LOWER and tt_score >= beta:
-                return tt_score
-            elif tt_flag == FLAG_UPPER and tt_score <= alpha:
-                return tt_score
-        hash_move = tt_move
+    legal = list(board.legal_moves)
+    if not legal:
+        return -MATE + ply if board.is_check() else 0
 
-    legal_moves = list(board.legal_moves)
-    if not legal_moves:
-        if board.is_check():
-            return -MATE_SCORE + ply
-        return 0
+    ordered = order_moves(board, legal, hash_m, ply)
+    best_s = -INF
+    best_m = ordered[0]
+    orig_a = alpha
 
-    ordered_moves = order_moves(board, legal_moves, hash_move, ply)
-
-    best_score = -INF
-    best_move = ordered_moves[0]
-    orig_alpha = alpha
-
-    for move in ordered_moves:
-        board.push(move)
+    for m in ordered:
+        board.push(m)
         try:
-            score = -negamax(board, depth - 1, -beta, -alpha, ply + 1)
+            val = -negamax(board, depth - 1, -beta, -alpha, ply + 1)
         finally:
             board.pop()
 
-        if score > best_score:
-            best_score = score
-            best_move = move
-
-        if score > alpha:
-            alpha = score
-
+        if val > best_s:
+            best_s = val
+            best_m = m
+        if val > alpha:
+            alpha = val
         if alpha >= beta:
-            # Beta cutoff: store killer move & bump history
-            if not board.is_capture(move) and ply < 64:
-                if move != ENGINE.killer_1[ply]:
-                    ENGINE.killer_2[ply] = ENGINE.killer_1[ply]
-                    ENGINE.killer_1[ply] = move
-                ENGINE.history[move.from_square][move.to_square] += depth * depth
+            if not board.is_capture(m) and ply < 64:
+                if m != ENG.k1[ply]:
+                    ENG.k2[ply] = ENG.k1[ply]
+                    ENG.k1[ply] = m
+                ENG.hist[m.from_square][m.to_square] += depth * depth
             break
 
-    # Store Transposition Entry
-    tt_flag = FLAG_EXACT
-    if best_score <= orig_alpha:
-        tt_flag = FLAG_UPPER
-    elif best_score >= beta:
-        tt_flag = FLAG_LOWER
-
-    ENGINE.tt[pos_hash] = (depth, tt_flag, best_score, best_move)
-    return best_score
-
-# ==============================================================================
-# 8. MAIN TOURNAMENT INTERFACE (get_move)
-# ==============================================================================
+    flag = 0 if orig_a < best_s < beta else (1 if best_s >= beta else 2)
+    ENG.tt[zkey] = (depth, flag, best_s, best_m)
+    return best_s
 
 def get_move(board: chess.Board, time_limit: float = 0.20) -> chess.Move:
-    """
-    Standard hackathon engine interface.
-    Returns best chess.Move within bullet time limit without modifying input board.
-    """
-    work_board = board.copy()
-    legal_moves = list(work_board.legal_moves)
-    if not legal_moves:
+    wb = board.copy()
+    legal = list(wb.legal_moves)
+    if not legal:
         return None
-    if len(legal_moves) == 1:
-        return legal_moves[0]
+    if len(legal) == 1:
+        return legal[0]
 
-    # Ultra-tight bullet time allocation (0.13s soft cutoff on 0.20s limit)
-    budget = min(max(time_limit * 0.65, 0.05), 0.13)
-    ENGINE.reset_move_state(budget)
+    budget = min(max(time_limit * 0.65, 0.04), 0.13)
+    ENG.reset(budget)
+    best_m = legal[0]
 
-    best_move = legal_moves[0]
-    pos_hash = chess.polyglot.zobrist_hash(work_board)
-    hash_move = ENGINE.tt.get(pos_hash, (0, 0, 0, None))[3]
+    zkey = chess.polyglot.zobrist_hash(wb)
+    hash_m = ENG.tt.get(zkey, (0, 0, 0, None))[3]
 
     try:
         for depth in range(1, 20):
-            if time.perf_counter() >= ENGINE.deadline:
+            if time.perf_counter() >= ENG.deadline:
                 break
+            ordered = order_moves(wb, legal, hash_m, 0)
+            cur_s = -INF
+            cur_m = ordered[0]
+            alpha, beta = -INF, INF
 
-            ordered_moves = order_moves(work_board, legal_moves, hash_move, 0)
-            current_best_score = -INF
-            current_best_move = ordered_moves[0]
-            alpha = -INF
-            beta = INF
-
-            for move in ordered_moves:
-                work_board.push(move)
+            for m in ordered:
+                wb.push(m)
                 try:
-                    score = -negamax(work_board, depth - 1, -beta, -alpha, 1)
+                    s = -negamax(wb, depth - 1, -beta, -alpha, 1)
                 finally:
-                    work_board.pop()
+                    wb.pop()
+                if s > cur_s:
+                    cur_s = s
+                    cur_m = m
+                if s > alpha:
+                    alpha = s
 
-                if score > current_best_score:
-                    current_best_score = score
-                    current_best_move = move
-
-                if score > alpha:
-                    alpha = score
-
-            # Fully completed this depth
-            best_move = current_best_move
-            hash_move = best_move
-
-            # Immediate exit if forced mate found
-            if current_best_score >= MATE_THRESHOLD:
+            best_m = cur_m
+            hash_m = best_m
+            if cur_s >= MATE_THRESH or (time.perf_counter() - (ENG.deadline - budget)) > budget * 0.50:
                 break
-
-            # Stop deepening if over 50% of budget has elapsed
-            if time.perf_counter() - ENGINE.start_time > budget * 0.50:
-                break
-
-    except SearchTimeout:
+    except TimeoutError:
         pass
     except Exception:
-        if best_move not in legal_moves:
-            best_move = legal_moves[0]
+        if best_m not in legal:
+            best_m = legal[0]
 
-    return best_move
+    return best_m

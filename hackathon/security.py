@@ -45,9 +45,9 @@ FORBIDDEN_STRING_TOKENS = {
     "urllib", "requests", "socket", "http", "chess.engine", "Stockfish"
 }
 
-MAX_FILE_SIZE_BYTES = 25 * 1024        # 25 KB max file size
-MAX_SINGLE_LITERAL_BYTES = 4 * 1024     # 4 KB max per literal
-MAX_CUMULATIVE_LITERAL_BYTES = 10 * 1024 # 10 KB cumulative constants
+MAX_FILE_SIZE_BYTES = 10 * 1024        # 10 KB max file size
+MAX_SINGLE_LITERAL_BYTES = 2 * 1024     # 2 KB max per literal
+MAX_CUMULATIVE_LITERAL_BYTES = 4 * 1024 # 4 KB cumulative constants
 MEMORY_LIMIT_BYTES = 256 * 1024 * 1024   # 256 MB RAM limit
 
 
@@ -61,7 +61,7 @@ def audit_bot_source(file_path: str):
 
     file_size = os.path.getsize(file_path)
     if file_size > MAX_FILE_SIZE_BYTES:
-        return False, f"File size {file_size / 1024:.1f} KB exceeds maximum limit of 100 KB"
+        return False, f"File size {file_size / 1024:.1f} KB exceeds maximum limit of 10 KB"
 
     try:
         with open(file_path, "r", encoding="utf-8") as f:

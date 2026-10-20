@@ -19,7 +19,7 @@ Welcome to **PICT Knight Shift** — where engineering logic meets blitz adrenal
 
 Think you know how to prompt AI agents, optimize algorithms, and tune heuristics? Put your code to the test in an automated campus battle.
 
-* 🛠️ **Rules:** Single Python file (`<name>_bot.py`), 0.20s max per move, pure `python-chess`.
+* 🛠️ **Rules:** Single Python file (`<name>_bot.py`), 10 KB max file size, 0.20s max per move, pure `python-chess`.
 * 🤖 **AI Policy:** **100% Legal & Encouraged.** Use Cursor, Claude, ChatGPT, Antigravity, or your own bare hands.
 * ⚔️ **The Arena:** An automated round-robin tournament runner pits every submitted bot against each other.
 
