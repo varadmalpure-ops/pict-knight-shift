@@ -9,8 +9,7 @@ env/
 # macOS
 .DS_Store
 
-# State files / credentials if any
-last_puzzle_state.json
-dispatched_history.json
-Chess/curriculum/
-Chess/PICT Knight Shift Curriculum/
+# Large media / artifacts
+*.pgn
+*.log
+hackathon/PICT_KNIGHT_SHIFT_POSTER.*

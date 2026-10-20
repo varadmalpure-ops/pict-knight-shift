@@ -262,76 +262,7 @@ PASSED_BONUS_MG = [0, 5, 10, 20, 35, 60, 100, 0]
 PASSED_BONUS_EG = [0, 10, 20, 40, 75, 130, 210, 0]
 
 # ============================================================================
-# 4. HAND-EMBEDDED OPENING PLAYBOOK
-# ============================================================================
-
-OPENING_BOOK = {
-    # 0. Start position
-    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -": ["e2e4", "e2e4", "d2d4", "d2d4", "g1f3", "c2c4"],
-    # 1. e4
-    "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq -": ["e7e5", "c7c5", "e7e6", "c7c6"],
-    # 1. e4 e5
-    "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -": ["g1f3", "g1f3", "f1c4", "b1c3"],
-    # 1. e4 e5 2. Nf3
-    "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq -": ["b8c6", "b8c6", "g8f6"],
-    # 1. e4 e5 2. Nf3 Nc6
-    "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq -": ["f1b5", "f1b5", "f1c4", "d2d4"],
-    # 1. e4 e5 2. Nf3 Nc6 3. Bc4 (Italian)
-    "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq -": ["f8c5", "g8f6"],
-    # 1. e4 e5 2. Nf3 Nc6 3. Bb5 (Ruy Lopez)
-    "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq -": ["a7a6", "g8f6"],
-    # 1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4
-    "r1bqkbnr/1ppp1ppp/p1n5/4p3/B3P3/5N2/PPPP1PPP/RNBQK2R b KQkq -": ["g8f6"],
-    # 1. e4 e5 2. Nf3 Nf6 (Petrov)
-    "r1bqkb1r/pppp1ppp/5n2/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq -": ["f3e5", "d2d4"],
-    # 1. e4 c5 (Sicilian)
-    "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -": ["g1f3", "g1f3", "b1c3", "c2c3"],
-    # 1. e4 c5 2. Nf3 d6
-    "rnbqkbnr/pp2pppp/3p4/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq -": ["d2d4"],
-    # 1. e4 c5 2. Nf3 Nc6
-    "r1bqkbnr/pp1ppppp/2n5/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq -": ["d2d4", "f1b5"],
-    # 1. e4 c5 2. Nf3 e6
-    "rnbqkbnr/pp1p1ppp/4p3/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq -": ["d2d4", "c2c3"],
-    # 1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3
-    "rnbqkb1r/pp2pppp/5n2/8/3NP3/2N5/PPP2PPP/R1BQKB1R b KQkq -": ["a7a6", "g7g6", "e7e6"],
-    # 1. e4 e6 (French)
-    "rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -": ["d2d4"],
-    # 1. e4 e6 2. d4 d5
-    "rnbqkbnr/ppp2ppp/4p3/3p4/3PP3/8/PPP2PPP/RNBQKBNR w KQkq -": ["b1c3", "b1d2", "e4e5"],
-    # 1. e4 c6 (Caro-Kann)
-    "rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq -": ["d2d4"],
-    # 1. e4 c6 2. d4 d5
-    "rnbqkbnr/pp2pppp/2p5/3p4/3PP3/8/PPP2PPP/RNBQKBNR w KQkq -": ["b1c3", "e4e5", "e4d5"],
-    # 1. d4
-    "rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq -": ["d7d5", "g8f6"],
-    # 1. d4 d5
-    "rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR w KQkq -": ["c2c4", "g1f3", "c1f4"],
-    # 1. d4 d5 2. c4 (Queen's Gambit)
-    "rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR b KQkq -": ["e7e6", "c7c6", "d5c4"],
-    # 1. d4 d5 2. c4 e6 (QGD)
-    "rnbqkbnr/ppp2ppp/4p3/3p4/2PP4/8/PP2PPPP/RNBQKBNR w KQkq -": ["b1c3", "g1f3"],
-    # 1. d4 d5 2. c4 e6 3. Nc3 Nf6
-    "rnbqkb1r/ppp2ppp/4pn2/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq -": ["c4d5", "c1g5", "g1f3"],
-    # 1. d4 d5 2. c4 c6 (Slav)
-    "rnbqkbnr/pp2pppp/2p5/3p4/2PP4/8/PP2PPPP/RNBQKBNR w KQkq -": ["g1f3", "b1c3"],
-    # 1. d4 d5 2. c4 dxc4 (QGA)
-    "rnbqkbnr/ppp1pppp/8/8/2pP4/8/PP2PPPP/RNBQKBNR w KQkq -": ["g1f3", "e2e3"],
-    # 1. d4 Nf6
-    "rnbqkb1r/pppppppp/5n2/8/3P4/8/PPP1PPPP/RNBQKBNR w KQkq -": ["c2c4", "g1f3", "c1f4"],
-    # 1. d4 Nf6 2. c4
-    "rnbqkb1r/pppppppp/5n2/8/2PP4/8/PP2PPPP/RNBQKBNR b KQkq -": ["e7e6", "g7g6", "c7c5"],
-    # 1. d4 Nf6 2. c4 e6
-    "rnbqkb1r/pppp1ppp/4pn2/8/2PP4/8/PP2PPPP/RNBQKBNR w KQkq -": ["b1c3", "g1f3"],
-    # 1. d4 Nf6 2. c4 g6
-    "rnbqkb1r/pppppp1p/5np1/8/2PP4/8/PP2PPPP/RNBQKBNR w KQkq -": ["b1c3", "g1f3"],
-    # 1. c4 (English)
-    "rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR b KQkq -": ["e7e5", "c7c5", "g8f6"],
-    # 1. Nf3 (Reti)
-    "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq -": ["d7d5", "g8f6", "c7c5"],
-}
-
-# ============================================================================
-# 5. ENGINE STATE & DATA STRUCTURES
+# 4. ENGINE STATE & DATA STRUCTURES
 # ============================================================================
 
 class SearchTimeoutException(Exception):
@@ -825,24 +756,8 @@ def get_move(board: chess.Board, time_limit: float = 1.0) -> chess.Move:
     if len(legal_moves) == 1:
         return legal_moves[0]
 
-    # 1. Opening Playbook Check
-    epd_key = search_board.epd()
-    if epd_key in OPENING_BOOK:
-        candidate_uci_list = OPENING_BOOK[epd_key]
-        valid_candidates = []
-        for uci_str in candidate_uci_list:
-            try:
-                candidate_m = chess.Move.from_uci(uci_str)
-                if candidate_m in legal_moves:
-                    valid_candidates.append(candidate_m)
-            except Exception:
-                continue
-
-        if valid_candidates:
-            return random.choice(valid_candidates)
-
-    # 2. Time Budget Setup (~0.75s per move max)
-    safe_budget = min(max(time_limit * 0.72, 0.1), 0.80)
+    # 1. Bullet / Rapid Time Budget Setup (~0.18s max on 0.25s limit)
+    safe_budget = min(max(time_limit * 0.72, 0.05), 0.18)
     ENGINE.reset_for_move(safe_budget)
 
     best_move_completed_depth = legal_moves[0]
@@ -886,8 +801,8 @@ def get_move(board: chess.Board, time_limit: float = 1.0) -> chess.Move:
             if current_depth_best_score >= MATE_THRESHOLD:
                 break
 
-            # If more than 55% of our budget is spent, avoid starting next depth
-            if time.time() - (ENGINE.end_time - safe_budget) > safe_budget * 0.55:
+            # If more than 50% of our budget is spent, avoid starting next depth
+            if time.time() - (ENGINE.end_time - safe_budget) > safe_budget * 0.50:
                 break
 
     except SearchTimeoutException:

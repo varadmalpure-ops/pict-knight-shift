@@ -20,8 +20,9 @@ The challenge: Build, prompt, or tune a lightweight Python chess bot to battle o
 2. **Runtime Constraints:**  
    - **Environment:** Pure Python 3 (`python-chess`).
    - **File Size:** Single file `<your_name>_bot.py` $\le$ **100 KB**.
-   - **Time Budget:** 1.0 second per move (soft target: 0.75s, hard OS timeout: 1.25s).
+   - **Time Budget:** 0.25 seconds per move (soft target: 0.18s, hard OS timeout: 0.35s).
    - **Memory Limit:** 256 MB per bot process.
+   - **No Hardcoded Opening Books:** Embedded lookup tables banned; moves must be dynamically searched.
    - **No External Engines or Network:** Strictly offline execution.
 3. **Persistent Process Architecture:**  
    Your bot process persists across moves within a match, meaning your Transposition Table (TT) and history heuristics retain state throughout the game.

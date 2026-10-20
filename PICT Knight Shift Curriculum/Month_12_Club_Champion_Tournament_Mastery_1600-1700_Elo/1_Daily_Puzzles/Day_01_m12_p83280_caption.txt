@@ -1,7 +1,0 @@
-*⚡ White to play: What is your move?*
-_React with number_
-
-1️⃣ *37. Rxd5+*
-2️⃣ *37. Be4+*
-3️⃣ *37. Be2+*
-4️⃣ *37. Re3+*

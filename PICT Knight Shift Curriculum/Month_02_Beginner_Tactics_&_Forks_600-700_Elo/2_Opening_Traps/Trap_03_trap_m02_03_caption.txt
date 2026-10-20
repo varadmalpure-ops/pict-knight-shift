@@ -1,8 +1,0 @@
-🪤 *Opening Trap:* Scotch Game
-*White to play: What is the winning tactical strike?*
-_React with number_
-
-1️⃣ *8. Qf7+*
-2️⃣ *8. Qxc5*
-3️⃣ *8. Qxd7+*
-4️⃣ *8. Qxg8+*

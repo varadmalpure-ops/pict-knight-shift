@@ -1,7 +1,0 @@
-*⚡ Black to play: What is your move?*
-_React with number_
-
-1️⃣ *51... Bg7*
-2️⃣ *51... g4+*
-3️⃣ *51... Bh8*
-4️⃣ *51... Rxh2+*

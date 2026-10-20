@@ -90,7 +90,7 @@ def play_game(candidate_client: PersistentBotClient, ref_bot, candidate_is_white
         return 0.5, "Adjudicated Draw (Material balanced)", moves_history
 
 
-def run_gauntlet(bot_file: str, pairs_per_tier: int = 1, time_limit: float = 1.0):
+def run_gauntlet(bot_file: str, pairs_per_tier: int = 2, time_limit: float = 0.25):
     print("=" * 72)
     print("⚔️  PICT KNIGHT SHIFT // REFERENCE CALIBRATION GAUNTLET")
     print("=" * 72)
@@ -214,8 +214,8 @@ def run_gauntlet(bot_file: str, pairs_per_tier: int = 1, time_limit: float = 1.0
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PICT Knight Shift Reference Gauntlet")
     parser.add_argument("bot_file", help="Path to Python bot file")
-    parser.add_argument("--pairs", type=int, default=1, help="Paired openings per tier (default: 1 pair = 2 games)")
-    parser.add_argument("--time-limit", type=float, default=1.0, help="Time limit per move (default: 1.0s)")
+    parser.add_argument("--pairs", type=int, default=2, help="Paired openings per tier (default: 2 pairs = 4 games)")
+    parser.add_argument("--time-limit", type=float, default=0.25, help="Time limit per move (default: 0.25s)")
     args = parser.parse_args()
 
     run_gauntlet(args.bot_file, pairs_per_tier=args.pairs, time_limit=args.time_limit)

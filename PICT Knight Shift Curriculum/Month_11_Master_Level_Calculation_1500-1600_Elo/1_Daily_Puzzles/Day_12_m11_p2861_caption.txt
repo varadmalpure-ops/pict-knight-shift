@@ -1,7 +1,0 @@
-*⚡ Black to play: What is your move?*
-_React with number_
-
-1️⃣ *24... Qxc1+*
-2️⃣ *24... Re2+*
-3️⃣ *24... Qxc2+*
-4️⃣ *24... Qc3+*

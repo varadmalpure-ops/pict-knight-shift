@@ -1,7 +1,0 @@
-*⚡ White to play: What is your move?*
-_React with number_
-
-1️⃣ *14. Bh7+*
-2️⃣ *14. cxb6*
-3️⃣ *14. Nxf7*
-4️⃣ *14. Nxe6*

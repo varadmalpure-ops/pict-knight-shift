@@ -1,7 +1,0 @@
-*⚡ Black to play: What is your move?*
-_React with number_
-
-1️⃣ *43... Rxb2*
-2️⃣ *43... Rb5+*
-3️⃣ *43... Rc5+*
-4️⃣ *43... Rf4+*

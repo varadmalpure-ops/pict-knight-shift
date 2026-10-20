@@ -1,8 +1,0 @@
-🪤 *Opening Trap:* Budapest Gambit
-*Black to play: What is the winning tactical strike?*
-_React with number_
-
-1️⃣ *8... Nxf3+*
-2️⃣ *8... Nxb4*
-3️⃣ *8... Qxb4*
-4️⃣ *8... Nd3#*

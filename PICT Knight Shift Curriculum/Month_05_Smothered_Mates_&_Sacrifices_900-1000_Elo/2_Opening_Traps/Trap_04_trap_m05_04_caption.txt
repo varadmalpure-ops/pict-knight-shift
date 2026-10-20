@@ -1,8 +1,0 @@
-🪤 *Opening Trap:* Four Knights Game
-*White to play: What is the winning tactical strike?*
-_React with number_
-
-1️⃣ *11. Nc7+*
-2️⃣ *11. dxe4*
-3️⃣ *11. Qxe4+*
-4️⃣ *11. Nf6+*

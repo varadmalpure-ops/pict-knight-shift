@@ -1,7 +1,0 @@
-*♟️ Black to play: What is the crucial move?*
-_React with number_
-
-1️⃣ *39... Rxf4+*
-2️⃣ *39... Nxe5+*
-3️⃣ *39... Ne3+*
-4️⃣ *39... Rg5+*

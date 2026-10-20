@@ -1,7 +1,0 @@
-*⚡ White to play: What is your move?*
-_React with number_
-
-1️⃣ *19. Rxe6*
-2️⃣ *19. Rxa6*
-3️⃣ *19. R6xd5*
-4️⃣ *19. Rxd8+*

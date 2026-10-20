@@ -1,5 +1,0 @@
-*⚡ White to play: What is your move?*
-_React with number_
-
-1️⃣ *37. Na2*
-2️⃣ *37. Kb1*

@@ -1,7 +1,0 @@
-*⚡ White to play: What is your move?*
-_React with number_
-
-1️⃣ *35. Rg7+*
-2️⃣ *35. Nf6+*
-3️⃣ *35. Rf7*
-4️⃣ *35. Rh8+*

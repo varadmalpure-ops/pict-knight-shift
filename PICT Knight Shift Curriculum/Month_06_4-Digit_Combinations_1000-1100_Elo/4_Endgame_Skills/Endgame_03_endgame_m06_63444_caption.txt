@@ -1,7 +1,0 @@
-*♟️ Black to play: What is the crucial move?*
-_React with number_
-
-1️⃣ *38... Na4+*
-2️⃣ *38... Ng8*
-3️⃣ *38... Nd3+*
-4️⃣ *38... Ne8*

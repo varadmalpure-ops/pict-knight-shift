@@ -1,7 +1,0 @@
-*♟️ White to play: What is the crucial move?*
-_React with number_
-
-1️⃣ *54. Ke5*
-2️⃣ *54. Ke6*
-3️⃣ *54. Kc7*
-4️⃣ *54. Rd4*

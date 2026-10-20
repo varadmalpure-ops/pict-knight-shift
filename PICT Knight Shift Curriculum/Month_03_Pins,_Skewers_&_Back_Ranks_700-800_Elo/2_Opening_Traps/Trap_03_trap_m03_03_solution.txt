@@ -1,3 +1,0 @@
-🎯 *TRAP SOLUTION:* 1️⃣ *Nd4*
-
-📝 *Breakdown:* _8... Nd4! attacks White's queen; if 9. Nxd4, 9... Qh2# is an immediate checkmate, while moving the queen loses it._

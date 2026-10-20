@@ -97,7 +97,7 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
     for b_path in eligible_bots:
         name = os.path.splitext(os.path.basename(b_path))[0]
         print(f"Running gauntlet ladder for {name}...")
-        est_elo, tier_results = run_gauntlet(b_path, pairs_per_tier=1, time_limit=0.4 if provisional else 0.5)
+        est_elo, tier_results = run_gauntlet(b_path, pairs_per_tier=1 if provisional else 2, time_limit=0.25)
         if tier_results:
             tot_raw = sum(t["score"] for t in tier_results.values())
             pts_10 = (tot_raw / 6.0) * 10.0
@@ -119,7 +119,7 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
         print(f"⚡ Bounded Scaling Activated: {len(eligible_bots)} contenders detected.")
         print("   Running Swiss Qualifier -> Top 8 Double Round-Robin Finals (Keeps runtime < 45m)")
         # Run Swiss tournament via arena_runner
-        tourney_stats = run_tournament(eligible_bots, seed=secret_seed, time_limit=0.4 if provisional else 0.5)
+        tourney_stats = run_tournament(eligible_bots, seed=secret_seed, time_limit=0.25)
         if tourney_stats:
             top_score = max(s["points"] for s in tourney_stats.stats.values())
             for name in scores:
@@ -135,7 +135,7 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
     else:
         # Direct Double Round-Robin
         print(f"⚔️ Direct Double Round-Robin: {len(eligible_bots)} contenders")
-        mgr = ArenaManager(eligible_bots, games_per_pair=2, time_limit=0.4 if provisional else 0.5, secret_seed=secret_seed)
+        mgr = ArenaManager(eligible_bots, games_per_pair=2, time_limit=0.25, secret_seed=secret_seed)
         mgr.run_round_robin()
         max_possible_arena_pts = (len(eligible_bots) - 1) * 2.0
         for name in scores:

@@ -129,7 +129,21 @@ def audit_bot_source(file_path: str):
                 )
             cumulative_literal_bytes += lit_size
 
-        # 5. Interface Verification
+        # 5. Check for Hardcoded Opening Books (Dicts of FENs or book tables)
+        elif isinstance(node, ast.Dict):
+            fen_key_count = 0
+            for k in node.keys:
+                if isinstance(k, ast.Constant) and isinstance(k.value, str):
+                    s = k.value
+                    if "/" in s and ("w" in s or "b" in s) and len(s) >= 15:
+                        fen_key_count += 1
+            if fen_key_count >= 5:
+                return False, (
+                    f"FORBIDDEN: Hardcoded opening book detected ({fen_key_count} FEN entries on line {node.lineno}). "
+                    f"Bots must calculate dynamically from move 1 without embedded opening lookup dictionaries."
+                )
+
+        # 6. Interface Verification
         elif isinstance(node, ast.FunctionDef):
             if node.name == "get_move":
                 has_get_move = True
@@ -267,8 +281,8 @@ class PersistentBotClient:
 
         self.in_q.put(("MOVE", (fen, time_limit, is_960)))
 
-        # Hard cutoff: 1.25s for 1.0s time_limit (or time_limit + 0.25s)
-        hard_limit = time_limit + 0.25
+        # Hard cutoff: e.g. 0.375s for 0.25s time_limit, or 1.25s for 1.0s time_limit
+        hard_limit = min(time_limit + 0.15, time_limit * 1.5)
 
         try:
             resp = self.out_q.get(timeout=hard_limit)

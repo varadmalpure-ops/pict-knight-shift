@@ -1,7 +1,0 @@
-*⚡ White to play: What is your move?*
-_React with number_
-
-1️⃣ *14. Qb5+*
-2️⃣ *14. Bd4*
-3️⃣ *14. Qd7+*
-4️⃣ *14. Qd8+*

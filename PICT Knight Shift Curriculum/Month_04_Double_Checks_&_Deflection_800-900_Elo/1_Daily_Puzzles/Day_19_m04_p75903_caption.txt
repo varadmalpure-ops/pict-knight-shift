@@ -1,7 +1,0 @@
-*⚡ Black to play: What is your move?*
-_React with number_
-
-1️⃣ *19... Qxb4*
-2️⃣ *19... Qxa5*
-3️⃣ *19... Bxb4*
-4️⃣ *19... Qe5+*
