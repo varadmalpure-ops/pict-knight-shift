@@ -107,9 +107,13 @@ def run_gauntlet(bot_file: str, pairs_per_tier: int = 2, time_limit: float = 0.2
     print(f"Match Format: Paired openings (swapping colors), 120 full moves cap, time_limit={time_limit}s\n")
 
     tiers = [
-        (1000, "Novice Benchmark"),
-        (1500, "Club Player Benchmark"),
-        (2000, "Expert Campus Benchmark"),
+        (1000, "Novice Benchmark (Skill Level 0)"),
+        (1350, "Intermediate Club Competitor"),
+        (1500, "Solid Tournament Player"),
+        (1700, "Advanced Campus League"),
+        (1900, "Expert Candidate Master Threshold"),
+        (2100, "FIDE Candidate Master"),
+        (2200, "National Master (Master Giant Slayer Boss)"),
     ]
 
     tier_results = {}
@@ -170,39 +174,41 @@ def run_gauntlet(bot_file: str, pairs_per_tier: int = 2, time_limit: float = 0.2
 
     # Summary & Approximate Calibration Estimation
     print("=" * 72)
-    print("📊 GAUNTLET CALIBRATION SUMMARY")
+    print("📊 STOCKFISH MULTI-TIER CALIBRATION SUMMARY")
     print("=" * 72)
     for elo, data in tier_results.items():
         print(f"  Tier ~{elo:4d} Elo:  {data['score']:.1f} / {data['total']} points ({data['pct']:5.1f}%)")
 
-    # Estimated Elo Band Calculation
-    s1000 = tier_results[1000]["score"] / tier_results[1000]["total"]
-    s1500 = tier_results[1500]["score"] / tier_results[1500]["total"]
-    s2000 = tier_results[2000]["score"] / tier_results[2000]["total"]
+    # Estimated Elo Calculation based on highest cleared tier
+    highest_cleared_tier = 800
+    for elo, data in tier_results.items():
+        if data["total"] > 0 and (data["score"] / data["total"]) >= 0.5:
+            highest_cleared_tier = max(highest_cleared_tier, elo)
+        elif data["score"] > 0:
+            highest_cleared_tier = max(highest_cleared_tier, elo - 80)
 
-    if s2000 >= 0.5:
-        est_elo = 2000 + int((s2000 - 0.5) * 400)
-    elif s1500 >= 0.5:
-        est_elo = 1500 + int(s2000 * 500)
-    elif s1000 >= 0.5:
-        est_elo = 1000 + int(s1500 * 500)
-    else:
-        est_elo = max(600, int(s1000 * 1000))
+    overall_pct = (total_score / total_games) if total_games > 0 else 0.0
+    est_elo = highest_cleared_tier + int(overall_pct * 150)
 
-    print(f"\n🎯 Estimated Calibrated Rating: ~{est_elo} Elo (Approximate)")
-    print("   * Disclaimer: Elo figures are approximate calibrated estimates based on")
-    print("     Stockfish UCI reference anchors and do not represent official FIDE/USCF ratings.")
+    print(f"\n🎯 Estimated Calibrated Rating: ~{est_elo} Elo (Stockfish Benchmark)")
+    print("   * Disclaimer: Elo figures are calibrated estimates anchored to")
+    print("     Stockfish UCI ratings and serve as the official campus ground-truth.")
 
-    # Giant Slayer Check
-    if s2000 > 0.0:
-        if s2000 >= 1.0:
-            print("\n🏆 GIANT SLAYER STATUS: SUPREME CONQUEROR (Defeated the 2000 Elo reference!)")
-        elif s2000 >= 0.5:
-            print("\n🏆 GIANT SLAYER STATUS: QUALIFIED (Secured a win or draw vs 2000 Elo reference!)")
+    # Giant Slayer Check (2100 / 2200 Master Tier)
+    s2100 = tier_results.get(2100, {}).get("score", 0.0)
+    s2200 = tier_results.get(2200, {}).get("score", 0.0)
+
+    if s2200 > 0.0:
+        if s2200 >= 1.0:
+            print("\n🏆 GIANT SLAYER STATUS: SUPREME CONQUEROR (Defeated National Master Stockfish 2200!)")
         else:
-            print("\n🏆 GIANT SLAYER STATUS: CONTENDER (Scored points vs 2000 Elo reference!)")
+            print("\n🏆 GIANT SLAYER STATUS: MASTER CONQUEROR (Drew vs National Master Stockfish 2200!)")
+    elif s2100 > 0.0:
+        print("\n🏆 GIANT SLAYER STATUS: CANDIDATE MASTER HUNTER (Scored vs Stockfish 2100!)")
+    elif tier_results.get(1900, {}).get("score", 0.0) > 0.0:
+        print("\n🏆 GIANT SLAYER STATUS: EXPERT CONTENDER (Scored vs Stockfish 1900!)")
     else:
-        print("\n🏆 GIANT SLAYER STATUS: Not qualified (0 points vs 2000 Elo reference)")
+        print("\n🏆 GIANT SLAYER STATUS: Not qualified (0 points vs 1900+ Stockfish)")
     print("=" * 72)
 
     return est_elo, tier_results

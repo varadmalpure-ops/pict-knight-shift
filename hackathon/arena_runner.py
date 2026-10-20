@@ -581,9 +581,10 @@ def main():
     args = parser.parse_args()
 
     bot_paths = glob.glob(os.path.join(args.bots_dir, "*.py"))
-    if not bot_paths:
-        print(f"⚠️ No bots in {args.bots_dir}. Using sample bots in hackathon/...")
-        bot_paths = [p for p in glob.glob("hackathon/*.py") if "runner" not in p and "test" not in p and "security" not in p]
+    if len(bot_paths) < 2:
+        print(f"ℹ️ Fewer than 2 submissions in {args.bots_dir}. Adding AI sparring bots from hackathon/ai_sparring_bots/ for tournament demo...")
+        sparring_paths = glob.glob("hackathon/ai_sparring_bots/*.py")
+        bot_paths = sorted(list(set(bot_paths + sparring_paths)))
 
     run_tournament(
         bot_paths,

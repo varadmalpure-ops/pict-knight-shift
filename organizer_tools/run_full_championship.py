@@ -104,7 +104,7 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
             pts_10 = (tot_raw / max_gaunt_pts) * 10.0 if max_gaunt_pts > 0 else 0.0
             scores[name]["gauntlet"] = round(pts_10, 2)
             scores[name]["est_elo"] = est_elo
-            scores[name]["vs_2000"] = tier_results[2000]["score"]
+            scores[name]["vs_2000"] = tier_results.get(2200, {}).get("score", 0.0) + tier_results.get(2100, {}).get("score", 0.0)
         else:
             scores[name]["gauntlet"] = 0.0
             scores[name]["est_elo"] = 0
