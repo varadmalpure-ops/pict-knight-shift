@@ -392,6 +392,7 @@ def run_tournament(bot_paths, seed: str = "PICT-KNIGHT-SHIFT-2026", time_limit: 
     with open(output_file, "w") as f:
         f.write(leaderboard_str)
     print(f"\n📁 Standings updated in: {output_file}")
+    return tourney_stats
 
 
 def main():

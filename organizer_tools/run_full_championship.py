@@ -26,7 +26,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")
 from hackathon.security import audit_bot_source
 from organizer_tools.challenge_generator import ChallengeSuite
 from organizer_tools.run_gauntlet import run_gauntlet
-from hackathon.arena_runner import run_tournament, ArenaManager
+from hackathon.arena_runner import run_tournament
 
 
 def copy_to_clipboard(text: str):
@@ -100,7 +100,8 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
         est_elo, tier_results = run_gauntlet(b_path, pairs_per_tier=1 if provisional else 2, time_limit=0.25)
         if tier_results:
             tot_raw = sum(t["score"] for t in tier_results.values())
-            pts_10 = (tot_raw / 6.0) * 10.0
+            max_gaunt_pts = sum(t["total"] for t in tier_results.values())
+            pts_10 = (tot_raw / max_gaunt_pts) * 10.0 if max_gaunt_pts > 0 else 0.0
             scores[name]["gauntlet"] = round(pts_10, 2)
             scores[name]["est_elo"] = est_elo
             scores[name]["vs_2000"] = tier_results[2000]["score"]
@@ -114,39 +115,20 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
     print("🥊 STAGE 3: MAIN TOURNAMENT ARENA (70 POINTS)")
     print("=" * 76)
 
-    # Scaling safety net: If > 8 bots, run Swiss qualifier to pick Top 8, then Top 8 Double Round-Robin
-    if len(eligible_bots) > 8:
-        print(f"⚡ Bounded Scaling Activated: {len(eligible_bots)} contenders detected.")
-        print("   Running Swiss Qualifier -> Top 8 Double Round-Robin Finals (Keeps runtime < 45m)")
-        # Run Swiss tournament via arena_runner
-        tourney_stats = run_tournament(eligible_bots, seed=secret_seed, time_limit=0.25)
-        if tourney_stats:
-            top_score = max(s["points"] for s in tourney_stats.stats.values())
-            for name in scores:
-                if name in tourney_stats.stats:
-                    rec = tourney_stats.stats[name]
-                    raw_pts = rec["points"]
-                    pts_70 = (raw_pts / top_score) * 70.0 if top_score > 0 else 0.0
-                    scores[name]["arena"] = round(pts_70, 2)
-                    scores[name]["wins"] = rec.get("wins", 0)
-                    scores[name]["losses"] = rec.get("losses", 0)
-                    scores[name]["draws"] = rec.get("draws", 0)
-                    scores[name]["forfeits"] = rec.get("forfeits", 0)
-    else:
-        # Direct Double Round-Robin
-        print(f"⚔️ Direct Double Round-Robin: {len(eligible_bots)} contenders")
-        mgr = ArenaManager(eligible_bots, games_per_pair=2, time_limit=0.25, secret_seed=secret_seed)
-        mgr.run_round_robin()
+    # Run tournament (handles both Swiss Qualifier for >8 bots and Double Round-Robin for <=8 bots)
+    tourney_stats = run_tournament(eligible_bots, seed=secret_seed, time_limit=0.25)
+    if tourney_stats:
         max_possible_arena_pts = (len(eligible_bots) - 1) * 2.0
         for name in scores:
-            rec = mgr.results.get(name, {"points": 0.0})
-            arena_raw = rec["points"]
-            pts_70 = (arena_raw / max_possible_arena_pts) * 70.0 if max_possible_arena_pts > 0 else 0.0
-            scores[name]["arena"] = round(pts_70, 2)
-            scores[name]["wins"] = rec.get("wins", 0)
-            scores[name]["losses"] = rec.get("losses", 0)
-            scores[name]["draws"] = rec.get("draws", 0)
-            scores[name]["forfeits"] = rec.get("forfeits", 0)
+            if name in tourney_stats.stats:
+                rec = tourney_stats.stats[name]
+                arena_raw = rec["points"]
+                pts_70 = (arena_raw / max_possible_arena_pts) * 70.0 if max_possible_arena_pts > 0 else 0.0
+                scores[name]["arena"] = round(pts_70, 2)
+                scores[name]["wins"] = rec.get("wins", 0)
+                scores[name]["losses"] = rec.get("losses", 0)
+                scores[name]["draws"] = rec.get("draws", 0)
+                scores[name]["forfeits"] = rec.get("forfeits", 0)
 
     for name in scores:
         scores[name]["total"] = round(scores[name]["challenge"] + scores[name]["gauntlet"] + scores[name]["arena"], 2)

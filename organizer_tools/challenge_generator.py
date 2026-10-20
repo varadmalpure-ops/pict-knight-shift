@@ -130,6 +130,10 @@ class ChallengeSuite:
 
         return challenges
 
+    def evaluate_bot(self, bot_path: str):
+        """Helper method to evaluate a bot using this suite's seed."""
+        return run_challenge_suite_on_bot(bot_path, self.master_seed), ""
+
 
 def run_challenge_suite_on_bot(bot_path: str, master_seed: str = "PICT-CHALLENGE-2026-SECRET"):
     """

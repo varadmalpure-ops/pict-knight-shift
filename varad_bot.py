@@ -723,7 +723,7 @@ def negamax(board: chess.Board, depth: int, alpha: int, beta: int, ply: int, is_
 
 # 10. MAIN TOURNAMENT INTERFACE (get_move)
 
-def get_move(board: chess.Board, time_limit: float = 1.0) -> chess.Move:
+def get_move(board: chess.Board, time_limit: float = 0.25) -> chess.Move:
     """
     Required hackathon interface:
     Takes a chess.Board and returns the chosen chess.Move within time_limit.
