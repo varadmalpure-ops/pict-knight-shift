@@ -157,9 +157,9 @@ def create_poster():
     cy += 24
 
     scoring_points = [
-        ("• 70% Main Arena:", " Swiss Qualifier + Double Round-Robin (Paired Openings)"),
+        ("• 60% Main Arena:", " Swiss Qualifier + Double Round-Robin (Paired Openings)"),
         ("• 20% Challenge Suite:", " 18 Secret Tactical, Endgame & Chess960 Tests"),
-        ("• 10% Reference Gauntlet:", " Battle ~1000, ~1500 & ~2000 Elo Reference Engines")
+        ("• 20% Reference Gauntlet:", " Battle ~1000, ~1500 & ~2000 Elo Reference Engines")
     ]
     for prefix, body in scoring_points:
         pw = draw.textbbox((0, 0), prefix, font=f_card_bold)[2] - draw.textbbox((0, 0), prefix, font=f_card_bold)[0]

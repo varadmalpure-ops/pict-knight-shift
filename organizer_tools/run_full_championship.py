@@ -8,10 +8,11 @@ One-click automated evaluation for the entire hackathon:
      - If <= 8 bots: Direct Double Round-Robin (Paired balanced openings).
      - If > 8 bots: 5-Round Swiss Qualifier -> Top-8 Double Round-Robin Finals.
   3. Runs the Hidden Challenge Suite (Chess960, endgames, tactics, bullet) -> 20 Pts.
-  4. Runs the Calibrated Reference Gauntlet (1000, 1500, 2000 Elo) -> 10 Pts.
-  5. Computes final 100-Point standings and awards (Grandmaster, Giant Slayer, Iron Bastion, Tactical Maestro).
-  6. Exports PGN game replays for WhatsApp and Lichess move-by-move analysis.
-  7. Optional `--provisional` mode: Formats and copies a weekly leaderboard directly to your clipboard!
+  4. Runs the Calibrated Reference Gauntlet (1000, 1500, 2000 Elo) -> 20 Pts.
+  5. Runs the Main Arena Tournament (Triathlon + Progressive Time Squeeze) -> 60 Pts.
+  6. Computes final 100-Point standings and awards (Grandmaster, Giant Slayer, Iron Bastion, Tactical Maestro).
+  7. Exports PGN game replays for WhatsApp and Lichess move-by-move analysis.
+  8. Optional `--provisional` mode: Formats and copies a weekly leaderboard directly to your clipboard!
 """
 
 import sys
@@ -90,9 +91,9 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
         scores[name]["challenge"] = round(pts_20, 2)
         print(f"-> {name} Challenge Score: {pts_20:.2f} / 20.0 pts\n")
 
-    # 3. Run Reference Gauntlet (10 Points)
+    # 3. Run Reference Gauntlet (20 Points)
     print("=" * 76)
-    print("⚔️ STAGE 2: CALIBRATED REFERENCE GAUNTLET (10 POINTS)")
+    print("⚔️ STAGE 2: CALIBRATED REFERENCE GAUNTLET (20 POINTS)")
     print("=" * 76)
     for b_path in eligible_bots:
         name = os.path.splitext(os.path.basename(b_path))[0]
@@ -101,8 +102,8 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
         if tier_results:
             tot_raw = sum(t["score"] for t in tier_results.values())
             max_gaunt_pts = sum(t["total"] for t in tier_results.values())
-            pts_10 = (tot_raw / max_gaunt_pts) * 10.0 if max_gaunt_pts > 0 else 0.0
-            scores[name]["gauntlet"] = round(pts_10, 2)
+            pts_20_gaunt = (tot_raw / max_gaunt_pts) * 20.0 if max_gaunt_pts > 0 else 0.0
+            scores[name]["gauntlet"] = round(pts_20_gaunt, 2)
             scores[name]["est_elo"] = est_elo
             scores[name]["vs_2000"] = tier_results.get(2200, {}).get("score", 0.0) + tier_results.get(2100, {}).get("score", 0.0)
         else:
@@ -110,9 +111,9 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
             scores[name]["est_elo"] = 0
             scores[name]["vs_2000"] = 0.0
 
-    # 4. Run Main Arena Tournament (70 Points) with Bounded Scaling
+    # 4. Run Main Arena Tournament (60 Points) with Bounded Scaling
     print("\n" + "=" * 76)
-    print("🥊 STAGE 3: MAIN TOURNAMENT ARENA (70 POINTS)")
+    print("🥊 STAGE 3: MAIN TOURNAMENT ARENA (60 POINTS)")
     print("=" * 76)
 
     # Run tournament (handles both Swiss Qualifier for >8 bots and Double Round-Robin for <=8 bots)
@@ -123,8 +124,8 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
             if name in tourney_stats.stats:
                 rec = tourney_stats.stats[name]
                 arena_raw = rec["points"]
-                pts_70 = (arena_raw / max_possible_arena_pts) * 70.0 if max_possible_arena_pts > 0 else 0.0
-                scores[name]["arena"] = round(pts_70, 2)
+                pts_60 = (arena_raw / max_possible_arena_pts) * 60.0 if max_possible_arena_pts > 0 else 0.0
+                scores[name]["arena"] = round(pts_60, 2)
                 scores[name]["wins"] = rec.get("wins", 0)
                 scores[name]["losses"] = rec.get("losses", 0)
                 scores[name]["draws"] = rec.get("draws", 0)
@@ -139,7 +140,7 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
     print("\n" + "=" * 76)
     print(f"🏆 {mode_title} LEADERBOARD (100-POINT MATRIX)")
     print("=" * 76)
-    print(f"{'Rank':<5} | {'Bot Name':<20} | {'Arena (70)':<10} | {'Suite (20)':<10} | {'Gaunt (10)':<10} | {'Total':<8} | {'Est. Elo'}")
+    print(f"{'Rank':<5} | {'Bot Name':<20} | {'Arena (60)':<10} | {'Suite (20)':<10} | {'Gaunt (20)':<10} | {'Total':<8} | {'Est. Elo'}")
     print("-" * 76)
 
     for rank, (name, d) in enumerate(ranked, start=1):
@@ -190,7 +191,7 @@ def run_full_championship(bots_dir: str = "hackathon/submitted_bots", secret_see
     with open("hackathon/leaderboard.md", "w", encoding="utf-8") as f:
         f.write(f"# 🏆 PICT Knight Shift // {mode_title}\n\n")
         f.write(f"*Last Updated: {time.strftime('%Y-%m-%d %H:%M:%S')}*\n\n")
-        f.write("| Rank | Bot Contender | Arena (70) | Challenge Suite (20) | Ref Gauntlet (10) | Total Score | Calibrated Elo |\n")
+        f.write("| Rank | Bot Contender | Arena (60) | Challenge Suite (20) | Ref Gauntlet (20) | Total Score | Calibrated Elo |\n")
         f.write("| :---: | :--- | :---: | :---: | :---: | :---: | :---: |\n")
         for rank, (name, d) in enumerate(ranked, start=1):
             f.write(f"| **#{rank}** | `{name}` | {d['arena']:.2f} | {d['challenge']:.2f} | {d['gauntlet']:.2f} | **{d['total']:.2f}** | ~{d.get('est_elo', 'N/A')} |\n")

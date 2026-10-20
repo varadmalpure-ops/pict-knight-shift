@@ -89,14 +89,14 @@ The entire competition is **100% automated and objective**. There is **no subjec
 ┌────────────────────────────────────────────────────────────────────────┐
 │                   PICT KNIGHT SHIFT AUTOMATED SCORING                  │
 ├───────────────────┬────────────────────────────────────────────────────┤
-│ 1. Main Tournament│ 70 Points (Swiss + Double Round-Robin Finals)      │
+│ 1. Main Tournament│ 60 Points (Swiss + Double Round-Robin Finals)      │
 │ 2. Challenge Suite│ 20 Points (Hidden 18-Test Variant & Tactics Suite) │
-│ 3. Ref Gauntlet   │ 10 Points (1000, 1500, 2000 Elo Reference Ladder)  │
+│ 3. Ref Gauntlet   │ 20 Points (1000, 1500, 2000 Elo Reference Ladder)  │
 │ TOTAL             │ 100 Points (100% Computer-Evaluated)               │
 └───────────────────┴────────────────────────────────────────────────────┘
 ```
 
-### 1. Main Tournament Arena: The Championship Triathlon (70 Points)
+### 1. Main Tournament Arena: The Championship Triathlon (60 Points)
 - **Format:** Dynamic scaling based on registrations:
   * **$N \le 12$ Contenders:** Direct Double Round-Robin Triathlon (Marathon endurance).
   * **$13 \le N \le 32$ Contenders:** 5-Round Swiss Qualifier &rarr; Top-8 Double Round-Robin Playoff.
@@ -128,12 +128,12 @@ The entire competition is **100% automated and objective**. There is **no subjec
   - **Tactical Deflections:** Mate-in-two patterns and tactical combinations.
   - **Variable Time Controls:** Flawless legal move execution under 0.2s, 1.0s, and 2.0s budgets.
 
-### 3. Calibrated Reference Gauntlet (10 Points)
+### 3. Calibrated Reference Gauntlet (20 Points)
 - Every bot runs through an automated 3-tier calibrated benchmark ladder:
-  - **Tier 1 (~1000 Elo):** Novice human benchmark.
-  - **Tier 2 (~1500 Elo):** Solid club player benchmark.
-  - **Tier 3 (~2000 Elo):** Expert campus benchmark.
-- Points are awarded automatically based on match scores against each tier.
+  - **Tier 1 (~1000 Elo - 5 Points):** Novice human benchmark.
+  - **Tier 2 (~1500 Elo - 7 Points):** Solid club player benchmark.
+  - **Tier 3 (~2000 Elo - 8 Points):** Expert campus benchmark.
+- Points are awarded automatically based on match scores against each tier (5 + 7 + 8 = 20 total points).
 
 ---
 
