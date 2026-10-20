@@ -45,9 +45,9 @@ FORBIDDEN_STRING_TOKENS = {
     "urllib", "requests", "socket", "http", "chess.engine", "Stockfish"
 }
 
-MAX_FILE_SIZE_BYTES = 100 * 1024       # 100 KB max file size
+MAX_FILE_SIZE_BYTES = 25 * 1024        # 25 KB max file size
 MAX_SINGLE_LITERAL_BYTES = 4 * 1024     # 4 KB max per literal
-MAX_CUMULATIVE_LITERAL_BYTES = 20 * 1024 # 20 KB cumulative constants
+MAX_CUMULATIVE_LITERAL_BYTES = 10 * 1024 # 10 KB cumulative constants
 MEMORY_LIMIT_BYTES = 256 * 1024 * 1024   # 256 MB RAM limit
 
 

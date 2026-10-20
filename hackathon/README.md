@@ -19,7 +19,7 @@ The challenge: Build, prompt, or tune a lightweight Python chess bot to battle o
    Use Cursor, Claude 3.5 Sonnet, ChatGPT, Antigravity, or write pure Python by hand. The real skill is **prompt engineering, algorithmic critique, heuristic weighting, and empirical A/B benchmarking.**
 2. **Runtime Constraints:**  
    - **Environment:** Pure Python 3 (`python-chess`).
-   - **File Size:** Single file `<your_name>_bot.py` $\le$ **100 KB**.
+   - **File Size:** Single file `<your_name>_bot.py` $\le$ **25 KB**.
    - **Time Budget:** 0.25 seconds per move (soft target: 0.18s, hard OS timeout: 0.35s).
    - **Memory Limit:** 256 MB per bot process.
    - **No Hardcoded Opening Books:** Embedded lookup tables banned; moves must be dynamically searched.

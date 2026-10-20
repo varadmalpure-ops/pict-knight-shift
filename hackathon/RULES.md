@@ -49,11 +49,11 @@ def get_move(board: chess.Board, time_limit: float = 0.25) -> chess.Move:
 | Specification | Limit | Action on Violation |
 | :--- | :--- | :--- |
 | **File Format** | Single `.py` source file (`<name>_bot.py`) | Disqualified if not valid Python |
-| **File Size Cap** | Maximum **100 KB** | Disqualified by static AST scanner |
+| **File Size Cap** | Maximum **25 KB** | Disqualified by static AST scanner |
 | **Move Time Budget** | **0.25s** (Soft: `0.18s`, Hard cutoff: `0.35s`) | Current game forfeited on timeout |
 | **Memory Limit** | Maximum **256 MB** per bot process | Process terminated on OOM |
 | **Opening Books** | **Strictly Prohibited** (No static lookup tables) | Disqualified by static AST scanner |
-| **Data Literals Cap** | Max **4 KB** single literal, **20 KB** cumulative | Disqualified (prevents giant embedded tables) |
+| **Data Literals Cap** | Max **4 KB** single literal, **10 KB** cumulative | Disqualified (prevents giant embedded tables) |
 | **Network & Disk I/O** | **Zero I/O** (Fully offline execution) | Disqualified by security sandbox |
 | **Process Model** | **Persistent Subprocess per Match** | Memory/Transposition tables persist across moves |
 
