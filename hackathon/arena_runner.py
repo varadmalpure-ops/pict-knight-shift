@@ -399,7 +399,7 @@ def main():
     parser = argparse.ArgumentParser(description="PICT Knight Shift Tournament Runner")
     parser.add_argument("--bots-dir", default="hackathon/submitted_bots", help="Directory of bot submissions")
     parser.add_argument("--seed", default="PICT-KNIGHT-SHIFT-2026-DIWALI", help="Secret tournament seed")
-    parser.add_argument("--time-limit", type=float, default=0.25, help="Time limit per move (default: 0.25s)")
+    parser.add_argument("--time-limit", type=float, default=0.20, help="Time limit per move (default: 0.20s)")
     parser.add_argument("--output", default="hackathon/leaderboard.md", help="Output leaderboard markdown file")
     args = parser.parse_args()
 

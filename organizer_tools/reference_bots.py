@@ -73,10 +73,9 @@ class StockfishReferenceBot(BaseReferenceBot):
     def _configure_elo(self, elo: int):
         if elo <= 1000:
             self.engine.configure({"UCI_LimitStrength": False, "Skill Level": 0})
-        elif elo <= 1500:
-            self.engine.configure({"UCI_LimitStrength": True, "UCI_Elo": 1500})
         else:
-            self.engine.configure({"UCI_LimitStrength": True, "UCI_Elo": 2000})
+            calibrated_elo = max(1320, min(3190, elo))
+            self.engine.configure({"UCI_LimitStrength": True, "UCI_Elo": calibrated_elo})
 
     def get_move(self, board: chess.Board, time_limit: float = 1.0) -> chess.Move:
         # Safe query budget to prevent hang
@@ -165,8 +164,17 @@ def create_reference_bot(target_elo: int) -> BaseReferenceBot:
 
     if target_elo <= 1200:
         return PurePython1000Bot()
-    elif target_elo <= 1700:
+    elif target_elo <= 1650:
         return PurePython1500Bot()
     else:
-        # Fallback to high-depth template if no Stockfish
-        return PurePython1500Bot()
+        # Fallback to pure-Python ~1800 Vanguard bot
+        try:
+            from hackathon.submitted_bots.victor_vanguard_bot import get_move as vanguard_move
+            class PurePython1800Bot(BaseReferenceBot):
+                def __init__(self):
+                    super().__init__("Python-1800-Vanguard", 1800)
+                def get_move(self, b: chess.Board, time_limit: float = 0.20) -> chess.Move:
+                    return vanguard_move(b, time_limit=time_limit)
+            return PurePython1800Bot()
+        except Exception:
+            return PurePython1500Bot()

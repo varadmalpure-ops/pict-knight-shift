@@ -723,7 +723,7 @@ def negamax(board: chess.Board, depth: int, alpha: int, beta: int, ply: int, is_
 
 # 10. MAIN TOURNAMENT INTERFACE (get_move)
 
-def get_move(board: chess.Board, time_limit: float = 0.25) -> chess.Move:
+def get_move(board: chess.Board, time_limit: float = 0.20) -> chess.Move:
     """
     Required hackathon interface:
     Takes a chess.Board and returns the chosen chess.Move within time_limit.
@@ -738,8 +738,8 @@ def get_move(board: chess.Board, time_limit: float = 0.25) -> chess.Move:
     if len(legal_moves) == 1:
         return legal_moves[0]
 
-    # 1. Bullet / Rapid Time Budget Setup (~0.18s max on 0.25s limit)
-    safe_budget = min(max(time_limit * 0.72, 0.05), 0.18)
+    # 1. Ultra-Bullet Time Budget Setup (~0.14s max on 0.20s limit)
+    safe_budget = min(max(time_limit * 0.70, 0.04), 0.14)
     ENGINE.reset_for_move(safe_budget)
 
     best_move_completed_depth = legal_moves[0]
@@ -783,8 +783,8 @@ def get_move(board: chess.Board, time_limit: float = 0.25) -> chess.Move:
             if current_depth_best_score >= MATE_THRESHOLD:
                 break
 
-            # If more than 50% of our budget is spent, avoid starting next depth
-            if time.time() - (ENGINE.end_time - safe_budget) > safe_budget * 0.50:
+            # If more than 45% of our budget is spent, avoid starting next depth
+            if time.time() - (ENGINE.end_time - safe_budget) > safe_budget * 0.45:
                 break
 
     except SearchTimeoutException:

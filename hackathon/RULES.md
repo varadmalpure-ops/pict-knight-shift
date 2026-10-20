@@ -36,7 +36,7 @@ Every submission must be submitted as a single Python file named `<your_name>_bo
 # Required Interface (Exact Signature)
 import chess
 
-def get_move(board: chess.Board, time_limit: float = 0.25) -> chess.Move:
+def get_move(board: chess.Board, time_limit: float = 0.20) -> chess.Move:
     """
     Given a python-chess Board and a move time budget in seconds,
     return a legal chess.Move. Must NEVER return None or raise uncaught exceptions.
@@ -50,7 +50,7 @@ def get_move(board: chess.Board, time_limit: float = 0.25) -> chess.Move:
 | :--- | :--- | :--- |
 | **File Format** | Single `.py` source file (`<name>_bot.py`) | Disqualified if not valid Python |
 | **File Size Cap** | Maximum **25 KB** | Disqualified by static AST scanner |
-| **Move Time Budget** | **0.25s** (Soft: `0.18s`, Hard cutoff: `0.35s`) | Current game forfeited on timeout |
+| **Move Time Budget** | **0.20s** (Soft: `0.14s`, Hard cutoff: `0.28s`) | Current game forfeited on timeout |
 | **Memory Limit** | Maximum **256 MB** per bot process | Process terminated on OOM |
 | **Opening Books** | **Strictly Prohibited** (No static lookup tables) | Disqualified by static AST scanner |
 | **Data Literals Cap** | Max **4 KB** single literal, **10 KB** cumulative | Disqualified (prevents giant embedded tables) |
@@ -151,7 +151,7 @@ def evaluate_board(board: chess.Board) -> int:
         score += val if piece.color == chess.WHITE else -val
     return score if board.turn == chess.WHITE else -score
 
-def get_move(board: chess.Board, time_limit: float = 0.25) -> chess.Move:
+def get_move(board: chess.Board, time_limit: float = 0.20) -> chess.Move:
     search_board = board.copy()
     start_time = time.perf_counter()
     safe_deadline = start_time + min(time_limit * 0.75, 0.8)
@@ -194,7 +194,7 @@ import numpy as np          # ❌ DISQUALIFIED: 'numpy' is not on whitelist
 import subprocess           # ❌ DISQUALIFIED: System module banned
 import chess.engine         # ❌ DISQUALIFIED: External engine wrapper banned
 
-def get_move(board: chess.Board, time_limit: float = 0.25) -> chess.Move:
+def get_move(board: chess.Board, time_limit: float = 0.20) -> chess.Move:
     # ❌ DISQUALIFIED: Dunder reflection bypass
     sub = ().__class__.__base__.__subclasses__()
     

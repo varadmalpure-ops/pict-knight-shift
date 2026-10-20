@@ -281,8 +281,8 @@ class PersistentBotClient:
 
         self.in_q.put(("MOVE", (fen, time_limit, is_960)))
 
-        # Hard cutoff: e.g. 0.375s for 0.25s time_limit, or 1.25s for 1.0s time_limit
-        hard_limit = min(time_limit + 0.15, time_limit * 1.5)
+        # Hard cutoff: e.g. 0.28s for 0.20s time_limit, or 1.25s for 1.0s time_limit
+        hard_limit = min(time_limit + 0.08, time_limit * 1.4)
 
         try:
             resp = self.out_q.get(timeout=hard_limit)
